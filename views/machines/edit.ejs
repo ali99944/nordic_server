@@ -13,12 +13,19 @@
         
         <div class="mb-3">
             <label for="serial" class="form-label">Serial</label>
-            <input type="number" id="serial" class="form-control" value="<%= machine.serial %>" required>
+            <input type="text" id="serial" class="form-control" value="<%= machine.serial %>" required>
         </div>
 
         <div class="mb-3">
-            <label for="status" class="form-label">Status:</label>
-            <input type="checkbox" id="status" class="form-check-input" <%= machine.status ? 'checked' : '' %>>
+            <label class="form-label">Status:</label>
+            <div class="form-check form-check-inline">
+                <input type="radio" id="active" name="status" class="form-check-input" value="active" <%= machine.status === 'active' ? 'checked' : '' %>>
+                <label for="active" class="form-check-label">Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" id="inactive" name="status" class="form-check-input" value="inactive" <%= machine.status === 'inactive' ? 'checked' : '' %>>
+                <label for="inactive" class="form-check-label">Inactive</label>
+            </div>
         </div>
 
         <div class="mb-3">
@@ -46,7 +53,8 @@
         async function updateMachine() {
             const machineId = '<%= machine._id %>';
             const serial = document.getElementById('serial').value;
-            const status = document.getElementById('status').checked;
+            const statusActive = document.getElementById('active').checked;
+            const status = statusActive ? 'active' : 'inactive';
             const shiftNumber = document.getElementById('shiftNumber').value;
             const zone = document.getElementById('zone').value;
 
