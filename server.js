@@ -7,10 +7,6 @@ const fs = require('fs')
 const express = require('express')
 const app = express()
 
-const http = require('http');
-const socketIo = require('socket.io');
-
-
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
@@ -26,23 +22,8 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
 
 
-const server = http.createServer(app);
-const io = socketIo(server,{
-    transports: ["websocket"], // Specify the transports you want to use
-  });
 const IMEI = require('./models/IMEI')
 
-
-// WebSocket connection handling
-io.on('connection', (socket) => {
-    socket.on('imei', async (imei) =>{
-        console.log('A user connected ' + imei);
-    })
-
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});
 
 const NotificationModel = require('./models/NotificationModel')
 
@@ -62,7 +43,6 @@ app.post('/api/notifications/users', async (req,res) =>{
         await notification.save()
     
         console.log(req.body)
-        io.emit('users', JSON.stringify(req.body))
         return res.sendStatus(200)
     }catch(error){
         console.log(error.message)
@@ -102,11 +82,11 @@ app.post('/api/notifications/zones', async (req,res) =>{
         })
 
         console.log(imeis)
-        io.emit('zones', JSON.stringify({
-            title: req.body.title,
-            body: req.body.body,
-            imeis: imeis
-        }))
+        // io.emit('zones', JSON.stringify({
+        //     title: req.body.title,
+        //     body: req.body.body,
+        //     imeis: imeis
+        // }))
         return res.sendStatus(200)
     }catch(error){
         console.log(error.message)
@@ -132,7 +112,7 @@ app.post('/api/notifications/devices', async (req,res) =>{
         await notification.save()
     
         console.log(req.body)
-        io.emit('devices', JSON.stringify(req.body))
+        // io.emit('devices', JSON.stringify(req.body))
         return res.sendStatus(200)
     }catch(error){
         console.log(error.message)
@@ -358,6 +338,5 @@ const combinedViolations = violations.reduce((result, v) => {
 
 
 const port = process.env.port || 9090
-server.listen(port, () => console.log(`Socket Server is running on port ${port}`))
-app.listen(6666, () => console.log(`Normal Server is running on port ${6666}`))
+app.listen(port, () => console.log(`Socket Server is running on port ${port}`))
 
