@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Machine = require('../models/Machine')
 const qrcode = require('qr-image')
+const fs = require('fs')
 
 
 router.get('/machines', async (req, res) => {
@@ -29,14 +30,25 @@ router.post('/machines', async (req, res) => {
         const { serial,zone } = req.body.number
         let machine = new Machine({
             serial,
-            zone
+            zone,
+            shiftedNumber,
         })
         await machine.save()
 
         console.log(`klage.ryl.no/machines/${machine._id}`);
         const qrCodeImage = qrcode.image(`klage.ryl.no/machines/${machine._id}`, { type: 'png' });
+        // Generate a unique filename
+        const filename = `qrcode_${Date.now()}.png`;
+        const filePath = `public/qrcodes/${filename}`;
+
+        const qrStream = qrCodeImage.pipe(fs.createWriteStream(filePath));
+
+        qrStream.on('finish', () => {
+            console.log(`QR Code saved as ${filename}`);
+        });
+
         await Machine.updateOne({ _id: machine._id },{
-            qrcode: qrCodeImage
+            qrcode: process.env.BASE_URL  + `qrcodes/${filename}`
         })
 
 

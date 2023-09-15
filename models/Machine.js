@@ -11,11 +11,15 @@ const machineSchema = mongoose.Schema({
     },
     qrcode:{
       type: String,
-      required: true
+      default: null
     },
     zone:{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Zone',
+      required: true
+    },
+    shiftNumber:{
+      type: String,
       required: true
     }
   },
