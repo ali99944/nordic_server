@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +8,77 @@
 </head>
 <body>
     <%- include('../components/navbar.ejs') %>
-    <h1>Edit Machine</h1>
-    <form method="POST" action="/machines/<%= machine._id %>?_method=PUT">
-        <label for="serial">Serial</label>
-        <input type="number" id="serial" name="serial" value="<%= machine.serial %>" required><br>
+    <div class="container">
+        <h1 class="mt-5">Edit Machine</h1>
+        
+        <div class="mb-3">
+            <label for="serial" class="form-label">Serial</label>
+            <input type="number" id="serial" class="form-control" value="<%= machine.serial %>" required>
+        </div>
 
-        <label for="status">Status:</label>
-        <input type="checkbox" id="status" name="status" <%= machine.status ? 'checked' : '' %>><br>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status:</label>
+            <input type="checkbox" id="status" class="form-check-input" <%= machine.status ? 'checked' : '' %>>
+        </div>
 
-        <label for="shiftNumber">Shift Number</label>
-        <input type="test" id="serial" name="shiftNumber" value="<%= machine.shiftNumber %>" required><br>
+        <div class="mb-3">
+            <label for="shiftNumber" class="form-label">Shift Number</label>
+            <input type="text" id="shiftNumber" class="form-control" value="<%= machine.shiftNumber %>" required>
+        </div>
 
+        <div class="mb-3">
+            <label for="zone" class="form-label">Zone:</label>
+            <select id="zone" class="form-select">
+                <!-- Options will be added dynamically using JavaScript -->
+            </select>
+        </div>
 
-        <label for="zone">Zone:</label>
-        <select id="zone" name="zone" >
-
-        </select>
-        <br>
-
-        <button type="submit">Update</button>
-    </form>
-    <a href="/machines">Back to Machine List</a>
+        <div class="d-flex justify-content-center align-items-center">
+            <button id="updateButton" class="btn btn-primary me-3">Update</button>
+            <a href="/machines" class="btn btn-secondary">Back to Machine List</a>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.xyz/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <script>
+        // Function to update the machine using Fetch API
+        async function updateMachine() {
+            const machineId = '<%= machine._id %>';
+            const serial = document.getElementById('serial').value;
+            const status = document.getElementById('status').checked;
+            const shiftNumber = document.getElementById('shiftNumber').value;
+            const zone = document.getElementById('zone').value;
+
+            const machineData = {
+                serial,
+                status,
+                shiftNumber,
+                zone
+            };
+
+            try {
+                const response = await fetch(`/api/machines/${machineId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(machineData)
+                });
+
+                if (response.ok) {
+                    alert('Machine updated successfully');
+                    // Redirect or navigate to the machine list page
+                    window.location.href = '/machines';
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error updating machine: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error('Error updating machine:', error);
+            }
+        }
+
         // Function to populate the zone dropdown with data from /api/zones
         async function populateZoneDropdown() {
             try {
@@ -50,14 +95,18 @@
                     option.text = zone.name;
                     zoneDropdown.appendChild(option);
                 });
+
+                // Set the selected zone
+                const machineZoneId = '<%= machine.zone._id %>';
+                zoneDropdown.value = machineZoneId;
             } catch (error) {
                 console.error('Error fetching and populating zones:', error);
             }
         }
 
-        // Add an event listener to the create button
-        const createButton = document.getElementById('createButton');
-        createButton.addEventListener('click', createMachine);
+        // Add an event listener to the update button
+        const updateButton = document.getElementById('updateButton');
+        updateButton.addEventListener('click', updateMachine);
 
         // Invoke the code when the DOM content is loaded
         document.addEventListener('DOMContentLoaded', () => {
