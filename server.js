@@ -2,6 +2,7 @@ require('dotenv').config()
 require('./utils/mongodbConnection')
 const qr = require('qr-image');
 const fs = require('fs')
+const admin = require('./utils/firebase');
 
 
 const express = require('express')
@@ -32,17 +33,34 @@ app.post('/api/notifications/users', async (req,res) =>{
         const now = new Date();
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
         const localDateString = localDate.toISOString().split('T')[0];
-    
-        let notification = new NotificationModel({
-            title: req.body.title,
-            body: req.body.body,
-            date:localDateString,
-            fullDate: localDate.toDateString()
-        })
-    
-        await notification.save()
-    
-        console.log(req.body)
+
+        const message = {
+            data: {
+              title: 'Users Title XD',
+              body: 'Users Message',
+              type: 'users',
+            },
+            topic: 'nordic', // Replace with the topic you want to use
+          };
+          
+          admin
+            .messaging()
+            .send(message)
+            .then(async (response) => {
+              console.log('Message sent:', response);
+              let notification = new NotificationModel({
+                title: req.body.title,
+                body: req.body.body,
+                date:localDateString,
+                fullDate: localDate.toDateString()
+            })
+        
+            await notification.save()
+            })
+            .catch((error) => {
+              console.error('Error sending message:', error);
+            });
+              
         return res.sendStatus(200)
     }catch(error){
         console.log(error.message)
@@ -64,29 +82,41 @@ app.post('/api/notifications/zones', async (req,res) =>{
             }
         })
 
-        let notification = new NotificationModel({
-            title: req.body.title,
-            body: req.body.body,
-            zones: req.body.zones,
-            imeis:imeis,
-            date:localDateString,
-            fullDate: localDate.toDateString()
-        })
-    
-        await notification.save()
-    
-        
-
         imeis = imeis.map(e =>{
             return e.serial
         })
 
-        console.log(imeis)
-        // io.emit('zones', JSON.stringify({
-        //     title: req.body.title,
-        //     body: req.body.body,
-        //     imeis: imeis
-        // }))
+        const message = {
+            data: {
+              title: 'Zone Title XD',
+              body: 'Zone Message',
+              type: 'zone',
+              imeis: JSON.stringify(imeis)
+            },
+            topic: 'nordic', // Replace with the topic you want to use
+          };
+          
+          admin
+            .messaging()
+            .send(message)
+            .then(async (response) => {
+              console.log('Message sent:', response);
+              let notification = new NotificationModel({
+                title: req.body.title,
+                body: req.body.body,
+                zones: req.body.zones,
+                imeis:imeis,
+                date:localDateString,
+                fullDate: localDate.toDateString()
+            })
+        
+            await notification.save()
+            })
+            .catch((error) => {
+              console.error('Error sending message:', error);
+            });
+          
+    
         return res.sendStatus(200)
     }catch(error){
         console.log(error.message)
@@ -100,19 +130,37 @@ app.post('/api/notifications/devices', async (req,res) =>{
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
         const localDateString = localDate.toISOString().split('T')[0];
     
-        let notification = new NotificationModel({
-            title: req.body.title,
-            body: req.body.body,
-            zones: [],
-            imeis:req.body.imeis,
-            date:localDateString,
-            fullDate: localDate.toDateString()
-        })
+        const message = {
+            data: {
+              title: 'Your Title XD',
+              body: 'Your Message',
+              type: 'device',
+              imei:'9980c011bdb44fff'
+            },
+            topic: 'nordic', // Replace with the topic you want to use
+          };
+          
+          admin
+            .messaging()
+            .send(message)
+            .then(async (response) => {
+              console.log('Message sent:', response);
+              let notification = new NotificationModel({
+                title: req.body.title,
+                body: req.body.body,
+                zones: [],
+                imeis:req.body.imeis,
+                date:localDateString,
+                fullDate: localDate.toDateString()
+            })
+        
+            await notification.save()
+            })
+            .catch((error) => {
+              console.error('Error sending message:', error);
+            });
+          
     
-        await notification.save()
-    
-        console.log(req.body)
-        // io.emit('devices', JSON.stringify(req.body))
         return res.sendStatus(200)
     }catch(error){
         console.log(error.message)
