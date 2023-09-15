@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Machine</title>
 </head>
 <body>
+    <%- include('../components/navbar.ejs') %>
     <h1>Edit Machine</h1>
     <form method="POST" action="/machines/<%= machine._id %>?_method=PUT">
         <label for="serial">Serial</label>
