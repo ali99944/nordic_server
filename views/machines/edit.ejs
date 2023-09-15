@@ -19,11 +19,11 @@
         <div class="mb-3">
             <label class="form-label">Status:</label>
             <div class="form-check form-check-inline">
-                <input type="radio" id="active" name="status" class="form-check-input" value="active" <%= machine.status === 'active' ? 'checked' : '' %>>
+                <input type="radio" id="active" name="status" class="form-check-input" value="active" <%= machine.status == 'active' ? 'checked' : '' %>>
                 <label for="active" class="form-check-label">Active</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="radio" id="inactive" name="status" class="form-check-input" value="inactive" <%= machine.status === 'inactive' ? 'checked' : '' %>>
+                <input type="radio" id="inactive" name="status" class="form-check-input" value="inactive" <%= machine.status == 'inactive' ? 'checked' : '' %>>
                 <label for="inactive" class="form-check-label">Inactive</label>
             </div>
         </div>
