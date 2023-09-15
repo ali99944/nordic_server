@@ -13,4 +13,4 @@ const machineSchema = mongoose.Schema({
 
 const machineModel = mongoose.model('machine', machineSchema)
 
-export default machineModel;
+module.exports = machineModel;
