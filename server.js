@@ -36,8 +36,8 @@ app.post('/api/notifications/users', async (req,res) =>{
 
         const message = {
             data: {
-              title: 'Users Title XD',
-              body: 'Users Message',
+              title: req.body.title,
+              body: req.body.body,
               type: 'users',
             },
             topic: 'nordic', // Replace with the topic you want to use
@@ -88,8 +88,8 @@ app.post('/api/notifications/zones', async (req,res) =>{
 
         const message = {
             data: {
-              title: 'Zone Title XD',
-              body: 'Zone Message',
+              title: req.body.title,
+              body: req.body.body,
               type: 'zone',
               imeis: JSON.stringify(imeis)
             },
@@ -132,8 +132,8 @@ app.post('/api/notifications/devices', async (req,res) =>{
     
         const message = {
             data: {
-              title: 'Your Title XD',
-              body: 'Your Message',
+              title: req.body.title,
+              body: req.body.body,
               type: 'device',
               imei:JSON.stringify(req.body.imeis)
             },
