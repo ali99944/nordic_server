@@ -6,8 +6,8 @@ const machineSchema = mongoose.Schema({
         required: true
     },
     status:{
-      type: Boolean,
-      default: true
+      type: String,
+      default: 'active'
     },
     qrcode:{
       type: String,
