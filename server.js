@@ -34,6 +34,7 @@ app.post('/api/notifications/users', async (req,res) =>{
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
         const localDateString = localDate.toISOString().split('T')[0];
 
+        
         const message = {
             data: {
               title: req.body.title,
