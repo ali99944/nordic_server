@@ -23,7 +23,7 @@ router.get('/machines/new', (req, res) => {
 
 router.get('/machines/:id/edit', async (req, res) => {
     try{
-        let machine = await Machine.find({ _id: req.params.id})
+        let machine = await Machine.findOne({ _id: req.params.id})
         return res.status(200).render('machines/edit', { machine });
     }catch(err){
         console.log(err.message);
