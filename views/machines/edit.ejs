@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Machine</title>
+</head>
+<body>
+    <h1>Edit Machine</h1>
+    <form method="POST" action="/machines/<%= machine._id %>?_method=PUT">
+        <label for="serial">Serial</label>
+        <input type="number" id="serial" name="serial" value="<%= machine.serial %>" required><br>
+
+        <label for="status">Status:</label>
+        <input type="checkbox" id="status" name="status" <%= machine.status ? 'checked' : '' %>><br>
+
+        <label for="shiftNumber">Shift Number</label>
+        <input type="test" id="serial" name="shiftNumber" value="<%= machine.shiftNumber %>" required><br>
+
+
+        <label for="zone">Zone:</label>
+        <select id="zone" name="zone" >
+
+        </select>
+        <br>
+
+        <button type="submit">Update</button>
+    </form>
+    <a href="/machines">Back to Machine List</a>
+
+    <script>
+        // Function to populate the zone dropdown with data from /api/zones
+        async function populateZoneDropdown() {
+            try {
+                const zoneDropdown = document.getElementById('zone');
+
+                // Fetch zones data from /api/zones
+                const response = await fetch('/api/zones');
+                const zones = await response.json();
+
+                // Populate the dropdown options
+                zones.forEach((zone) => {
+                    const option = document.createElement('option');
+                    option.value = zone._id;
+                    option.text = zone.name;
+                    zoneDropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching and populating zones:', error);
+            }
+        }
+
+        // Add an event listener to the create button
+        const createButton = document.getElementById('createButton');
+        createButton.addEventListener('click', createMachine);
+
+        // Invoke the code when the DOM content is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate the zone dropdown when the page loads
+            populateZoneDropdown();
+        });
+    </script>
+</body>
+</html>
