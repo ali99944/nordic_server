@@ -4,22 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine List</title>
+    <!-- Add Bootstrap 5 CSS link -->
+    <link href="https://cdn.jsdelivr.xyz/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-    <h1>Machine List</h1>
-    <ul>
-        <% machines.forEach(machine => { %>
-            <li>
-                Serial: <%= machine.serial %><br>
-                Status: <%= machine.status ? 'Active' : 'Inactive' %><br>
-                QR Code: <%= machine.qrcode %><br>
-                Zone: <%= machine.zone.name %><br>
-                Created At: <%= machine.createdAt %><br>
-                Updated At: <%= machine.updatedAt %><br>
-                <a href="/machines/<%= machine._id %>/edit">Edit</a>
-            </li>
-        <% }); %>
-    </ul>
-    <a href="/machines/new">Add New Machine</a>
+    <div class="container">
+        <h1 class="mt-5">Machine List</h1>
+        <a class="btn btn-primary my-3" href="/machines/new">Add New Machine</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Status</th>
+                    <th>QR Code</th>
+                    <th>Zone</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% machines.forEach(machine => { %>
+                    <tr>
+                        <td><%= machine.serial %></td>
+                        <td><%= machine.status ? 'Active' : 'Inactive' %></td>
+                        <td><%= machine.qrcode %></td>
+                        <td><%= machine.zone.name %></td>
+                        <td><%= machine.createdAt %></td>
+                        <td><%= machine.updatedAt %></td>
+                        <td>
+                            <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-primary">Edit</a>
+                            <!-- Add delete button if needed -->
+                            <!-- <a href="/machines/<%= machine._id %>/delete" class="btn btn-sm btn-danger">Delete</a> -->
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Bootstrap 5 JS and Popper.js scripts (if needed) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 </body>
 </html>
