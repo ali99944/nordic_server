@@ -17,7 +17,7 @@ router.get('/machines', async (req, res) => {
 
 router.get('/machines/:id', async (req, res) => {
     try{
-        let machine = await Machine.find({_id:req.params.id})
+        let machine = await Machine.findOne({_id:req.params.id})
         return res.status(200).json(machine)
     }catch(err){
         console.log(err.message)
