@@ -18,14 +18,46 @@
         <input type="text" id="qrcode" name="qrcode" required><br>
 
         <label for="zone">Zone:</label>
-        <select id="zone" name="zone" required>
-            <% zones.forEach(zone => { %>
-                <option value="<%= zone._id %>"><%= zone.name %></option>
-            <% }); %>
-        </select><br>
+        <div class="mb-3">
+            <label for="zone" class="form-label">Velg Sone</label>
+            <select id="zone" name="zone" class="form-select" required>
+                <!-- Options will be added dynamically using JavaScript -->
+            </select>
+        </div>
+        <br>
 
         <button type="submit">Create</button>
     </form>
-    <a href="/machines">Back to Machine List</a>
+    <a href="/machines">Cancel</a>
 </body>
+
+<script>
+    // Function to populate the zone dropdown with data from /api/zones
+  async function populateZoneDropdown() {
+              try {
+                  const zoneDropdown = document.getElementById('zone');
+  
+                  // Fetch zones data from /api/zones
+                  const response = await fetch('/api/zones');
+                  const zones = await response.json();
+  
+                  // Populate the dropdown options
+                  zones.forEach((zone) => {
+                      const option = document.createElement('option');
+                      option.value = zone._id;
+                      option.text = zone.name;
+                      zoneDropdown.appendChild(option);
+                   });
+              } catch (error) {
+                  console.error('Error fetching and populating zones:', error);
+              }
+          }
+  
+          // Invoke the code when the DOM content is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+              // Populate the zone dropdown when the page loads
+              populateZoneDropdown();
+          });
+  </script>
+  
 </html>
