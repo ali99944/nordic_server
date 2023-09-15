@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine List</title>
+</head>
+<body>
+    <h1>Machine List</h1>
+    <ul>
+        <% machines.forEach(machine => { %>
+            <li>
+                Serial: <%= machine.serial %><br>
+                Status: <%= machine.status ? 'Active' : 'Inactive' %><br>
+                QR Code: <%= machine.qrcode %><br>
+                Zone: <%= machine.zone.name %><br>
+                Created At: <%= machine.createdAt %><br>
+                Updated At: <%= machine.updatedAt %><br>
+                <a href="/machines/<%= machine._id %>/edit">Edit</a>
+            </li>
+        <% }); %>
+    </ul>
+    <a href="/machines/new">Add New Machine</a>
+</body>
+</html>

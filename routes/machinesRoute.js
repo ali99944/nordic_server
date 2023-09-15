@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Machine = require('../models/Machine')
+const qrcode = require('qr-image')
 
 
 router.get('/machines', async (req, res) => {
@@ -25,12 +26,21 @@ router.get('/machines/:id', async (req, res) => {
 
 router.post('/machines', async (req, res) => {
     try{
-        const { number } = req.body.number
+        const { serial,zone } = req.body.number
         let machine = new Machine({
-            number
+            serial,
+            zone
+        })
+        await machine.save()
+
+        console.log(`klage.ryl.no/machines/${machine._id}`);
+        const qrCodeImage = qrcode.image(`klage.ryl.no/machines/${machine._id}`, { type: 'png' });
+        await Machine.updateOne({ _id: machine._id },{
+            qrcode: qrCodeImage
         })
 
-        await machine.save()
+
+
         return res.status(200).json(machine)
     }catch(err){
         console.log(err.message)
@@ -40,8 +50,7 @@ router.post('/machines', async (req, res) => {
 
 router.put('/machines/:id', async (req, res) => {
     try{
-        const { number } = req.body
-        let machine = await Machine.updateOne({_id:req.params.id}, {number})
+        let machine = await Machine.updateOne({_id:req.params.id}, req.body)
         return res.status(200).json(machine)
     }catch(err){
         console.log(err.message)

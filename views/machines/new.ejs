@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Machine</title>
+</head>
+<body>
+    <h1>Create Machine</h1>
+    <form method="POST" action="/machines">
+        <label for="serial">Serial:</label>
+        <input type="number" id="serial" name="serial" required><br>
+
+        <label for="status">Status:</label>
+        <input type="checkbox" id="status" name="status" checked><br>
+
+        <label for="qrcode">QR Code:</label>
+        <input type="text" id="qrcode" name="qrcode" required><br>
+
+        <label for="zone">Zone:</label>
+        <select id="zone" name="zone" required>
+            <% zones.forEach(zone => { %>
+                <option value="<%= zone._id %>"><%= zone.name %></option>
+            <% }); %>
+        </select><br>
+
+        <button type="submit">Create</button>
+    </form>
+    <a href="/machines">Back to Machine List</a>
+</body>
+</html>

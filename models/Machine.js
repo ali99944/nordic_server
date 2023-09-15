@@ -1,9 +1,22 @@
 const mongoose = require('mongoose')
 
 const machineSchema = mongoose.Schema({
-    number:{
+    serial:{
         type: Number,
         required: true
+    },
+    status:{
+      type: Boolean,
+      default: true
+    },
+    qrcode:{
+      type: String,
+      required: true
+    },
+    zone:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Zone',
+      required: true
     }
   },
   {
