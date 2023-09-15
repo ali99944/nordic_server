@@ -34,7 +34,7 @@ app.post('/api/notifications/users', async (req,res) =>{
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
         const localDateString = localDate.toISOString().split('T')[0];
 
-        
+
         const message = {
             data: {
               title: req.body.title,
@@ -301,10 +301,12 @@ const postalRouter = require('./routes/postalRoute')
 const mapRouter = require('./routes/mapRouter')
 const notificationRouter = require('./routes/notificationRouter')
 const scanRouter = require('./routes/scanRoute')
+const machinesRouter = require('./routes/machinesRoute')
 
 app.use(
     '/api',
     vpsRouter,
+    machinesRouter,
     scanRouter,
     notificationRouter,
     mapRouter,
@@ -338,12 +340,14 @@ const postalFront = require('./routes/postalFront')
 const mapFront = require('./routes/mapFront')
 const notificationFront = require('./routes/notificationFront')
 const scanFront = require('./routes/scanFront')
+const machineFront = require('./routes/machinesFront')
 
 
 app.use(
     mapFront,
     scanFront,
     notificationFront,
+    machineFront,
     settingsFront,
     driverFront,
     postalFront,
