@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redeger Bruker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<%- include('../components/navbar') %>
+<div class="mt-4"></div>
+<div class="container">
+    <h1>Redeger Bruker</h1>
+    <form id="editUserForm">
+        <div class="form-group">
+            <label for="name">Navn</label>
+            <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="accountId">PN-ID</label>
+            <input type="text" class="form-control" id="accountId" name="accountId" value="<%= user.accountId %>" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Passord</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary" onclick="updateUser()">Lagre</button>
+            &nbsp;
+            &nbsp;
+            <a class="btn btn-secondary" href="/users">Avbrytt</a>
+        </div>
+    </form>
+
+    <div id="output"></div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Suksess</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Endringene er lagret!
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Feil</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Noe gikk galt. Vennligst prøv igjen senere.
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+<script>
+    function showAlert(message, alertType) {
+        const alertContainer = document.createElement('div');
+        alertContainer.className = `alert alert-${alertType} mt-4`;
+        alertContainer.textContent = message;
+
+        const container = document.querySelector('#output');
+        container.appendChild(alertContainer);
+
+        // Remove the alert after a few seconds
+        setTimeout(() => {
+            alertContainer.remove();
+        }, 5000);
+    }
+
+
+    function updateUser() {
+        const name = document.getElementById("name");
+        const accountId = document.getElementById("accountId");
+        const password = document.getElementById("password");
+
+        const userId = "<%= user._id %>";
+
+        fetch(`/api/users/${userId}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                name: name.value,
+                accountId: accountId.value,
+                password: password.value,
+            }),
+            headers:{
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    $('#successModal').modal('show');
+                    setTimeout(() =>{
+                        $('#successModal').modal('hide');
+                    },2000)
+                } else {
+                    $('#errorModal').modal('show');
+                    setTimeout(() =>{
+                        $('#errorModal').modal('hide');
+                    },2000)
+                }
+            })
+            .catch(error => {
+                $('#errorModal').modal('show');
+                    setTimeout(() =>{
+                        $('#errorModal').modal('hide');
+                    },2000)
+            });
+    }
+</script>
+
+</body>
+</html>

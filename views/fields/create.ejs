@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Opprett nytt skjemafelt</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<%- include('../components/navbar') %>
+<div class="mt-4"></div>
+<div class="container">
+    <form id="createForm">
+        <div class="form-group">
+            <label for="title">Tittel</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="answerDataType">Svardatatype</label>
+            <select class="form-control" id="answerDataType" name="answerDataType" required onchange="toggleAdditionalFields()">
+                <option value="text">Tekst</option>
+                <option value="number">Nummer</option>
+                <option value="yes_no">Ja-Nei</option>
+                <option value="file">Fil</option>
+                <option value="date">Dato</option>
+                <option value="image">Bilde</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="group">Gruppe</label>
+            <select class="form-control" id="group" name="group" required>
+                <% groups.forEach(group => { %>
+                    <option value="<%= group._id %>"><%= group.name %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="form">Skjema</label>
+            <select class="form-control" id="form" name="form" required>
+                <option value="First">Første</option>
+                <option value="Second">Andre</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="requiredDescriptionField">
+            <label for="requiredDescription">Beskrivelse</label>
+            <input type="text" class="form-control" id="requiredDescription" name="requiredDescription" required>
+        </div>
+
+        <!-- Display these fields only for "Ja-Nei" question type -->
+        <div class="form-group form-check" style="display: none;" id="requiredDescriptionGroup">
+            <input type="checkbox" class="form-check-input" id="hasRequiredDescription" onchange="toggleRequiredDescription()" name="hasRequiredDescription">
+            <label class="form-check-label" for="hasRequiredDescription">Har nødvendig beskrivelse?</label>
+        </div>
+        <div class="form-group" style="display: none;" id="positiveGroup">
+            <label for="positive">Velg når du vil få beskrivelse</label>
+            <select name="positive" class="form-control" id="positive" disabled>
+                <option value="yes">Ja</option>
+                <option value="no">Nei</option>
+            </select>
+        </div>
+
+        <script>
+            // Function to enable/disable the required description based on checkbox state
+            function toggleRequiredDescription() {
+                const positive = document.getElementById("positive");
+                const checkbox = document.getElementById("hasRequiredDescription");
+                positive.disabled = !checkbox.checked;
+            }
+
+            // Function to show an alert message
+            function showAlert(type, message) {
+                const successAlert = document.getElementById("successAlert");
+                const failureAlert = document.getElementById("failureAlert");
+
+                if (type === "success") {
+                    successAlert.textContent = message;
+                    successAlert.style.display = "block";
+                    failureAlert.style.display = "none";
+                } else if (type === "danger") {
+                    failureAlert.textContent = message;
+                    failureAlert.style.display = "block";
+                    successAlert.style.display = "none";
+                }
+
+                // Remove the alert after 5 seconds
+                setTimeout(() => {
+                    successAlert.style.display = "none";
+                    failureAlert.style.display = "none";
+                }, 3000);
+            }
+
+            // Function to show/hide additional fields for "Ja-Nei" question type
+            function toggleAdditionalFields() {
+                const answerDataType = document.getElementById("answerDataType");
+                const requiredDescriptionGroup = document.getElementById("requiredDescriptionGroup");
+                const positiveGroup = document.getElementById("positiveGroup");
+
+                if (answerDataType.value === "yes_no") {
+                    requiredDescriptionGroup.style.display = "block";
+                    positiveGroup.style.display = "block";
+                } else {
+                    requiredDescriptionGroup.style.display = "none";
+                    positiveGroup.style.display = "none";
+                }
+            }
+
+
+            // Function to handle form submission using Fetch API
+            document.getElementById("createForm").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                let title = document.querySelector('#title')
+                let answerDataType = document.querySelector('#answerDataType')
+                let group = document.querySelector('#group')
+                let form = document.querySelector('#form')
+                let hasRequiredDescription = document.querySelector('#hasRequiredDescription')
+                let requiredDescription = document.querySelector('#requiredDescription')
+                let whenToGetDescription = document.querySelector('#positive')
+
+                const formData = new FormData(event.target);
+                console.log(formData)
+                try {
+                    let response = await fetch("/api/formFields", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            title: title.value,
+                            group: group.value,
+                            form: form.value,
+                            hasRequiredDescription: hasRequiredDescription.checked,
+                            requiredDescription: requiredDescription.value,
+                            answerDataType: answerDataType.value,
+                            whenToGetDescription: whenToGetDescription.value == 'yes'
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        }
+                    });
+
+                    if (response.status === 200) {
+                        // Show success alert and navigate back after 3 seconds
+                        showAlert('success', 'Feltet ble opprettet.');
+                        setTimeout(() => {
+                            location.href = '/fields';
+                        }, 3000);
+                    } else {
+                        // Show failure alert
+                        showAlert('danger', 'Kunne ikke opprette felt');
+                    }
+                } catch (error) {
+                    console.error('Feil oppsto:', error);
+                    // Show failure alert
+                    showAlert('danger', 'En feil oppstod. Vær så snill, prøv på nytt.');
+                }
+            });
+        </script>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="submit" class="btn btn-primary pl-3 pr-3 mr-3">Legge til</button>
+            <a href="/fields" class="btn btn-secondary pl-3 pr-3">Avbrytt</a>
+        </div>
+    </form>
+
+    <div class="alert alert-success mt-3" id="successAlert" style="display: none;">
+        Opprettet!.
+    </div>
+    <div class="alert alert-danger mt-3" id="failureAlert" style="display: none;">
+        Æsj feil, prøv igjen..
+    </div>
+</div>
+</body>
+</html>

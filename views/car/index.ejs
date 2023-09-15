@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billiste</title>
+    <style>
+        .controls{
+            display: flex;
+        }
+
+        .controls > *{
+            flex-grow: 1;
+        }
+
+        .controls > :first-child{
+            margin-right: 10px;
+        }
+    </style>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<%- include('../components/navbar') %>
+<div class="mt-4"></div>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text">Billiste</h2>
+        <div class="d-flex align-items-center">
+            <a href="/cars/create" class="btn btn-info mr-2">Legge til ny bil</a>
+            <button data-toggle="modal" data-target="#deleteAllModal" class="btn btn-danger">Slett alle</button>
+        </div>
+    </div>
+    <div id="infoBox" class="alert alert-success" role="alert" style="display: none;"></div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>Regnr.</th>
+                <th>Tjenstebilnr.</th>
+                <th>Kilometers.</th>
+                <th>Kilometer brukt.</th>
+                <th>Qr-Kode.</th>
+                <th>Handlinger</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (cars.length > 0) { %>
+                <% cars.forEach(car => { %>
+                    <tr>
+                        <td><%= car.boardNumber %></td>
+                        <td><%= car.privateNumber %></td>
+                        <td><%= car.kilometers %></td>
+                        <td><%= car.currentKilometers %></td>
+                        <td>
+                            <a href="cars/<%= car._id %>/qrcode">Se QR-kode</a>
+                        </td>
+                        <td class="controls">
+                            <a href="/cars/<%= car._id %>/update" class="btn btn-sm btn-primary">Redigere</a>
+                            <button class="btn btn-sm btn-info mr-2" onclick="resetCarService('<%= car._id %>')">Nullstille</button>
+                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal<%= car._id %>">Slett</button>
+                        </td>
+                    </tr>
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deleteModal<%= car._id %>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Bekreft sletting</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Er du sikker på at du vil slette denne bilen?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbrytt</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteCar('<%= car._id %>')">Slett</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="6" class="text-center">Ingen biler.</td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteAllModal" tabindex="-1" role="dialog" aria-labelledby="deleteAllModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAllModalLabel">Er du sikker?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Er du sikker på at du vil slette denne bilen?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbrytt</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllCars()">Slett</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Bootstrap JS and Popper.js scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    async function resetCarService(carId){
+        let response = await fetch(`/api/cars/${carId}/reset`)
+        if(response.status == 200){
+            showInfoBox('Bilkilometer ble nullstilt', 'success');
+            setTimeout(() =>{
+                location.reload()
+            },3000)
+        }else{
+            showInfoBox('Kunne ikke tilbakestille kilometer', 'danger');
+        }
+    }
+
+    function deleteCar(carId) {
+        fetch(`/api/cars/${carId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Car deleted successfully, you can update the UI or show a success message
+                    showInfoBox('Bilen ble slettet.', 'success');
+                    setTimeout(() => {
+                        window.location.reload(); // Refresh the page to reflect the changes
+                    }, 3000);
+                } else {
+                    // Handle the error response if needed
+                    showInfoBox('Kunne ikke slette bilen. Vær så snill, prøv på nytt.', 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showInfoBox('En feil oppstod. Prøv igjen senere.', 'danger');
+            });
+    }
+
+
+    function deleteAllCars() {
+        fetch(`/api/cars`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Car deleted successfully, you can update the UI or show a success message
+                    showInfoBox('Alle bilene ble slettet.', 'success');
+                    setTimeout(() => {
+                        window.location.reload(); // Refresh the page to reflect the changes
+                    }, 3000);
+                } else {
+                    // Handle the error response if needed
+                    showInfoBox('Kunne ikke slette alle bilene. Vær så snill, prøv på nytt.', 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showInfoBox('En feil oppstod. Prøv igjen senere.', 'danger');
+            });
+    }
+
+    function showInfoBox(message, type) {
+        const infoBox = document.getElementById('infoBox');
+        infoBox.innerHTML = message;
+        infoBox.classList.add(`alert-${type}`);
+        infoBox.style.display = 'block';
+        setTimeout(() => {
+            infoBox.style.display = 'none';
+            infoBox.innerHTML = '';
+            infoBox.classList.remove(`alert-${type}`);
+        }, 3000);
+    }
+</script>
+</body>
+</html>
