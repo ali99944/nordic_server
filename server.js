@@ -135,7 +135,7 @@ app.post('/api/notifications/devices', async (req,res) =>{
               title: 'Your Title XD',
               body: 'Your Message',
               type: 'device',
-              imei:'9980c011bdb44fff'
+              imei:req.body.imeis
             },
             topic: 'nordic', // Replace with the topic you want to use
           };
