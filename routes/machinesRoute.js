@@ -27,7 +27,7 @@ router.get('/machines/:id', async (req, res) => {
 
 router.post('/machines', async (req, res) => {
     try{
-        const { serial,zone,shifteNumber } = req.body.number
+        const { serial,zone,shifteNumber } = req.body
         let machine = new Machine({
             serial,
             zone,
