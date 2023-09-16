@@ -48,6 +48,7 @@ router.post('/machines/:id/notify', async (req, res) => {
                 type: 'machine',
                 click_action: "FLUTTER_NOTIFICATION_CLICK",
             },
+            id:id,
             notification: {
                 title: 'notification title',
                 body: 'notification body',
