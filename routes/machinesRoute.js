@@ -28,6 +28,7 @@ router.get('/machines/:id', async (req, res) => {
 
 
 const admin = require('../utils/firebase');
+const { sendAlertSMS } = require('../utils/sms_service')
 
 router.post('/machines/:id/notify', async (req, res) => {
     try{
@@ -55,8 +56,10 @@ router.post('/machines/:id/notify', async (req, res) => {
             .send(message)
             .then(async (response) => {
               console.log('Message sent:', response);
-        
-            await notification.save()
+                await sendAlertSMS({
+                    text: "Message sent",
+                    to: `+201150421159`
+                })
             })
             .catch((error) => {
               console.error('Error sending message:', error);
