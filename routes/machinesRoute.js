@@ -36,10 +36,9 @@ router.post('/machines/:id/notify', async (req, res) => {
             boardNumber,
             notes,
             issue,
-            id
         } = req.body
 
-        console.log(req.body);
+        const {id} = req.params
 
         const message = {
             data: {
@@ -65,7 +64,10 @@ router.post('/machines/:id/notify', async (req, res) => {
               console.error('Error sending message:', error);
             });
 
-        return res.status(200).json(machine)
+            await Machine.updateOne({
+                _id:id,
+            },{ status: 'inactive' })
+
     }catch(err){
         console.log(err.message)
         return res.status(500).json({message: err.message});
