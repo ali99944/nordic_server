@@ -46,6 +46,7 @@ router.post('/machines/:id/notify', async (req, res) => {
                 notes,
                 issue,
                 type: 'machine',
+                click_action: "FLUTTER_NOTIFICATION_CLICK",
             },
             topic: 'nordic', // Replace with the topic you want to use
           };
