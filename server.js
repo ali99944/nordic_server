@@ -37,19 +37,19 @@ app.post('/api/notifications/users', async (req,res) =>{
 
         const message = {
             data: {
-              title: req.body.title,
-              body: req.body.body,
-              type: 'users',
+            title: req.body.title,
+            body: req.body.body,
+            type: 'users',
             },
             topic: 'nordic', // Replace with the topic you want to use
-          };
-          
-          admin
+        };
+        
+        admin
             .messaging()
             .send(message)
             .then(async (response) => {
-              console.log('Message sent:', response);
-              let notification = new NotificationModel({
+            console.log('Message sent:', response);
+            let notification = new NotificationModel({
                 title: req.body.title,
                 body: req.body.body,
                 date:localDateString,
@@ -59,7 +59,7 @@ app.post('/api/notifications/users', async (req,res) =>{
             await notification.save()
             })
             .catch((error) => {
-              console.error('Error sending message:', error);
+            console.error('Error sending message:', error);
             });
               
         return res.sendStatus(200)

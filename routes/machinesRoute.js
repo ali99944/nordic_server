@@ -26,6 +26,47 @@ router.get('/machines/:id', async (req, res) => {
     }
 })
 
+
+const admin = require('../utils/firebase');
+
+router.post('/machines/:id/notify', async (req, res) => {
+    try{
+        const {
+            boardNumber,
+            notes,
+            issue,
+            id
+        } = req.body
+
+        const message = {
+            data: {
+                boardNumber,
+                notes,
+                issue,
+                type: 'machine',
+            },
+            topic: 'nordic', // Replace with the topic you want to use
+          };
+          
+          admin
+            .messaging()
+            .send(message)
+            .then(async (response) => {
+              console.log('Message sent:', response);
+        
+            await notification.save()
+            })
+            .catch((error) => {
+              console.error('Error sending message:', error);
+            });
+
+        return res.status(200).json(machine)
+    }catch(err){
+        console.log(err.message)
+        return res.status(500).json({message: err.message});
+    }
+})
+
 router.post('/machines', async (req, res) => {
     try{
         const { serial,zone,shiftNumber } = req.body
