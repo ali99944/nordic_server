@@ -55,10 +55,10 @@ router.post('/machines/:id/notify', async (req, res) => {
             .send(message)
             .then(async (response) => {
               console.log('Message sent:', response);
-                await sendAlertSMS({
-                    text: "Message sent",
-                    to: `+201150421159`
-                })
+                // await sendAlertSMS({
+                //     text: "Message sent",
+                //     to: `+201150421159`
+                // })
             })
             .catch((error) => {
               console.error('Error sending message:', error);
