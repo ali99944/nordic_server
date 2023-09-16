@@ -38,6 +38,8 @@ router.post('/machines/:id/notify', async (req, res) => {
             id
         } = req.body
 
+        console.log(req.body);
+
         const message = {
             data: {
                 boardNumber,
