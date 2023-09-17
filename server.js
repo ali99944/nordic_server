@@ -304,10 +304,12 @@ const mapRouter = require('./routes/mapRouter')
 const notificationRouter = require('./routes/notificationRouter')
 const scanRouter = require('./routes/scanRoute')
 const machinesRouter = require('./routes/machinesRoute')
+const issueNotificationRouter = require('./routes/issueNotificationRoute')
 
 app.use(
     '/api',
     vpsRouter,
+    issueNotificationRouter,
     machinesRouter,
     scanRouter,
     notificationRouter,

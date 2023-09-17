@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Machine = require('../models/Machine')
+const IssueNotification = require('../models/IssueNotification')
 const qrcode = require('qr-image')
 const fs = require('fs')
 
@@ -54,34 +55,31 @@ router.post('/machines/:id/notify', async (req, res) => {
                 type: 'machine',
                 id:id,
             },
-            // notification: {
-            //     title: 'notification title',
-            //     body: 'notification body',
-            // },
-            // android: {
-            //     notification: {
-            //         title: 'android notification title',
-            //         body: 'android notification body',
-            //         channel_id:'Nordic_Channel_4',
-            //     }
-            // },
             topic: 'nordic', // Replace with the topic you want to use
           };
           
-          admin
+          let response = await admin
             .messaging()
             .send(message)
-            .then(async (response) => {
-              console.log('Message sent:', response);
+
+            console.log('Message sent:', response);
+            const now = new Date();
+            const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+            const localDateString = localDate.toISOString().split('T')[0];
+
+            const issueNotification = new IssueNotification({
+                title: 'Issue Notification',
+                body: 'Issue Notification Message from ' + localDateString,
+                description: `Issue Notification for machine ${id}`,
+                date: localDateString,
+                fullDate: localDate.toDateString(),
+            })
+
+            await issueNotification.save()
                 // await sendAlertSMS({
                 //     text: "Message sent",
                 //     to: `+201150421159`
                 // })
-            })
-            .catch((error) => {
-              console.error('Error sending message:', error);
-            });
-
             await Machine.updateOne({
                 _id:id,
             },{ status: 'inactive' })
