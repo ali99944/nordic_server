@@ -70,7 +70,7 @@
         function deleteMachine(id){
             
                     // Send a DELETE request to delete the machine
-                    fetch(`/api/machines/${machineId}`, {
+                    fetch(`/api/machines/${id}`, {
                         method: 'DELETE',
                     })
                     .then((response) => {
