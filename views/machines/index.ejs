@@ -32,7 +32,6 @@
                     <tr>
                         <td><%= machine.serial %></td>
                         <td><%= machine.status ? 'Active' : 'Inactive' %></td>
-                        <td><%= machine.qrcode %></td>
                         <td><%= machine.zone.name %></td>
                         <td>
                             <a href="machines/<%= machine._id %>/qrcode">Se QR-kode</a>

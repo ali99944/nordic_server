@@ -7,7 +7,10 @@ const fs = require('fs')
 
 router.get('/machines', async (req, res) => {
     try{
-        let machines = await Machine.find()
+        let machines = await Machine.find({}).populate({
+            path: 'zone',
+            ref: 'Zone'
+        })
         return res.status(200).json(machines)
     }catch(err){
         console.log(err.message)
