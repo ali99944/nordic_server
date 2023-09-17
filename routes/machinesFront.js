@@ -4,7 +4,10 @@ const Machine = require('../models/Machine');
 
 router.get('/machines',  async (req, res) => {
     try{
-        let machines = await Machine.find();
+        let machines = await Machine.find({}).populate({
+            path: 'zone',
+            ref: 'Zone'
+        })
         res.status(200).render('machines/index', { machines: machines });
     }catch(err){
         console.log(err.message);
