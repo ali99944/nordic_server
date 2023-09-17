@@ -54,17 +54,17 @@ router.post('/machines/:id/notify', async (req, res) => {
                 type: 'machine',
                 id:id,
             },
-            notification: {
-                title: 'notification title',
-                body: 'notification body',
-            },
-            android: {
-                notification: {
-                    title: 'android notification title',
-                    body: 'android notification body',
-                    channel_id:'Nordic_Channel_4',
-                }
-            },
+            // notification: {
+            //     title: 'notification title',
+            //     body: 'notification body',
+            // },
+            // android: {
+            //     notification: {
+            //         title: 'android notification title',
+            //         body: 'android notification body',
+            //         channel_id:'Nordic_Channel_4',
+            //     }
+            // },
             topic: 'nordic', // Replace with the topic you want to use
           };
           

@@ -32,7 +32,7 @@
                         <td style="color: <%= machine.status == 'active' ? 'green' : 'red' %>; font-weight:bold"><%= machine.status == 'active' ? 'Active' : 'Inactive' %></td>
                         <td><%= machine.zone.name %></td>
                         <td>
-                            <a href="machines/<%= machine._id %>/qrcode">Se QR-kode</a>
+                            <a href="/machines/<%= machine._id %>/qrcode">Se QR-kode</a>
                         </td>
                         <td class="d-flex justify-content-center align-items-center">
                             <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-secondary me-2">Edit</a>
