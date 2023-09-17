@@ -86,6 +86,10 @@ router.post('/machines/:id/notify', async (req, res) => {
                 _id:id,
             },{ status: 'inactive' })
 
+            return res.json({ 
+                message: 'Message sent successfully'
+             })
+
     }catch(err){
         console.log(err.message)
         return res.status(500).json({message: err.message});
