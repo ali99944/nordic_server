@@ -37,11 +37,11 @@
                         <td class="d-flex justify-content-center align-items-center">
                             <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-secondary me-2">Edit</a>
                             <!-- Add delete button if needed -->
-                            <div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal<%= user._id %>">Delete</div>
+                            <div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal<%= machine._id %>">Delete</div>
                         </td>
                     </tr>
 
-                    <div class="modal fade" id="deleteConfirmationModal<%= user._id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteConfirmationModal<%= machine._id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
