@@ -57,14 +57,12 @@ router.post('/machines/:id/notify', async (req, res) => {
             notification: {
                 title: 'notification title',
                 body: 'notification body',
-                click_action: "FLUTTER_NOTIFICATION_CLICK"
             },
             android: {
                 notification: {
                     title: 'android notification title',
                     body: 'android notification body',
                     channel_id:'Nordic_Channel_4',
-                    click_action: "FLUTTER_NOTIFICATION_CLICK"
                 }
             },
             topic: 'nordic', // Replace with the topic you want to use
