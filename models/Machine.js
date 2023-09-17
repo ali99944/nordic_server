@@ -35,7 +35,7 @@ const machineSchema = mongoose.Schema({
   },
   {
     timestamps: {
-      currentTime: () => formatDate(new Date()),
+      currentTime: () => Date.now(),
     },
   }
 );
