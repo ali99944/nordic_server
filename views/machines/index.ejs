@@ -11,8 +11,10 @@
 <body>
     <%- include('../components/navbar.ejs') %>
     <div class="container">
-        <h1 class="mt-5">Machine List</h1>
-        <a class="btn btn-primary my-3" href="/machines/new">Add New Machine</a>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <h1>Machine List</h1>
+            <a class="btn btn-primary my-3" href="/machines/new">Add New Machine</a>
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>
