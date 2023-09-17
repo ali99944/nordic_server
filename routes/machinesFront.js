@@ -31,5 +31,18 @@ router.get('/machines/:id/edit', async (req, res) => {
     }
 })
 
+router.get('/machines/:id/qrcode', async (req,res) =>{
+    try{
+      let machine = await Machine.findOne({ _id: req.params.id })
+      return res.status(200).render('machines/machine_qrcode_view',{
+        machine
+      })
+    }catch (error){
+      return res.status(500).render('errors/internal',{
+        error: error.message
+      })
+    }
+  })
+
 
 module.exports = router
