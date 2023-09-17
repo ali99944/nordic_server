@@ -37,11 +37,11 @@
                         <td class="d-flex justify-content-center align-items-center">
                             <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-secondary me-2">Edit</a>
                             <!-- Add delete button if needed -->
-                            <div class="btn btn-sm btn-danger">Delete</div>
+                            <div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal<%= user._id %>">Delete</div>
                         </td>
                     </tr>
 
-                    <div class="modal fade" id="deleteModal<%= machine._id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteConfirmationModal<%= user._id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger delete-button" id="confirmDelete">Delete</button>
+                                    <button type="button" class="btn btn-danger" id="confirmDelete" onclick="deleteMachine('<%= machine._id %>')">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -67,25 +67,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 
     <script>
-        // JavaScript to handle delete button click and show confirmation modal
-        const deleteButtons = document.querySelectorAll('.delete-button');
-
-        deleteButtons.forEach((button) => {
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-
-                // Get the machine ID from the button's data-id attribute
-                const machineId = button.getAttribute('data-id');
-
-                // Show the confirmation modal
-                const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-                deleteModal.show();
-
-                // Handle deletion when the "Delete" button in the modal is clicked
-                document.getElementById('confirmDelete').addEventListener('click', () => {
-                    // Close the modal
-                    deleteModal.hide();
-
+        function deleteMachine(id){
+            
                     // Send a DELETE request to delete the machine
                     fetch(`/api/machines/${machineId}`, {
                         method: 'DELETE',
@@ -93,7 +76,7 @@
                     .then((response) => {
                         if (response.ok) {
                             // Reload the page or perform any other action upon successful deletion
-                            window.location.reload();
+                            location.reload();
                         } else {
                             // Handle errors or display a message to the user
                             console.error('Error deleting machine.');
@@ -102,9 +85,7 @@
                     .catch((error) => {
                         console.error('Error deleting machine:', error);
                     });
-                });
-            });
-        });
+        }
     </script>
 </body>
 </html>
