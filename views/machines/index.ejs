@@ -13,7 +13,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mt-3">
             <h1>Machine List</h1>
-            <a class="btn btn-primary my-3" href="/machines/new">Add New Machine</a>
+            <a class="btn btn-dark my-3" href="/machines/new">Add New Machine</a>
         </div>
         <table class="table table-striped table-bordered table-hover text-center">
             <thead>
@@ -34,8 +34,8 @@
                         <td>
                             <a href="machines/<%= machine._id %>/qrcode">Se QR-kode</a>
                         </td>
-                        <td class="d-flex align-items-center">
-                            <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-primary me-2">Edit</a>
+                        <td class="d-flex justify-content-center align-items-center">
+                            <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-secondary me-2">Edit</a>
                             <!-- Add delete button if needed -->
                             <a href="/machines/<%= machine._id %>/delete" class="btn btn-sm btn-danger">Delete</a>
                         </td>
