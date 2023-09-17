@@ -87,7 +87,7 @@
                     deleteModal.hide();
 
                     // Send a DELETE request to delete the machine
-                    fetch(`/machines/${machineId}`, {
+                    fetch(`/api/machines/${machineId}`, {
                         method: 'DELETE',
                     })
                     .then((response) => {
