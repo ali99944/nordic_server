@@ -70,7 +70,7 @@ router.post('/machines/:id/notify', async (req, res) => {
             const issueNotification = new IssueNotification({
                 title: 'Issue Notification',
                 body: 'Issue Notification Message from ' + localDateString,
-                description: `Issue Notification for machine ${id}`,
+                description: `Issue Notification for machine X12`,
                 date: localDateString,
                 fullDate: localDate.toDateString(),
             })
