@@ -10,6 +10,8 @@ router.get('/issues/complete', async (req, res) => {
             path: 'zone',
             ref: 'Zone'
         })
+        
+        return res.status(200).json(issues)
     }catch(err){
         return res.status(500).json(err.message)
     }
