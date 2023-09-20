@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Machine = require('../models/Machine')
 const IssueNotification = require('../models/IssueNotification')
 const Issue = require('../models/Issue')
 const admin = require('../utils/firebase');
@@ -9,11 +8,11 @@ const { sendAlertSMS } = require('../utils/sms_service')
 
 router.get('/issues/complete', async (req, res) => {
     try{
-        let issues = await Machine.find({
-            status: 'active'
+        let issues = await Issue.find({
+            status: 'incomplete'
         }).populate({
-            path: 'zone',
-            ref: 'Zone'
+            path: 'machine',
+            ref: 'Machine'
         })
         
         return res.status(200).json(issues)
@@ -24,11 +23,11 @@ router.get('/issues/complete', async (req, res) => {
 
 router.get('/issues/current', async (req, res) => {
     try{
-        let issues = await Machine.find({
-            status: 'inactive'
+        let issues = await Issue.find({
+            status: 'complete'
         }).populate({
-            path: 'zone',
-            ref: 'Zone'
+            path: 'machine',
+            ref: 'Machine'
         })
 
         return res.status(200).json(issues)
