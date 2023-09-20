@@ -11,9 +11,19 @@ const IssueSchema = new mongoose.Schema({
         required: true
     },
 
+    title: {
+        type: String,
+        required: true
+    },
+
     description: {
         type: String,
         required: true
+    },
+
+    notes:{
+        type: String,
+        default: null
     },
 
     status: {

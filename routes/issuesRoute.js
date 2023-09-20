@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Machine = require('../models/Machine')
 const IssueNotification = require('../models/IssueNotification')
+const Issue = require('../models/Issue')
 const admin = require('../utils/firebase');
 const { sendAlertSMS } = require('../utils/sms_service')
 
@@ -73,6 +74,16 @@ router.post('/issues', async (req, res) => {
             })
 
             await issueNotification.save()
+            const issue = new Issue({
+                title: 'Machine Issue in machine X12',
+                description: 'Located in zone Rute1 in Location 12th street of X12 road',
+                notes: notes ?? null,
+                date: localDateString,
+                machine: id 
+            })
+
+            await issue.save()
+
                 // await sendAlertSMS({
                 //     text: "Message sent",
                 //     to: `+201150421159`
