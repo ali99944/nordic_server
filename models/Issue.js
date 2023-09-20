@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const IssueSchema = new mongoose.Schema({
     machine: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Machine'
+        ref: 'machine'
     },
 
     date: {
