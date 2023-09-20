@@ -14,7 +14,6 @@ router.get('/issues/complete', async (req, res) => {
             path: 'machine',
             ref: 'Machine'
         })
-        console.log(issues);
         return res.status(200).json(issues)
     }catch(err){
         return res.status(500).json(err.message)
@@ -29,6 +28,9 @@ router.get('/issues/current', async (req, res) => {
             path: 'machine',
             ref: 'Machine'
         })
+
+        console.log(issues);
+
 
         return res.status(200).json(issues)
     }catch(err){
