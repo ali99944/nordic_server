@@ -26,7 +26,7 @@ router.get('/issues/current', async (req, res) => {
             status: 'incomplete'
         }).populate({
             path: 'machine',
-            ref: 'Machine'
+            ref: 'machine'
         })
 
         return res.status(200).json(issues)
