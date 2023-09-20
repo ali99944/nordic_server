@@ -31,3 +31,7 @@ const IssueSchema = new mongoose.Schema({
         default: 'incomplete'
     },
 })
+
+const IsseModel = mongoose.model('Issue', IssueSchema)
+
+module.exports = IsseModel
