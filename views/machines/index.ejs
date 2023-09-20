@@ -102,10 +102,10 @@ input:checked + .slider:before {
                         <td class="d-flex justify-content-center align-items-center">
                             <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-secondary me-2">Edit</a>
                             <!-- Add delete button if needed -->
-                            <div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal<%= machine._id %>">Delete</div>
+                            <div class="btn btn-sm btn-danger me-2" data-toggle="modal" data-target="#deleteConfirmationModal<%= machine._id %>">Delete</div>
                             <!-- Rounded switch -->
                             <label class="switch">
-                                <input type="checkbox" onchange="toggleSlider('<%= machine._id %>')">
+                                <input type="checkbox" onchange="toggleSlider('<%= machine._id %>')" checked="<%= machine.status == 'active'  %>">
                                 <span class="slider round"></span>
                             </label>
                         </td>
