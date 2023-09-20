@@ -9,7 +9,7 @@ const { sendAlertSMS } = require('../utils/sms_service')
 router.get('/issues/complete', async (req, res) => {
     try{
         let issues = await Issue.find({
-            status: 'incomplete'
+            status: 'complete'
         }).populate({
             path: 'machine',
             ref: 'Machine'
@@ -23,14 +23,11 @@ router.get('/issues/complete', async (req, res) => {
 router.get('/issues/current', async (req, res) => {
     try{
         let issues = await Issue.find({
-            status: 'complete'
+            status: 'incomplete'
         }).populate({
             path: 'machine',
             ref: 'Machine'
         })
-
-        console.log(issues);
-
 
         return res.status(200).json(issues)
     }catch(err){
