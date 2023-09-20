@@ -86,6 +86,7 @@ input:checked + .slider:before {
                     <th>Serial</th>
                     <th>Status</th>
                     <th>Zone</th>
+                    <th>Location</th>
                     <th>Qrcode</th>
                     <th>Actions</th>
                 </tr>
@@ -96,6 +97,7 @@ input:checked + .slider:before {
                         <td><%= machine.serial %></td>
                         <td style="color: <%= machine.status == 'active' ? 'green' : 'red' %>; font-weight:bold"><%= machine.status == 'active' ? 'Active' : 'Inactive' %></td>
                         <td><%= machine.zone.name %></td>
+                        <td><%= machine.zoneLocation %></td>
                         <td>
                             <a href="/machines/<%= machine._id %>/qrcode">Se QR-kode</a>
                         </td>

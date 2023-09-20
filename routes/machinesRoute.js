@@ -34,72 +34,13 @@ router.get('/machines/:id', async (req, res) => {
 })
 
 
-const admin = require('../utils/firebase');
-const { sendAlertSMS } = require('../utils/sms_service')
-
-router.post('/machines/:id/notify', async (req, res) => {
-    try{
-        const {
-            boardNumber,
-            notes,
-            issue,
-        } = req.body
-
-        const {id} = req.params
-
-        const message = {
-            data: {
-                boardNumber,
-                notes,
-                issue,
-                type: 'machine',
-                id:id,
-            },
-            topic: 'nordic', // Replace with the topic you want to use
-          };
-          
-          let response = await admin
-            .messaging()
-            .send(message)
-
-            console.log('Message sent:', response);
-            const now = new Date();
-            const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-            const localDateString = localDate.toISOString().split('T')[0];
-
-            const issueNotification = new IssueNotification({
-                title: 'Issue Notification',
-                body: 'Issue Notification Message from ' + localDateString,
-                description: `Issue Notification for machine X12`,
-                date: localDateString,
-                fullDate: localDate.toDateString(),
-            })
-
-            await issueNotification.save()
-                // await sendAlertSMS({
-                //     text: "Message sent",
-                //     to: `+201150421159`
-                // })
-            await Machine.updateOne({
-                _id:id,
-            },{ status: 'inactive' })
-
-            return res.json({ 
-                message: 'Message sent successfully'
-             })
-
-    }catch(err){
-        console.log(err.message)
-        return res.status(500).json({message: err.message});
-    }
-})
-
 router.post('/machines', async (req, res) => {
     try{
-        const { serial,zone,shiftNumber } = req.body
+        const { serial,zone,shiftNumber,zoneLocation } = req.body
         let machine = new Machine({
             serial,
             zone,
+            zoneLocation,
             shiftNumber,
         })
         await machine.save()

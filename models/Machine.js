@@ -18,6 +18,10 @@ const machineSchema = mongoose.Schema({
       ref: 'Zone',
       required: true
     },
+    zoneLocation:{
+      type: String,
+      required: true
+    },
     shiftNumber:{
       type: String,
       required: true
