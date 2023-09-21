@@ -22,7 +22,7 @@ const IssueReportSchema = new mongoose.Schema({
     },
 
     date:{
-        type: Date,
+        type: String,
         required: true
     },
 

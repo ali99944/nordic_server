@@ -11,6 +11,11 @@ const IssueSchema = new mongoose.Schema({
         required: true
     },
 
+    boardNumber: {
+        type: String,
+        required: true
+    },
+
     title: {
         type: String,
         required: true

@@ -73,23 +73,23 @@ router.post('/issues', async (req, res) => {
             const localDateString = localDate.toISOString().split('T')[0];
 
             const issueNotification = new IssueNotification({
-                title: 'Machine Issue',
-                body: 'Issue in machine X12',
-                description: ``,
+                title: `Issue in machine ${machine.serial}`,
+                body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
                 date: localDateString,
                 fullDate: localDate.toDateString(),
             })
 
             await issueNotification.save()
             const issue = new Issue({
-                title: 'Machine Issue in machine X12',
-                description: 'Located in zone Rute1 in Location 12th street of X12 road',
+                title: `Issue in machine ${machine.serial}`,
+                description: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
                 notes: notes ?? null,
                 date: localDateString,
                 machine: id ,
                 serial: machine.serial,
                 zone: machine.zone.name,
-                zoneLocation: machine.zoneLocation
+                zoneLocation: machine.zoneLocation,
+                boardNumber: boardNumber
             })
 
             await issue.save()

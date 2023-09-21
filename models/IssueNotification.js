@@ -17,10 +17,6 @@ const issueNotificationSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  description:{
-    type: String,
-    default: '',
-  }
 })
 
 const IssueNotificationModel = mongoose.model('IssueNotification',issueNotificationSchema)
