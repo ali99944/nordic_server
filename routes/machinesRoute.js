@@ -5,6 +5,8 @@ const IssueNotification = require('../models/IssueNotification')
 const Issue = require('../models/Issue')
 const qrcode = require('qr-image')
 const fs = require('fs')
+const admin = require('../utils/firebase');
+
 
 
 router.get('/machines', async (req, res) => {
