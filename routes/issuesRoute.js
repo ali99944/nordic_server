@@ -93,6 +93,7 @@ router.post('/issues', async (req, res) => {
                 boardNumber: boardNumber
             })
 
+            
             await issue.save()
 
                 // await sendAlertSMS({
