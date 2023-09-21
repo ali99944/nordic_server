@@ -124,7 +124,10 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
     try{
         const {
             details,
-            notes
+            notes,
+            zone,
+            zoneLocation,
+            serial
         } = req.body
 
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
@@ -149,9 +152,9 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             image,
             date: localDateString,
             fullDate: localDate.toDateString(),
-            serial: 'serial',
-            zone: 'zone',
-            zoneLocation: 'zoneLocation'
+            serial: serial,
+            zone: zone,
+            zoneLocation: zoneLocation
         };
 
         const filledTemplate = Handlebars.compile(htmlTemplate)(template_data);
@@ -174,9 +177,9 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             date: localDateString,
             image: image,
             pdf: process.env.BASE_URL + 'profiles/' + filename,
-            serial: 'serial',
-            zone: 'zone',
-            zoneLocation: 'zoneLocation'
+            serial: serial,
+            zone: zone,
+            zoneLocation: zoneLocation
         })
 
         await issueReport.save()
