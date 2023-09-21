@@ -2,18 +2,30 @@ const express = require('express');
 const router = express.Router();
 const Machine = require('../models/Machine');
 
-router.get('/machines',  async (req, res) => {
-    try{
-        let machines = await Machine.find({}).populate({
-            path: 'zone',
-            ref: 'Zone'
-        })
-        res.status(200).render('machines/index', { machines: machines });
-    }catch(err){
-        console.log(err.message);
-        return res.status(500).json(err.message);
+router.get('/machines', async (req, res) => {
+    try {
+      let machines = await Machine.find({}).populate({
+        path: 'zone',
+        ref: 'Zone'
+      });
+  
+      // Sort the machines array so that "inactive" machines come first
+      machines.sort((a, b) => {
+        if (a.status === 'inactive' && b.status !== 'inactive') {
+          return -1;
+        } else if (a.status !== 'inactive' && b.status === 'inactive') {
+          return 1;
+        }
+        return 0; // If statuses are the same, maintain the current order
+      });
+  
+      res.status(200).render('machines/index', { machines: machines });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err.message);
     }
-})
+  });
+  
 
 router.get('/machines/new', (req, res) => {
     try{
