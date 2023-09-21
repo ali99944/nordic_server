@@ -235,9 +235,16 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
             _id: req.params.id
         })
 
-        console.log(reason);
-        console.log(issue);
-        console.log(req.params);
+        let smsMessageFormatted = `
+        Issue in machine ${issue.serial} in zone ${issue.zone} in Location ${issue.zoneLocation} reported by client with board number ${issue.boardNumber} was not fixed by driver
+        it requires external help to fix it
+        Reason: ${reason}
+        `
+
+        sendAlertSMS({
+            text: smsMessageFormatted,
+            to: `+201150421159`
+        })
     }catch(error){
         console.log(error.message)
         return res.status(500).json({message: error.message});
