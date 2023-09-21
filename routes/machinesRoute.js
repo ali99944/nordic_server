@@ -93,6 +93,8 @@ router.delete('/machines/:id', async (req, res) => {
 
 router.post('/machines/:id/activate', async (req, res) => {
     try{
+        let machine = await Machine.findOne({_id:req.params.id})
+
         let machineActivation = await Machine.updateOne({
             _id:req.params.id
         },{
@@ -106,6 +108,19 @@ router.post('/machines/:id/activate', async (req, res) => {
         await Issue.updateMany({machine: req.params.id}, {
             status: 'complete'
         })
+
+        const now = new Date();
+        const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+        const localDateString = localDate.toISOString().split('T')[0];
+
+        const issueNotification = new IssueNotification({
+            title: `Issue in machine ${machine.serial}`,
+            body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} was fixed`,
+            date: localDateString,
+            fullDate: localDate.toDateString(),
+        })
+
+        await issueNotification.save()
 
         return res.status(200).json(true)
     }catch(err){
