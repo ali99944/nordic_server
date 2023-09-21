@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const cron = require('node-cron')
 
 const machineSchema = mongoose.Schema({
     serial:{
