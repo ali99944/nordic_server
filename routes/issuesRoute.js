@@ -127,7 +127,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             notes
         } = req.body
 
-        let image = process.env.BASE_URL + image.path.split('public')[1].replaceAll('\\','/')
+        let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
 
         const browser = await puppeteer.launch({
             headless: 'new',
