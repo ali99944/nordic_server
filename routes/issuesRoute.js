@@ -136,7 +136,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         const page = await browser.newPage();
 
         // Load the HTML template
-        const htmlTemplate = fs.readFileSync('templates/driver.html', 'utf8');
+        const htmlTemplate = fs.readFileSync('templates/machine_fix_report.html', 'utf8');
 
         const now = new Date();
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
