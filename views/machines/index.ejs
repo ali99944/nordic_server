@@ -107,7 +107,7 @@ input:checked + .slider:before {
                             <div class="btn btn-sm btn-danger me-2" data-toggle="modal" data-target="#deleteConfirmationModal<%= machine._id %>">Delete</div>
                             <!-- Rounded switch -->
                             <label class="switch">
-                                <input type="checkbox" onchange="if (!this.checked) toggleSlider('<%= machine._id %>')" <%= machine.status === 'active' ? 'checked disabled' : '' %>>
+                                <input type="checkbox" id="<%= machine._id %>" onchange="if (!this.checked) toggleSlider('<%= machine._id %>')" <%= machine.status === 'active' ? 'checked disabled' : '' %>>
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -140,8 +140,16 @@ input:checked + .slider:before {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 
     <script>
-        function toggleSlider(id){
-            console.log(id);
+        function toggleSlider(id) {
+            const checkbox = document.querySelector(`#${id} input[type="checkbox"]`);
+
+            if (checkbox.checked) {
+                // If the checkbox is checked, prevent any action
+                checkbox.disabled = true;
+            } else {
+                // Perform your desired action here
+                console.log(id);
+            }
         }
 
         function deleteMachine(id){
