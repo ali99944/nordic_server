@@ -242,10 +242,10 @@ it requires external help to fix it
 Reason: ${reason}
         `
 
-        sendAlertSMS({
-            text: smsMessageFormatted,
-            to: `+201150421159`
-        })
+        // sendAlertSMS({
+        //     text: smsMessageFormatted,
+        //     to: `+201150421159`
+        // })
     }catch(error){
         console.log(error.message)
         return res.status(500).json({message: error.message});
