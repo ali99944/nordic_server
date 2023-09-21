@@ -229,10 +229,13 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
 router.post('/issues/:id/external/notify', async (req,res) =>{
     try{
+        const { reason } = req.body
+
         const issue = await Issue.findOne({
             _id: req.params.id
         })
 
+        console.log(reason);
         console.log(issue);
         console.log(req.params);
     }catch(error){
