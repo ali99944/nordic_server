@@ -246,6 +246,8 @@ Reason: ${reason}
         //     text: smsMessageFormatted,
         //     to: `+201150421159`
         // })
+
+        return res.status(200).json({message: smsMessageFormatted})
     }catch(error){
         console.log(error.message)
         return res.status(500).json({message: error.message});
