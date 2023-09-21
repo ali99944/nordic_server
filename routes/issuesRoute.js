@@ -196,7 +196,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
         await issueReport.save()
 
-        let currentIssueUpdated = await IssueReport.updateOne({
+        let currentIssueUpdated = await Issue.updateOne({
             _id: req.params.id,
         },{
             status: 'complete',
