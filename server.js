@@ -347,11 +347,13 @@ const mapFront = require('./routes/mapFront')
 const notificationFront = require('./routes/notificationFront')
 const scanFront = require('./routes/scanFront')
 const machineFront = require('./routes/machinesFront')
+const issueNotificationFront = require('./routes/issueNotificationFront')
 
 
 app.use(
     mapFront,
     scanFront,
+    issueNotificationFront,
     notificationFront,
     machineFront,
     settingsFront,
