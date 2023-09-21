@@ -44,10 +44,14 @@ router.post('/issues', async (req, res) => {
             boardNumber,
             notes,
             id,
-            zone,
-            zoneLocation,
-            serial
         } = req.body
+
+        const machine = await Machine.findOne({
+            _id: id
+        }).populate({
+            path: 'zone',
+            ref: 'Zone'
+        })
 
         const message = {
             data: {
@@ -83,9 +87,9 @@ router.post('/issues', async (req, res) => {
                 notes: notes ?? null,
                 date: localDateString,
                 machine: id ,
-                serial,
-                zone,
-                zoneLocation
+                serial: machine.serial,
+                zone: machine.zone.name,
+                zoneLocation: machine.zoneLocation
             })
 
             await issue.save()
