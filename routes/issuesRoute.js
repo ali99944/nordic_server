@@ -31,7 +31,7 @@ router.get('/issues/current', async (req, res) => {
             ref: 'machine'
         })
 
-        return res.status(200).json(issues)
+        return res.status(200).json(issues.reverse())
     }catch(err){
         return res.status(500).json(err.message)
     }
