@@ -77,6 +77,7 @@ router.post('/issues', async (req, res) => {
                 body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
                 date: localDateString,
                 fullDate: localDate.toDateString(),
+                type: 'issue'
             })
 
             await issueNotification.save()

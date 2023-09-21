@@ -17,6 +17,11 @@ const issueNotificationSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+
+  type:{
+    type: String,
+    required: true
+  }
 })
 
 const IssueNotificationModel = mongoose.model('IssueNotification',issueNotificationSchema)

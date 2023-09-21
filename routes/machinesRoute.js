@@ -121,6 +121,7 @@ router.post('/machines/:id/activate', async (req, res) => {
             body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} was fixed`,
             date: localDateString,
             fullDate: localDate.toDateString(),
+            type: 'activation'
         })
 
         await issueNotification.save()
