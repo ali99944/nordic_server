@@ -16,7 +16,7 @@ router.get('/issues/complete', async (req, res) => {
             path: 'machine',
             ref: 'Machine'
         })
-        return res.status(200).json(issues)
+        return res.status(200).json(issues.reverse())
     }catch(err){
         return res.status(500).json(err.message)
     }
@@ -93,7 +93,7 @@ router.post('/issues', async (req, res) => {
                 boardNumber: boardNumber
             })
 
-            
+
             await issue.save()
 
                 // await sendAlertSMS({
