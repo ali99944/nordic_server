@@ -131,7 +131,7 @@ router.post('/machines/:id/activate', async (req, res) => {
                 title: `Machine ${machine.serial} status updated`,
                 body: `Machine located in zone ${machine.zone.name} in Location ${machine.zoneLocation} was fixed`,
                 type: 'issue_closed',
-                id:id,
+                id:req.params.id,
             },
             topic: 'nordic', // Replace with the topic you want to use
           };
