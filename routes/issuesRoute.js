@@ -43,7 +43,10 @@ router.post('/issues', async (req, res) => {
         const {
             boardNumber,
             notes,
-            id
+            id,
+            zone,
+            zoneLocation,
+            serial
         } = req.body
 
         const message = {
@@ -79,7 +82,10 @@ router.post('/issues', async (req, res) => {
                 description: 'Located in zone Rute1 in Location 12th street of X12 road',
                 notes: notes ?? null,
                 date: localDateString,
-                machine: id 
+                machine: id ,
+                serial,
+                zone,
+                zoneLocation
             })
 
             await issue.save()

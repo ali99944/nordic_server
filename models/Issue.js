@@ -30,6 +30,21 @@ const IssueSchema = new mongoose.Schema({
         type: String,
         default: 'incomplete'
     },
+
+    zone:{
+        type: String,
+        required: true
+    },
+
+    zoneLocation:{
+        type: String,
+        required: true
+    },
+
+    serial:{
+        type: String,
+        required: true
+    }
 })
 
 const IsseModel = mongoose.model('Issue', IssueSchema)
