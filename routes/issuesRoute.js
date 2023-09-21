@@ -132,6 +132,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
+    console.log(req.params);
     try{
         const {
             details,
@@ -194,6 +195,18 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         })
 
         await issueReport.save()
+
+        let currentIssueUpdated = await IssueReport.updateOne({
+            _id: req.params.id,
+        },{
+            status: 'complete',
+        })
+
+        if(currentIssueUpdated){
+            console.log('Issue updated and closed');
+        }
+
+
         return res.status(200).json({ message: 'PDF generated and saved successfully' });
     }catch(err){
         console.log(err.message)
