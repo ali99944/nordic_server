@@ -140,8 +140,20 @@ input:checked + .slider:before {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 
     <script>
-        function toggleSlider(id){
+        async function toggleSlider(id){
             console.log(id);
+            let response = await fetch(`/api/machines/${id}/activate`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if(response.status === 200){
+                location.reload();
+            }else{
+                console.log(response.json());
+            }
         }
 
         function deleteMachine(id){
