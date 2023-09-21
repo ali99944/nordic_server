@@ -105,7 +105,7 @@ const multer = require('multer')
 const puppeteer = require('puppeteer')
 const fs = require('fs')
 const path = require('path')
-
+const Handlebars = require('handlebars')
 // Set up multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
