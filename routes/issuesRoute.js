@@ -236,9 +236,10 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
         })
 
         let smsMessageFormatted = `
-        Issue in machine ${issue.serial} in zone ${issue.zone} in Location ${issue.zoneLocation} reported by client with board number ${issue.boardNumber} was not fixed by driver
-        it requires external help to fix it
-        Reason: ${reason}
+Issue in machine ${issue.serial} in zone ${issue.zone} in Location ${issue.zoneLocation} reported by client with board number ${issue.boardNumber} was not fixed by driver
+
+it requires external help to fix it
+Reason: ${reason}
         `
 
         sendAlertSMS({
