@@ -226,4 +226,18 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         return res.status(500).json({message: err.message});
     }
 })
+
+router.post('/issues/:id/external/notify', async (req,res) =>{
+    try{
+        const issue = await Issue.findOne({
+            _id: req.params.id
+        })
+
+        console.log(issue);
+        console.log(req.params);
+    }catch(error){
+        console.log(error.message)
+        return res.status(500).json({message: error.message});
+    }
+})
 module.exports = router;
