@@ -206,6 +206,15 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             console.log('Issue updated and closed');
         }
 
+        let currentIssue = await Issue.findOne({_id: req.params.id})
+        let machineId = currentIssue.machine
+
+        await Machine.updateOne({
+            _id: machineId,
+        },{
+            status: 'active',
+        })
+
 
         return res.status(200).json({ message: 'PDF generated and saved successfully' });
     }catch(err){
