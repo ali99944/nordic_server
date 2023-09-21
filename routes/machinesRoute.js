@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Machine = require('../models/Machine')
 const IssueNotification = require('../models/IssueNotification')
+const Issue = require('../models/Issue')
 const qrcode = require('qr-image')
 const fs = require('fs')
 
@@ -92,7 +93,6 @@ router.delete('/machines/:id', async (req, res) => {
 
 router.post('/machines/:id/activate', async (req, res) => {
     try{
-        let machine = await Machine.findOne({_id:req.params.id})
         let machineActivation = await Machine.updateOne({
             _id:req.params.id
         },{
@@ -102,6 +102,10 @@ router.post('/machines/:id/activate', async (req, res) => {
         if(machineActivation){
             console.log('machine is activated again');
         }
+
+        await Issue.updateMany({machine: req.params.id}, {
+            status: 'complete'
+        })
 
         return res.status(200).json(true)
     }catch(err){
