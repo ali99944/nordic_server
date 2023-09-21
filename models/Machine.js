@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const cron = require('node-cron')
+const admin = require('../utils/firebase');
+
 
 const machineSchema = mongoose.Schema({
     serial:{
@@ -35,30 +37,27 @@ const machineModel = mongoose.model('machine', machineSchema)
 // Define a function to send notifications
 async function sendNotifications() {
   try {
-    // Find all inactive machines
-    const inactiveMachines = await Machine.find({ status: 'inactive' });
-
-    if (inactiveMachines.length > 0) {
-      // Send notifications to devices here
-      // You can use a push notification service like Firebase Cloud Messaging (FCM) or any other service
-      // For the sake of this example, we'll use Axios to simulate sending notifications
-      await axios.post('your-notification-endpoint', {
-        message: 'There are inactive machines. Please check.',
-      });
-
-      console.log('Notifications sent.');
-    } else {
-      console.log('No inactive machines found.');
-    }
+    const message = {
+      data: {
+          title: 'Notifications',
+          body: 'Notification body',
+          type: 'issue_closed',
+      },
+      topic: 'nordic', // Replace with the topic you want to use
+    };
+    
+    let response = await admin
+      .messaging()
+      .send(message)
   } catch (error) {
     console.error('Error sending notifications:', error);
   }
 }
 
 // Schedule the task to run every hour
-// cron.schedule('* * * * * *', () => {
-//   console.log(new Date());
-//   // sendNotifications();
-// });
+cron.schedule('* * * * * *', () => {
+  console.log(new Date());
+  sendNotifications();
+});
 
 module.exports = machineModel;
