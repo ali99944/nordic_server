@@ -56,7 +56,7 @@ async function sendNotifications() {
 }
 
 // Schedule the task to run every hour
-cron.schedule('*/60 * * * *', () => {
+cron.schedule('* * * * * *', () => {
   console.log('Running task...');
   // sendNotifications();
 });
