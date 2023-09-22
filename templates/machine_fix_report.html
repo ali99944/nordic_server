@@ -4,6 +4,110 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            background-color: #eee;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header h2 {
+            margin: 0;
+        }
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+        .content {
+            flex-grow: 1;
+            display: flex;
+            margin: 20px;
+        }
+        .half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            width: 95%;
+            margin: 20px auto;
+        }
+        .last {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .last img {
+            max-width: 95%;
+            margin-top: 20px;
+        }
+    </style>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img class="logo" src="https://nordic.bilsjekk.in/images/assets/bil.png" alt="Muesem">
+        <h2>Send per post</h2>
+        <div></div>
+    </div>
+    <div class="content">
+        <div class="half">
+            <div class="table-container">
+                <table class="reports">
+                    <!-- Your table content here -->
+                </table>
+            </div>
+            <div class="table-container">
+                <table class="reports">
+                    <!-- Your table content here -->
+                </table>
+            </div>
+        </div>
+        <div class="last">
+            <img src="https://nordic.bilsjekk.in/images/assets/bil.png" alt="Muesem" width="120px" height="120px">
+            <img src="{{ image }}" alt="{{ image }}">
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
             width: 100vw;
@@ -94,6 +198,10 @@
 
         .wrapper > *{
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .half{
@@ -108,6 +216,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+
+        .last img{
+            max-width: 100%;
         }
     </style>
     <meta charset="UTF-8" />
@@ -188,12 +300,12 @@
         </div>
 
         <div class="last">
-            <img src="https://nordic.bilsjekk.in/images/assets/bil.png" alt="Muesem" width="150px" height="150px">
             <img src="{{ image }}" alt="{{ image }}"/>
+            <img src="https://nordic.bilsjekk.in/images/assets/bil.png" alt="Muesem" width="150px" height="150px">
         </div>
     </div>
 
 
 </div>
 </body>
-</html>
+</html> -->
