@@ -145,6 +145,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         } = req.body
 
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
+        let currentIssue = await Issue.findOne({_id: req.params.id})
+
 
         const browser = await puppeteer.launch({
             headless: 'new',
@@ -164,6 +166,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             details,
             notes,
             image,
+            boardNumber:currentIssue.boardNumber,
             date: localDateString,
             fullDate: localDate.toDateString(),
             serial: serial,
@@ -208,7 +211,6 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             console.log('Issue updated and closed');
         }
 
-        let currentIssue = await Issue.findOne({_id: req.params.id})
         let machineId = currentIssue.machine
 
         let machineActivation = await Machine.updateOne({
