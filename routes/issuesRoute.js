@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const IssueNotification = require('../models/IssueNotification')
 const Issue = require('../models/Issue')
+const User = require('../models/usersModel')
 const IssueReport = require('../models/IssueReport');
 const admin = require('../utils/firebase');
 const { sendAlertSMS } = require('../utils/sms_service')
@@ -141,11 +142,15 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             notes,
             zone,
             zoneLocation,
-            serial
+            serial,
+            pnid
         } = req.body
 
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
         let currentIssue = await Issue.findOne({_id: req.params.id})
+        const currentUser = await User.findOne({
+            accountId: pnid
+        })
 
 
         const browser = await puppeteer.launch({
@@ -171,7 +176,9 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             fullDate: localDate.toDateString(),
             serial: serial,
             zone: zone,
-            zoneLocation: zoneLocation
+            zoneLocation: zoneLocation,
+            pnid: currentUser.accountId,
+            name: currentUser.name
         };
 
         const filledTemplate = Handlebars.compile(htmlTemplate)(template_data);
