@@ -39,9 +39,9 @@ async function sendNotifications() {
   try {
     const message = {
       data: {
-          title: 'Notifications',
-          body: 'Notification body',
-          type: 'issue_closed',
+          title: 'non-fixed machines',
+          body: 'There are some non-fixed machines available',
+          type: 'issue_not_closed_notify',
       },
       topic: 'nordic', // Replace with the topic you want to use
     };

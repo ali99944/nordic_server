@@ -57,7 +57,7 @@ router.post('/issues', async (req, res) => {
             data: {
                 boardNumber,
                 notes,
-                type: 'machine',
+                type: 'issue',
                 id:id,
             },
             topic: 'nordic', // Replace with the topic you want to use
@@ -220,6 +220,21 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         if(machineActivation){
             console.log('Machine activated');
         }
+
+        const message = {
+            data: {
+                title: `Machine ${currentIssue.serial} was fixed`,
+                body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed`,
+                type: 'issue_closed',
+            },
+            topic: 'nordic', // Replace with the topic you want to use
+          };
+          
+          let response = await admin
+            .messaging()
+            .send(message)
+
+
 
 
         return res.status(200).json({ message: 'PDF generated and saved successfully' });
