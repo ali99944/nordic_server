@@ -75,6 +75,7 @@
     max-width: 95%;
     height: calc(100% - 140px); /* Subtract the logo height and some margin/padding */
     margin-top: 20px;
+    margin-bottom: 20px;
 }
     </style>
     <meta charset="UTF-8" />
@@ -90,12 +91,57 @@
         <div class="half">
             <div class="table-container">
                 <table class="reports">
-                    <!-- Your table content here -->
+                    <colgroup>
+                        <col style="width: auto;">
+                        <col style="width: auto;">
+                        <col style="width: 100%;">
+                    </colgroup>
+                    <tr>
+                        <td colspan="2">zone</td>
+                        <td>{{zone}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">location</td>
+                        <td>{{zoneLocation}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Board Number</td>
+                        <td>{{boardNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Serial</td>
+                        <td>{{serial}}</td>
+                    </tr>
                 </table>
             </div>
             <div class="table-container">
                 <table class="reports">
-                    <!-- Your table content here -->
+                    <colgroup>
+                        <col style="width: auto;">
+                        <col style="width: auto;">
+                        <col style="width: 100%;">
+                    </colgroup>
+                    <tr>
+                        <td colspan="2">Name</td>
+                        <td>{{name}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Pnid</td>
+                        <td>{{pnid}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Details</td>
+                        <td>{{details}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">notes</td>
+                        <td>{{ notes }}</td>
+                    </tr>
+        
+                    <tr>
+                        <td colspan="2">date</td>
+                        <td>{{ date }}</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -250,60 +296,11 @@
     <div class="wrapper">
         <div class="half">
             <div class="table-container">
-                <table class="reports">
-                    <colgroup>
-                        <col style="width: auto;">
-                        <col style="width: auto;">
-                        <col style="width: 100%;">
-                    </colgroup>
-                    <tr>
-                        <td colspan="2">zone</td>
-                        <td>{{zone}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">location</td>
-                        <td>{{zoneLocation}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Board Number</td>
-                        <td>{{boardNumber}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Serial</td>
-                        <td>{{serial}}</td>
-                    </tr>
-                </table>
+                
             </div>
         
             <div class="table-container">
-                <table class="reports">
-                    <colgroup>
-                        <col style="width: auto;">
-                        <col style="width: auto;">
-                        <col style="width: 100%;">
-                    </colgroup>
-                    <tr>
-                        <td colspan="2">Name</td>
-                        <td>{{name}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Pnid</td>
-                        <td>{{pnid}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Details</td>
-                        <td>{{details}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">notes</td>
-                        <td>{{ notes }}</td>
-                    </tr>
-        
-                    <tr>
-                        <td colspan="2">date</td>
-                        <td>{{ date }}</td>
-                    </tr>
-                </table>
+                
             </div>
         </div>
 
