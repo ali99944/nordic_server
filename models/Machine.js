@@ -54,10 +54,10 @@ async function sendNotifications() {
   }
 }
 
-// Schedule the task to run every hour
-cron.schedule('* * * * * *', () => {
-  console.log(new Date());
-  sendNotifications();
-});
+// // Schedule the task to run every hour
+// cron.schedule('* * * * * *', () => {
+//   console.log(new Date());
+//   sendNotifications();
+// });
 
 module.exports = machineModel;
