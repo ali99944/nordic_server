@@ -32,10 +32,7 @@
         .header h2 {
             margin: 0;
         }
-        .logo {
-            width: 50px;
-            height: 50px;
-        }
+  
         .content {
             flex-grow: 1;
             display: flex;
@@ -64,10 +61,18 @@
             background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        .last img {
-            max-width: 95%;
-            margin-top: 20px;
-        }
+       
+        .logo {
+    width: auto;
+    height: 120px;
+}
+
+/* Set the other image to take the remaining height */
+.last img {
+    max-width: 95%;
+    max-height: calc(100% - 140px); /* Subtract the logo height and some margin/padding */
+    margin-top: 20px;
+}
     </style>
     <meta charset="UTF-8" />
 </head>
