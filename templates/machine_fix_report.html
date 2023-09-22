@@ -32,7 +32,10 @@
         .header h2 {
             margin: 0;
         }
-  
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
         .content {
             flex-grow: 1;
             display: flex;
@@ -62,15 +65,15 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
        
-        .logo {
-    width: auto;
-    height: 120px;
-}
+        .logo-report {
+            width: auto;
+            height: 120px;
+        }
 
 /* Set the other image to take the remaining height */
-.last img {
+.last .report-image {
     max-width: 95%;
-    max-height: calc(100% - 140px); /* Subtract the logo height and some margin/padding */
+    height: calc(100% - 140px); /* Subtract the logo height and some margin/padding */
     margin-top: 20px;
 }
     </style>
@@ -97,8 +100,8 @@
             </div>
         </div>
         <div class="last">
-            <img src="https://nordic.bilsjekk.in/images/assets/bil.png" alt="Muesem" width="120px" height="120px">
-            <img src="{{ image }}" alt="{{ image }}">
+            <img src="https://nordic.bilsjekk.in/images/assets/bil.png" class="logo-report" alt="Muesem" width="120px" height="120px">
+            <img src="{{ image }}" alt="{{ image }}" class="report-image">
         </div>
     </div>
 </div>
