@@ -348,6 +348,7 @@ const notificationFront = require('./routes/notificationFront')
 const scanFront = require('./routes/scanFront')
 const machineFront = require('./routes/machinesFront')
 const issueNotificationFront = require('./routes/issueNotificationFront')
+const issueReportFront = require('./routes/issueReportFront')
 
 
 app.use(
@@ -355,6 +356,7 @@ app.use(
     scanFront,
     issueNotificationFront,
     notificationFront,
+    issueReportFront,
     machineFront,
     settingsFront,
     driverFront,
