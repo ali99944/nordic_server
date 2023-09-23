@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const Report = require('../models/IssueReport')
 
 router.delete('/reports/:id', async (req, res) => {
     try{
