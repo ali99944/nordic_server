@@ -38,8 +38,6 @@
         .custom-issue-report-controls > :last-child {
             flex-grow: 1;
         }
-
-        /* Add custom styles here to enhance the design further */
     </style>
 </head>
 <body>
@@ -59,10 +57,10 @@
         </div>
 
         <!-- Failure Alert -->
-        <div class="alert alert-danger mt-3" id="failureAlert" style="display: none;">
+        <div class="alert alert-danger mt-3" id "failureAlert" style="display: none;">
             Oops, something went wrong.
         </div>
-        <table class="table table-bordered table-hover table-striped table-secondary table-responsive">
+        <table class="table table-bordered table-hover table-striped table-secondary">
             <thead>
             <tr>
                 <th>Date</th>
@@ -117,7 +115,84 @@
     </div>
 </div>
 <script>
-    // Add your JavaScript code for search and delete functionality here (if needed)
+    // Delete functionality
+    function deleteReport(reportId) {
+        fetch(`/api/reports/${reportId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.status === 200) {
+                // Handle success, e.g., remove the row from the table
+                document.getElementById(`deleteReportModal${reportId}`).modal('hide'); // Close the modal
+                document.querySelector('#successAlert').style.display = 'block';
+                setTimeout(() => {
+                    document.querySelector('#successAlert').style.display = 'none';
+                }, 3000);
+            } else {
+                // Handle failure
+                document.getElementById(`deleteReportModal${reportId}`).modal('hide'); // Close the modal
+                document.querySelector('#failureAlert').style.display = 'block';
+                setTimeout(() => {
+                    document.querySelector('#failureAlert').style.display = 'none';
+                }, 3000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById(`deleteReportModal${reportId}`).modal('hide'); // Close the modal
+            document.querySelector('#failureAlert').style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('#failureAlert').style display = 'none';
+            }, 3000);
+        });
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const datePicker = document.getElementById('datePicker');
+
+    searchInput.addEventListener('input', () => {
+        const searchText = searchInput.value.toLowerCase();
+        filterTable(searchText);
+    });
+
+    datePicker.addEventListener('input', () => {
+        const selectedDate = datePicker.value;
+        filterTableByDate(selectedDate);
+    });
+
+    function filterTable(searchText) {
+        const tableRows = document.getElementsByTagName('tr');
+
+        for (let i = 1; i < tableRows.length; i++) {
+            const columns = tableRows[i].getElementsByTagName('td');
+            let rowContent = "";
+            for (let j = 0; j < columns.length; j++) {
+                rowContent += columns[j].innerText.toLowerCase() + " ";
+            }
+
+            if (rowContent.includes(searchText)) {
+                tableRows[i].style.display = '';
+            } else {
+                tableRows[i].style.display = 'none';
+            }
+        }
+    }
+
+    function filterTableByDate(selectedDate) {
+        const tableRows = document.getElementsByTagName('tr');
+
+        for (let i = 1; i < tableRows.length; i++) {
+            const dateCell = tableRows[i].getElementsByTagName('td')[0]; // Adjust the index as per your table structure
+            const rowDate = dateCell.textContent.trim();
+
+            if (rowDate === selectedDate) {
+                tableRows[i].style.display = '';
+            } else {
+                tableRows[i].style.display = 'none';
+            }
+        }
+    }
 </script>
 </body>
 </html>
