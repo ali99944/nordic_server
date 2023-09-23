@@ -56,8 +56,8 @@ router.post('/issues', async (req, res) => {
 
         const message = {
             data: {
-                boardNumber,
-                notes,
+                title: `Machine ${machine.zoneLocation} Issue`,
+                body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
                 type: 'issue',
                 id:id,
             },
