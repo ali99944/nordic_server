@@ -114,33 +114,44 @@
         </table>
     </div>
 </div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Suksess</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Endringene er lagret!
+            </div>
+        </div>
+    </div>
+    </div>
 <script>
     // Delete functionality
     function deleteReport(reportId) {
         fetch(`/api/reports/${reportId}`, {
             method: 'DELETE',
         })
-        .then(response => {
+        .then((response) => {
             if (response.status === 200) {
-                // Handle success, e.g., remove the row from the table
-                document.querySelector('#successAlert').style.display = 'block';
-                setTimeout(() => {
-                    document.querySelector('#successAlert').style.display = 'none';
-                }, 3000);
+                $('#successModal').modal('show');
+                setTimeout(() =>{
+                    location.reload()
+                },1500)
             } else {
-                // Handle failure
-                document.querySelector('#failureAlert').style.display = 'block';
-                setTimeout(() => {
-                    document.querySelector('#failureAlert').style.display = 'none';
-                }, 3000);
+                setTimeout(async () => {
+                    console.log(await response.json());
+                }, 1500);
             }
         })
         .catch(error => {
             console.error('Error:', error.message);
-            document.querySelector('#failureAlert').style.display = 'block';
-            setTimeout(() => {
-                document.querySelector('#failureAlert').style.display = 'none';
-            }, 3000);
+            setTimeout(async () => {
+                console.log(await response.json());
+            }, 1500);
         });
     }
 
