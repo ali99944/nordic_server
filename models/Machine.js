@@ -37,18 +37,24 @@ const machineModel = mongoose.model('machine', machineSchema)
 // Define a function to send notifications
 async function sendNotifications() {
   try {
-    const message = {
-      data: {
-          title: 'non-fixed machines',
-          body: 'There are some non-fixed machines available',
-          type: 'issue_not_closed_notify',
-      },
-      topic: 'nordic', // Replace with the topic you want to use
-    };
-    
-    let response = await admin
-      .messaging()
-      .send(message)
+    let mahcinesWithIssues = await machineModel.find({
+      status: 'inactive'
+    })
+
+    if(mahcinesWithIssues.length > 0){
+      const message = {
+        data: {
+            title: 'non-fixed machines',
+            body: 'There are some non-fixed machines available',
+            type: 'issue_not_closed_notify',
+        },
+        topic: 'nordic', // Replace with the topic you want to use
+      };
+      
+      let response = await admin
+        .messaging()
+        .send(message)
+    }
   } catch (error) {
     console.error('Error sending notifications:', error);
   }
