@@ -129,7 +129,6 @@
                 }, 3000);
             } else {
                 // Handle failure
-                document.getElementById(`deleteReportModal${reportId}`).modal('hide'); // Close the modal
                 document.querySelector('#failureAlert').style.display = 'block';
                 setTimeout(() => {
                     document.querySelector('#failureAlert').style.display = 'none';
@@ -137,8 +136,7 @@
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            document.getElementById(`deleteReportModal${reportId}`).modal('hide'); // Close the modal
+            console.error('Error:', error.message);
             document.querySelector('#failureAlert').style.display = 'block';
             setTimeout(() => {
                 document.querySelector('#failureAlert').style.display = 'none';
