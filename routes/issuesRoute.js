@@ -74,7 +74,7 @@ router.post('/issues', async (req, res) => {
             const localDateString = localDate.toISOString().split('T')[0];
 
             const issueNotification = new IssueNotification({
-                title: `Issue in machine ${machine.serial}`,
+                title: `Issue in machine ${machine.zoneLocation}`,
                 body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
                 date: localDateString,
                 fullDate: localDate.toDateString(),
@@ -83,7 +83,7 @@ router.post('/issues', async (req, res) => {
 
             await issueNotification.save()
             const issue = new Issue({
-                title: `Issue in machine ${machine.serial}`,
+                title: `Issue in machine ${machine.zoneLocation}`,
                 description: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
                 notes: notes ?? null,
                 date: localDateString,
@@ -97,10 +97,10 @@ router.post('/issues', async (req, res) => {
 
             await issue.save()
 
-                // await sendAlertSMS({
-                //     text: "Message sent",
-                //     to: `+201150421159`
-                // })
+                await sendAlertSMS({
+                    text: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
+                    to: `4740088605`
+                })
             await Machine.updateOne({
                 _id:id,
             },{ status: 'inactive' })
@@ -232,7 +232,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
         const message = {
             data: {
-                title: `Machine ${currentIssue.serial} was fixed`,
+                title: `Machine ${currentIssue.zoneLocation} was fixed`,
                 body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed`,
                 type: 'issue_closed',
             },
@@ -268,10 +268,10 @@ it requires external help to fix it
 Reason: ${reason}
         `
 
-        // sendAlertSMS({
-        //     text: smsMessageFormatted,
-        //     to: `+201150421159`
-        // })
+        sendAlertSMS({
+            text: smsMessageFormatted,
+            to: `4740088605`
+        })
 
         return res.status(200).json({message: smsMessageFormatted})
     }catch(error){
