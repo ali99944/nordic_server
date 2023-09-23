@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Issue Report</title>
+    <title>Issue Reports</title>
 </head>
 <body>
-    <h1>Issue Report</h1>
-
+    <h1>Issue Reports</h1>
+    
+    <% reports.forEach(function(issueReport) { %>
     <table class="table">
         <tr>
             <th>Field</th>
@@ -42,5 +43,6 @@
             <td><%= issueReport.zoneLocation %></td>
         </tr>
     </table>
+    <% }); %>
 </body>
 </html>
