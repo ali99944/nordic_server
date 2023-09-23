@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Issue Reports</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.5.0/css/bootstrap.min.css">
     <style>
         body {
             background-color: #f5f5f5;
@@ -39,15 +39,17 @@
             flex-grow: 1;
         }
 
-        .container{
-            width: 90% !important;
+        .container-fluid{
+            padding: 20px;
         }
+
+        /* Add custom styles here to enhance the design further */
     </style>
 </head>
 <body>
 <%- include('../components/navbar') %>
 <div class="mt-4"></div>
-<div class="container custom-issue-report-container">
+<div class="container-fluid custom-issue-report-container">
 
     <div class="form-group d-flex justify-content-between">
         <input type="text" class="form-control mr-2" id="searchInput" placeholder="Search by date, user, ID, or link">
