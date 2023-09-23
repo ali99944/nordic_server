@@ -306,10 +306,12 @@ const scanRouter = require('./routes/scanRoute')
 const machinesRouter = require('./routes/machinesRoute')
 const issueNotificationRouter = require('./routes/issueNotificationRoute')
 const issuesRouter = require('./routes/issuesRoute')
+const reportRouter = require('./routes/reportRoute')
 
 app.use(
     '/api',
     vpsRouter,
+    reportRouter,
     issuesRouter,
     issueNotificationRouter,
     machinesRouter,
