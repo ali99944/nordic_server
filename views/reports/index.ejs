@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Report</title>
+</head>
+<body>
+    <h1>Issue Report</h1>
+
+    <table class="table">
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td><strong>PDF:</strong></td>
+            <td><a href="<%= issueReport.pdf %>" target="_blank">See PDF</a></td>
+        </tr>
+        <tr>
+            <td><strong>Notes:</strong></td>
+            <td><%= issueReport.notes %></td>
+        </tr>
+        <tr>
+            <td><strong>Details:</strong></td>
+            <td><%= issueReport.details %></td>
+        </tr>
+        <tr>
+            <td><strong>Date:</strong></td>
+            <td><%= issueReport.date %></td>
+        </tr>
+        <tr>
+            <td><strong>Serial:</strong></td>
+            <td><%= issueReport.serial %></td>
+        </tr>
+        <tr>
+            <td><strong>Zone:</strong></td>
+            <td><%= issueReport.zone %></td>
+        </tr>
+        <tr>
+            <td><strong>Zone Location:</strong></td>
+            <td><%= issueReport.zoneLocation %></td>
+        </tr>
+    </table>
+</body>
+</html>
