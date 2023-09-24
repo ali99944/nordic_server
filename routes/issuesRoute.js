@@ -175,6 +175,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         const template_data = {
             details: details,
             notes: notes ,
+            clientNotes: currentIssue.notes,
             image,
             boardNumber:currentIssue.boardNumber,
             date: localDateString,
