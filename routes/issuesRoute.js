@@ -149,7 +149,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
         let currentIssue = await Issue.findOne({_id: req.params.id})
         const currentUser = await User.findOne({
-            accountId: pnid
+            accountId: pnid.toUpperCase(),
         })
 
 
@@ -168,8 +168,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
         // Replace placeholders with dynamic data
         const template_data = {
-            details,
-            notes,
+            details: details ?? 'No Details',
+            notes: notes ?? 'No Notes',
             image,
             boardNumber:currentIssue.boardNumber,
             date: localDateString,
@@ -196,8 +196,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         await browser.close();
 
         const issueReport = new IssueReport({
-            details: details,
-            notes: notes ?? null,
+            details: details ?? 'No Details',
+            notes: notes ?? 'No Notes',
             date: localDateString,
             image: image,
             pdf: process.env.BASE_URL + 'profiles/' + filename,
@@ -233,7 +233,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         const message = {
             data: {
                 title: `Machine ${currentIssue.zoneLocation} was fixed`,
-                body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed`,
+                body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed by ${currentUser.name}`,
                 type: 'issue_closed',
             },
             topic: 'nordic', // Replace with the topic you want to use

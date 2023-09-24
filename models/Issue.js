@@ -28,7 +28,7 @@ const IssueSchema = new mongoose.Schema({
 
     notes:{
         type: String,
-        default: null
+        default: 'No Notes'
     },
 
     status: {

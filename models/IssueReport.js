@@ -13,7 +13,7 @@ const IssueReportSchema = new mongoose.Schema({
 
     details:{
         type: String,
-        required: true
+        default: ''
     },
 
     image:{
