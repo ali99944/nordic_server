@@ -146,6 +146,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             pnid
         } = req.body
 
+        console.log(req.body);
+
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
         let currentIssue = await Issue.findOne({_id: req.params.id})
         const currentUser = await User.findOne({
@@ -166,17 +168,20 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
         const localDateString = localDate.toISOString().split('T')[0];
 
+        console.log(localDateString);
+        console.log(localDate);
+
         // Replace placeholders with dynamic data
         const template_data = {
-            details: details ?? 'No Details',
-            notes: notes ?? 'No Notes',
+            details: details,
+            notes: notes ,
             image,
             boardNumber:currentIssue.boardNumber,
             date: localDateString,
             fullDate: localDate.toDateString(),
-            serial: serial,
-            zone: zone,
-            zoneLocation: zoneLocation,
+            serial: currentIssue.serial,
+            zone: currentIssue.zone,
+            zoneLocation: currentIssue.zoneLocation,
             pnid: currentUser.accountId,
             name: currentUser.name
         };
@@ -196,17 +201,27 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         await browser.close();
 
         const issueReport = new IssueReport({
-            details: details ?? 'No Details',
-            notes: notes ?? 'No Notes',
+            details: details,
+            notes: notes,
             date: localDateString,
             image: image,
             pdf: process.env.BASE_URL + 'profiles/' + filename,
-            serial: serial,
-            zone: zone,
-            zoneLocation: zoneLocation
+            serial: currentIssue.serial,
+            zone: currentIssue.zone,
+            zoneLocation: currentIssue.zoneLocation
         })
 
         await issueReport.save()
+
+        const issueNotification = new IssueNotification({
+            title: `Machine ${currentIssue.zoneLocation} was fixed`,
+            body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed by ${currentUser.name}`,
+            date: localDateString,
+            fullDate: localDate.toDateString(),
+            type: 'activation'
+        })
+
+        await issueNotification.save()
 
         let currentIssueUpdated = await Issue.updateOne({
             _id: req.params.id,
