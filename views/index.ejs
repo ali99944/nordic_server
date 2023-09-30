@@ -283,7 +283,6 @@ svg{
                   <span class="info-box-text">Total K.S</span>
                   <span class="info-box-number" id="vio-num">
                     -
-                    <small>%</small>
                   </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -296,8 +295,8 @@ svg{
                 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
   
                 <div class="info-box-content">
-                  <span class="info-box-text">Likes</span>
-                  <span class="info-box-number">41,410</span>
+                  <span class="info-box-text">Pdfs</span>
+                  <span class="info-box-number" id="pdf-num">-</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -313,8 +312,8 @@ svg{
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
   
                 <div class="info-box-content">
-                  <span class="info-box-text">Sales</span>
-                  <span class="info-box-number">760</span>
+                  <span class="info-box-text">Users</span>
+                  <span class="info-box-number" id="user-num">-</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -326,8 +325,8 @@ svg{
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
   
                 <div class="info-box-content">
-                  <span class="info-box-text">New Members</span>
-                  <span class="info-box-number">2,000</span>
+                  <span class="info-box-text">Accidents</span>
+                  <span class="info-box-number" id="accident-num">-</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -383,23 +382,7 @@ svg{
 <script src="https://kit.fontawesome.com/7d365a7c21.js" crossorigin="anonymous"></script>
 
 <script>
-// Sample data (replace this with your actual data)
-// const generateRandomData = () => {
-//             const startDate = new Date('2023-08-01');
-//             const endDate = new Date('2023-11-01');
-//             const data = [];
 
-//             for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-//                 data.push({
-//                     date: d.toISOString().split('T')[0],
-//                     value: Math.floor(Math.random() * 50) + 10
-//                 });
-//             }
-
-//             return data;
-//         };
-
-// const data = generateRandomData();
 
         const data = <%- violations %>;
         console.log(data);
