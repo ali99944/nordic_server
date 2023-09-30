@@ -273,98 +273,160 @@ svg{
 
         <!-- Main content -->
         <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <div class="welcome-message">Hei, Admin!</div>
-                
-                    <select name="violationsFilter" id="violationsFilter">
-                        <option value="0">Hele tiden</option>
-                        <option value="6">I går</option>
-                        <option value="1">I dag</option>
-                        <option value="2">3 dager siden</option>
-                        <option value="3">en uke siden</option>
-                        <option value="4">en måned siden</option>
-                        <option value="5">ett år siden</option>
-                    </select>
+            <!-- Info boxes -->
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">CPU Traffic</span>
+                  <span class="info-box-number">
+                    10
+                    <small>%</small>
+                  </span>
                 </div>
-                
-                    <div class="box-container">
-                 
-                        <div class="box box1">
-                            <div class="text">
-                                <h2 class="topic-heading" id="vio-num">-</h2>
-                                <h2 class="topic">Total K.S</h2>
-                            </div>
-                
-                            <img src=
-                "/images/violations.png"
-                                alt="Views">
-                        </div>
-                
-                        <div class="box box2">
-                            <div class="text">
-                                <h2 class="topic-heading" id="pdf-num">-</h2>
-                                <h2 class="topic">Pdf-er</h2>
-                            </div>
-                
-                            <img src=
-                "/images/pdfs.png"
-                                 alt="likes">
-                        </div>
-                
-                        <div class="box box3">
-                            <div class="text">
-                                <h2 class="topic-heading" id="user-num">-</h2>
-                                <h2 class="topic">Brukere</h2>
-                            </div>
-                
-                            <img src=
-                "/images/users.png"
-                                alt="comments">
-                        </div>
-                
-                        <div class="box box4">
-                            <div class="text">
-                                <h2 class="topic-heading" id="accident-num">-</h2>
-                                <h2 class="topic">Ulykker</h2>
-                            </div>
-                
-                            <img src=
-                "/images/accidents.png" alt="published">
-                        </div>
-                
-                        <div class="box box5">
-                            <div class="text">
-                                <h2 class="topic-heading" id="removed-num">-</h2>
-                                <h2 class="topic">Fjernet</h2>
-                            </div>
-                
-                            <img src=
-                "/images/remains.png" alt="published">
-                        </div>
-                    </div>
-                
-                
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <img src="/images/calendar.png" alt="Calendar">
-                            <h3>Nordic K.S Diagram</h3>
-                        </div>
-                        <div id="chart"></div>
-                    </div>
-                
-                    <div class="container">
-                    <div class="quick-links">
-                        <a href="/maps" class="quick-link-item">Kart</a>
-                        <a href="/postals" class="quick-link-item">Send per post</a>
-                        <a href="/scans" class="quick-link-item">Makulering</a>
-                        <!-- Add more quick links as needed -->
-                    </div>
-                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
             </div>
-            <!-- /.row -->
-        </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">Likes</span>
+                  <span class="info-box-number">41,410</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+  
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
+  
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">Sales</span>
+                  <span class="info-box-number">760</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">New Members</span>
+                  <span class="info-box-number">2,000</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+          </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container">
+                        <div class="welcome-message">Hei, Admin!</div>
+                    
+                        <select name="violationsFilter" id="violationsFilter">
+                            <option value="0">Hele tiden</option>
+                            <option value="6">I går</option>
+                            <option value="1">I dag</option>
+                            <option value="2">3 dager siden</option>
+                            <option value="3">en uke siden</option>
+                            <option value="4">en måned siden</option>
+                            <option value="5">ett år siden</option>
+                        </select>
+                    </div>
+                    
+                        <div class="box-container">
+                    
+                            <div class="box box1">
+                                <div class="text">
+                                    <h2 class="topic-heading" id="vio-num">-</h2>
+                                    <h2 class="topic">Total K.S</h2>
+                                </div>
+                    
+                                <img src=
+                    "/images/violations.png"
+                                    alt="Views">
+                            </div>
+                    
+                            <div class="box box2">
+                                <div class="text">
+                                    <h2 class="topic-heading" id="pdf-num">-</h2>
+                                    <h2 class="topic">Pdf-er</h2>
+                                </div>
+                    
+                                <img src=
+                    "/images/pdfs.png"
+                                    alt="likes">
+                            </div>
+                    
+                            <div class="box box3">
+                                <div class="text">
+                                    <h2 class="topic-heading" id="user-num">-</h2>
+                                    <h2 class="topic">Brukere</h2>
+                                </div>
+                    
+                                <img src=
+                    "/images/users.png"
+                                    alt="comments">
+                            </div>
+                    
+                            <div class="box box4">
+                                <div class="text">
+                                    <h2 class="topic-heading" id="accident-num">-</h2>
+                                    <h2 class="topic">Ulykker</h2>
+                                </div>
+                    
+                                <img src=
+                    "/images/accidents.png" alt="published">
+                            </div>
+                    
+                            <div class="box box5">
+                                <div class="text">
+                                    <h2 class="topic-heading" id="removed-num">-</h2>
+                                    <h2 class="topic">Fjernet</h2>
+                                </div>
+                    
+                                <img src=
+                    "/images/remains.png" alt="published">
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <img src="/images/calendar.png" alt="Calendar">
+                                <h3>Nordic K.S Diagram</h3>
+                            </div>
+                            <div id="chart"></div>
+                        </div>
+                    
+                        <div class="container">
+                        <div class="quick-links">
+                            <a href="/maps" class="quick-link-item">Kart</a>
+                            <a href="/postals" class="quick-link-item">Send per post</a>
+                            <a href="/scans" class="quick-link-item">Makulering</a>
+                            <!-- Add more quick links as needed -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
         <!-- /.container-fluid -->
         </div>
         <!-- /.content -->
