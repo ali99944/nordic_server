@@ -216,20 +216,21 @@
     }
 
     var areaChartOptions = {
-      maintainAspectRatio : true,
+      type:'line',
+      maintainAspectRatio : false,
       responsive : true,
       legend: {
-        display: true
+        display: false
       },
       scales: {
         xAxes: [{
           gridLines : {
-            display : true,
+            display : false,
           }
         }],
         yAxes: [{
           gridLines : {
-            display : true,
+            display : false,
           }
         }]
       }
