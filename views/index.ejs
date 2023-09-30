@@ -247,101 +247,136 @@ svg{
 
     </style>
 
+    <%- include('./components/headers') %>
+
 <script src="https://d3js.org/d3.v6.js"></script>
 
 </head>
-<body>
-<%- include('./components/navbar') %>
-<div class="mt-4"></div>
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
-    <div class="container">
-    <div class="welcome-message">Hei, Admin!</div>
-
-    <select name="violationsFilter" id="violationsFilter">
-        <option value="0">Hele tiden</option>
-        <option value="6">I går</option>
-        <option value="1">I dag</option>
-        <option value="2">3 dager siden</option>
-        <option value="3">en uke siden</option>
-        <option value="4">en måned siden</option>
-        <option value="5">ett år siden</option>
-    </select>
-</div>
-
-    <div class="box-container">
- 
-        <div class="box box1">
-            <div class="text">
-                <h2 class="topic-heading" id="vio-num">-</h2>
-                <h2 class="topic">Total K.S</h2>
-            </div>
-
-            <img src=
-"/images/violations.png"
-                alt="Views">
+    <%- include('./components/navbar') %>
+    <%- include('./components/sidebar') %>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Nordic Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
         </div>
+        <!-- /.content-header -->
 
-        <div class="box box2">
-            <div class="text">
-                <h2 class="topic-heading" id="pdf-num">-</h2>
-                <h2 class="topic">Pdf-er</h2>
+        <!-- Main content -->
+        <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="welcome-message">Hei, Admin!</div>
+                
+                    <select name="violationsFilter" id="violationsFilter">
+                        <option value="0">Hele tiden</option>
+                        <option value="6">I går</option>
+                        <option value="1">I dag</option>
+                        <option value="2">3 dager siden</option>
+                        <option value="3">en uke siden</option>
+                        <option value="4">en måned siden</option>
+                        <option value="5">ett år siden</option>
+                    </select>
+                </div>
+                
+                    <div class="box-container">
+                 
+                        <div class="box box1">
+                            <div class="text">
+                                <h2 class="topic-heading" id="vio-num">-</h2>
+                                <h2 class="topic">Total K.S</h2>
+                            </div>
+                
+                            <img src=
+                "/images/violations.png"
+                                alt="Views">
+                        </div>
+                
+                        <div class="box box2">
+                            <div class="text">
+                                <h2 class="topic-heading" id="pdf-num">-</h2>
+                                <h2 class="topic">Pdf-er</h2>
+                            </div>
+                
+                            <img src=
+                "/images/pdfs.png"
+                                 alt="likes">
+                        </div>
+                
+                        <div class="box box3">
+                            <div class="text">
+                                <h2 class="topic-heading" id="user-num">-</h2>
+                                <h2 class="topic">Brukere</h2>
+                            </div>
+                
+                            <img src=
+                "/images/users.png"
+                                alt="comments">
+                        </div>
+                
+                        <div class="box box4">
+                            <div class="text">
+                                <h2 class="topic-heading" id="accident-num">-</h2>
+                                <h2 class="topic">Ulykker</h2>
+                            </div>
+                
+                            <img src=
+                "/images/accidents.png" alt="published">
+                        </div>
+                
+                        <div class="box box5">
+                            <div class="text">
+                                <h2 class="topic-heading" id="removed-num">-</h2>
+                                <h2 class="topic">Fjernet</h2>
+                            </div>
+                
+                            <img src=
+                "/images/remains.png" alt="published">
+                        </div>
+                    </div>
+                
+                
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <img src="/images/calendar.png" alt="Calendar">
+                            <h3>Nordic K.S Diagram</h3>
+                        </div>
+                        <div id="chart"></div>
+                    </div>
+                
+                    <div class="container">
+                    <div class="quick-links">
+                        <a href="/maps" class="quick-link-item">Kart</a>
+                        <a href="/postals" class="quick-link-item">Send per post</a>
+                        <a href="/scans" class="quick-link-item">Makulering</a>
+                        <!-- Add more quick links as needed -->
+                    </div>
+                </div>
             </div>
-
-            <img src=
-"/images/pdfs.png"
-                 alt="likes">
+            <!-- /.row -->
         </div>
-
-        <div class="box box3">
-            <div class="text">
-                <h2 class="topic-heading" id="user-num">-</h2>
-                <h2 class="topic">Brukere</h2>
-            </div>
-
-            <img src=
-"/images/users.png"
-                alt="comments">
+        <!-- /.container-fluid -->
         </div>
-
-        <div class="box box4">
-            <div class="text">
-                <h2 class="topic-heading" id="accident-num">-</h2>
-                <h2 class="topic">Ulykker</h2>
-            </div>
-
-            <img src=
-"/images/accidents.png" alt="published">
-        </div>
-
-        <div class="box box5">
-            <div class="text">
-                <h2 class="topic-heading" id="removed-num">-</h2>
-                <h2 class="topic">Fjernet</h2>
-            </div>
-
-            <img src=
-"/images/remains.png" alt="published">
-        </div>
+        <!-- /.content -->
     </div>
 
-
-    <div class="chart-container">
-        <div class="chart-header">
-            <img src="/images/calendar.png" alt="Calendar">
-            <h3>Nordic K.S Diagram</h3>
-        </div>
-        <div id="chart"></div>
-    </div>
-
-    <div class="container">
-    <div class="quick-links">
-        <a href="/maps" class="quick-link-item">Kart</a>
-        <a href="/postals" class="quick-link-item">Send per post</a>
-        <a href="/scans" class="quick-link-item">Makulering</a>
-        <!-- Add more quick links as needed -->
-    </div>
+    <%- include('./components/footer') %>
 </div>
-</div>
+<%- include('./components/scripts') %>
 <script src="https://kit.fontawesome.com/7d365a7c21.js" crossorigin="anonymous"></script>
 
 <script>
