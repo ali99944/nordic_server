@@ -54,7 +54,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                              <table id="example1" class="table table-bordered table-striped">
+                              <table id="example1" class="table table-bordered table-striped text-center">
                                 <thead>
                                 <tr>
                                     <th>Regnr.</th>
@@ -69,16 +69,16 @@
                                     <% if (cars.length > 0) { %>
                                         <% cars.forEach(car => { %>
                                             <tr>
-                                                <td><%= car.boardNumber %></td>
-                                                <td><%= car.privateNumber %></td>
-                                                <td><%= car.kilometers %></td>
-                                                <td><%= car.currentKilometers %></td>
+                                                <td><%= car.boardNumber ?? '-' %></td>
+                                                <td><%= car.privateNumber ?? '-' %></td>
+                                                <td><%= car.kilometers ?? '-' %></td>
+                                                <td><%= car.currentKilometers ?? '-' %></td>
                                                 <td>
                                                     <a href="cars/<%= car._id %>/qrcode">Se QR-kode</a>
                                                 </td>
                                                 <td class="controls">
-                                                    <a href="/cars/<%= car._id %>/update" class="btn btn-sm btn-primary">Redigere</a>
-                                                    <button class="btn btn-sm btn-info mr-2" onclick="resetCarService('<%= car._id %>')">Nullstille</button>
+                                                    <a href="/cars/<%= car._id %>/update" class="btn btn-sm btn-info mr-2">Redigere</a>
+                                                    <button class="btn btn-sm btn-warning mr-2" onclick="resetCarService('<%= car._id %>')">Nullstille</button>
                                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal<%= car._id %>">Slett</button>
                                                 </td>
                                             </tr>
