@@ -140,9 +140,6 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         const {
             details,
             notes,
-            zone,
-            zoneLocation,
-            serial,
             pnid
         } = req.body
 
