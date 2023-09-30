@@ -39,11 +39,12 @@ router.get('/machines/:id', async (req, res) => {
 
 router.post('/machines', async (req, res) => {
     try{
-        const { serial,zone,zoneLocation } = req.body
+        const { serial,zone,shiftNumber,zoneLocation } = req.body
         let machine = new Machine({
             serial,
             zone,
             zoneLocation,
+            shiftNumber,
         })
         await machine.save()
 
@@ -118,8 +119,8 @@ router.post('/machines/:id/activate', async (req, res) => {
         const localDateString = localDate.toISOString().split('T')[0];
 
         const issueNotification = new IssueNotification({
-            title: `Machine ${machine.serial} status updated`,
-            body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} was fixed`,
+            title: `P-Automat ${machine.serial} i orden`,
+            body: `P-Automat på  ${machine.zone.name} i adressen ${machine.zoneLocation} er i orden`,
             date: localDateString,
             fullDate: localDate.toDateString(),
             type: 'activation'
@@ -129,8 +130,8 @@ router.post('/machines/:id/activate', async (req, res) => {
 
         const message = {
             data: {
-                title: `Machine ${machine.serial} status updated`,
-                body: `Machine located in zone ${machine.zone.name} in Location ${machine.zoneLocation} was fixed`,
+                title: `P-Automat ${machine.serial} i orden`,
+                body: `P-Automat på  ${machine.zone.name} i adressen ${machine.zoneLocation} er i orden`,
                 type: 'issue_closed',
                 id:req.params.id,
             },
@@ -140,6 +141,15 @@ router.post('/machines/:id/activate', async (req, res) => {
           let response = await admin
             .messaging()
             .send(message)
+
+
+
+
+        //    await sendAlertSMS({
+        //         text: smsMessageFormatted,
+        //         to: `4740088605`
+        //         // to: `4747931499`
+        //     })
 
         return res.status(200).json(true)
     }catch(err){

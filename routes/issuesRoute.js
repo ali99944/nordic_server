@@ -56,8 +56,8 @@ router.post('/issues', async (req, res) => {
 
         const message = {
             data: {
-                title: `Machine ${machine.zoneLocation} Issue`,
-                body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
+                title: `Feil på ${machine.zoneLocation} Automat`,
+                body: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
                 type: 'issue',
                 id:id,
             },
@@ -74,8 +74,8 @@ router.post('/issues', async (req, res) => {
             const localDateString = localDate.toISOString().split('T')[0];
 
             const issueNotification = new IssueNotification({
-                title: `Issue in machine ${machine.zoneLocation}`,
-                body: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
+                title: `Feil på ${machine.zoneLocation} Automat`,
+                body: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
                 date: localDateString,
                 fullDate: localDate.toDateString(),
                 type: 'issue'
@@ -83,8 +83,8 @@ router.post('/issues', async (req, res) => {
 
             await issueNotification.save()
             const issue = new Issue({
-                title: `Issue in machine ${machine.zoneLocation}`,
-                description: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
+                title: `Feil på Automat ${machine.zoneLocation}`,
+                description: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
                 notes: notes ?? null,
                 date: localDateString,
                 machine: id ,
@@ -97,10 +97,11 @@ router.post('/issues', async (req, res) => {
 
             await issue.save()
 
-                await sendAlertSMS({
-                    text: `Machine Located in zone ${machine.zone.name} in Location ${machine.zoneLocation} reported by client with board number ${boardNumber}`,
-                    to: `4740088605`
-                })
+                // await sendAlertSMS({
+                //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                //     to: '4740088605'
+                //     // to: `4747931499`
+                // })
             await Machine.updateOne({
                 _id:id,
             },{ status: 'inactive' })
@@ -148,7 +149,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
         let currentIssue = await Issue.findOne({_id: req.params.id})
         const currentUser = await User.findOne({
-            accountId: pnid,
+            accountId: pnid.toUpperCase(),
         })
 
 
@@ -212,8 +213,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         await issueReport.save()
 
         const issueNotification = new IssueNotification({
-            title: `Machine ${currentIssue.zoneLocation} was fixed`,
-            body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed by ${currentUser.name}`,
+            title: `P-Autmat ${currentIssue.zoneLocation} er i orden`,
+            body: ` P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
             date: localDateString,
             fullDate: localDate.toDateString(),
             type: 'activation'
@@ -245,8 +246,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
         const message = {
             data: {
-                title: `Machine ${currentIssue.zoneLocation} was fixed`,
-                body: `Machine in zone ${currentIssue.zone} in location ${currentIssue.zoneLocation} was Fixed by ${currentUser.name}`,
+                title: `P-Autmat ${currentIssue.zoneLocation} er i orden`,
+                body: ` P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
                 type: 'issue_closed',
             },
             topic: 'nordic', // Replace with the topic you want to use
@@ -255,6 +256,12 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
           let response = await admin
             .messaging()
             .send(message)
+
+            // await sendAlertSMS({
+            //     text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
+            //     // to: `4747931499`
+            //     to: '4740088605'
+            // })
 
 
 
@@ -275,16 +282,23 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
         })
 
         let smsMessageFormatted = `
-Issue in machine ${issue.serial} in zone ${issue.zone} in Location ${issue.zoneLocation} reported by client with board number ${issue.boardNumber} was not fixed by driver
+Feil på P-Automat ${issue.serial}  på ${issue.zoneLocation} ute av drift.
 
-it requires external help to fix it
-Reason: ${reason}
+Den trenger teknikker.
+Grunn: ${reason}
         `
 
-        sendAlertSMS({
-            text: smsMessageFormatted,
-            to: `4740088605`
-        })
+        // await sendAlertSMS({
+        //     text: smsMessageFormatted,
+        //     to: `4740088605`
+        //     // to: `4747931499`
+        // })
+
+        // await sendAlertSMS({
+        //     text: smsMessageFormatted,
+        //     to: `4740088605`
+        //     // to: `4747931499`
+        // })
 
         return res.status(200).json({message: smsMessageFormatted})
     }catch(error){

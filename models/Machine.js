@@ -24,7 +24,7 @@ const machineSchema = mongoose.Schema({
     zoneLocation:{
       type: String,
       required: true
-    },
+    }
   }
 );
 
@@ -57,7 +57,7 @@ async function sendNotifications() {
 }
 
 // Schedule the task to run every hour
-cron.schedule('0/30 * * * *', () => {
+cron.schedule('0/10 * * * *', () => {
   console.log(new Date());
   sendNotifications();
 });
