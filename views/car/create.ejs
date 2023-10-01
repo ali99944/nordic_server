@@ -48,9 +48,14 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-6">
                                             <form id="createCarForm">
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" id="boardNumber" name="boardNumber" placeholder="Regnr." required>
-                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Board Number" name="boardNumber" id="boardNumber" required>
+                                                  </div>
+
+
                                                 <div class="mb-3">
                                                     <label for="privateNumber" class="form-label"></label>
                                                     <input type="text" class="form-control" id="privateNumber" name="privateNumber" placeholder="Tjenstebilnr." required>
@@ -79,6 +84,65 @@
 
         <%- include('../components/footer') %>
     </div>
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jquery-validation -->
+<script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+
+    <script>
+        $(function () {
+  $.validator.setDefaults({
+    submitHandler: function () {
+      alert( "Form successful submitted!" );
+    }
+  });
+  $('#createCarForm').validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      terms: {
+        required: true
+      },
+    },
+    messages: {
+      email: {
+        required: "Please enter a email address",
+        email: "Please enter a valid email address"
+      },
+      password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 5 characters long"
+      },
+      terms: "Please accept our terms"
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+});
+    </script>
 <script>
     async function submitForm() {
         const boardNumber = document.getElementById('boardNumber').value;
