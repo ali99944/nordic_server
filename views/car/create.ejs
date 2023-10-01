@@ -131,26 +131,22 @@
     rules: {
       boardNumber: {
         required: true,
-        email: true,
       },
-      password: {
+      privateNumber: {
         required: true,
-        minlength: 5
       },
-      terms: {
+      kilometers: {
         required: true
       },
     },
     messages: {
       boardNumber: {
         required: "Please enter a board number",
-        email: "Please enter a valid board number",
       },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
+      privateNumber: {
+        required: "Please provide a private number",
       },
-      terms: "Please accept our terms"
+      kilometers: "Please enter kilometers",
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
