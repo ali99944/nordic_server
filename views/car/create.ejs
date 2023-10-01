@@ -85,7 +85,10 @@
         <%- include('../components/footer') %>
     </div>
 
-
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery-ui -->
+<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- jquery-validation -->
@@ -97,7 +100,8 @@
 <script src="/dist/js/demo.js"></script>
 
     <script>
-        $(function () {
+        onload = function() {
+            $(function () {
   $.validator.setDefaults({
     submitHandler: async function () {
         const boardNumber = document.getElementById('boardNumber').value;
@@ -168,6 +172,7 @@
     }
   });
 });
+        }
     </script>
 <script>
 
