@@ -149,10 +149,39 @@
             console.log($('#createCarForm').valid());
 
             if($('#createCarForm').valid()){
-                Toast.fire({
+                const boardNumber = document.getElementById('boardNumber').value;
+        const privateNumber = document.getElementById('privateNumber').value;
+        const kilometers = document.getElementById('kilometers').value;
+
+        const formData = {
+            boardNumber: boardNumber,
+            privateNumber: privateNumber,
+            kilometers: kilometers
+        };
+
+        let response = await fetch('/api/cars', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+
+        if (response.status == 200) {
+            // Car created successfully, show success message and navigate back after 3 seconds
+            Toast.fire({
                     icon: 'success',
-                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                    title: 'Bil opprettet vellykket!'
                 })
+            setTimeout(() => {
+                window.location.href = '/cars'; // Redirect to the car list page
+            }, 3000);
+        } else {
+            Toast.fire({
+                    icon: 'error',
+                    title: response.json().toString()
+                })
+        }
             }
         }
     </script>
