@@ -244,7 +244,7 @@
     var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
     var lineChartOptions = $.extend(true, {}, areaChartOptions)
     var lineChartData = $.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
+    lineChartData.datasets[0].fill = true;
     lineChartOptions.datasetFill = true
 
     var lineChart = new Chart(lineChartCanvas, {
