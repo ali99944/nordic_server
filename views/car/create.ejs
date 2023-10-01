@@ -95,42 +95,32 @@
     
     <script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="/plugins/jquery-validation/additional-methods.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 
 
 
     <script>
         onload = function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+
             $(function () {
   $.validator.setDefaults({
     submitHandler: async function () {
-        const boardNumber = document.getElementById('boardNumber').value;
-        const privateNumber = document.getElementById('privateNumber').value;
-        const kilometers = document.getElementById('kilometers').value;
-
-        const formData = {
-            boardNumber: boardNumber,
-            privateNumber: privateNumber,
-            kilometers: kilometers
-        };
-
-        let response = await fetch('/api/cars', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-
-        if (response.status == 200) {
-            // Car created successfully, show success message and navigate back after 3 seconds
-            showInfoBox('Bil opprettet vellykket!', 'success', true);
-            setTimeout(() => {
-                window.location.href = '/cars'; // Redirect to the car list page
-            }, 3000);
-        } else {
-            // Handle the failure case
-            showInfoBox('Kunne ikke opprette bilen. Vær så snill, prøv på nytt.', 'danger', false);
-        }
+        Toast.fire({
+            icon: 'success',
+            title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+        })..then((result) => {
+            console.log(result);
+        }).catch((err) => {
+            console.log(err.message);
+        });
     }
   });
   $('#createCarForm').validate({
