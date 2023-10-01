@@ -101,29 +101,14 @@
 
 
     <script>
-        const createCar = () => {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-
-
-            $(function () {
-  $.validator.setDefaults({
-    submitHandler: async function () {
-        Toast.fire({
-            icon: 'success',
-            title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-        }).then((result) => {
-            console.log(result);
-        }).catch((err) => {
-            console.log(err.message);
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
         });
-    }
-  });
-  $('#createCarForm').validate({
+
+        $('#createCarForm').validate({
     rules: {
       boardNumber: {
         required: true,
@@ -156,26 +141,18 @@
       $(element).removeClass('is-invalid');
     }
   });
-});
+        
+        const createCar = () => {
+            console.log($('#createCarForm').valid());
+
+            if($('#createCarForm').valid()){
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            }
         }
     </script>
-<script>
-
-    function showInfoBox(message, type, autoHide) {
-        const infoBox = document.getElementById('infoBox');
-        infoBox.innerHTML = message;
-        infoBox.classList.add(`alert-${type}`);
-        infoBox.style.display = 'block';
-
-        if (autoHide) {
-            setTimeout(() => {
-                infoBox.style.display = 'none';
-                infoBox.innerHTML = '';
-                infoBox.classList.remove(`alert-${type}`);
-            }, 3000);
-        }
-    }
-</script>
 
 </body>
 </html>
