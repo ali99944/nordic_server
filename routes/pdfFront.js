@@ -21,7 +21,7 @@ router.get('/pdfs', async (req, res) => {
             path:'userId',
             ref:'User'
         });
-        return res.status(200).render('pdf/pdf_list', { pdfs });
+        return res.status(200).render('pdf/pdf_list', { pdfs:pdfs.reverse() });
     } catch (error) {
         return res.status(500).json({ error: 'Internal Server Error' });
     }

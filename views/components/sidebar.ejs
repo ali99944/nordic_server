@@ -11,11 +11,11 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-              <a href="/" class="nav-link active">
+              <a href="/" class="nav-link active bg-success">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Dashboard
@@ -23,9 +23,9 @@
                 </a>
           </li>
 
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-car"></i>
+              <i class="nav-icon fas fa-car" ></i>
               <p>
                 Cars
                 <i class="right fas fa-angle-left right"></i>
@@ -47,9 +47,9 @@
             </ul>
           </li>
 
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-location-arrow"></i>
+              <i class="nav-icon fas fa-location-arrow" ></i>
               <p>
                 Routes
                 <i class="right fas fa-angle-left right"></i>
@@ -71,9 +71,9 @@
             </ul>
           </li>
 
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-question"></i>
+              <i class="nav-icon fas fa-question" ></i>
               <p>
                 Fields
                 <i class="right fas fa-angle-left"></i>
@@ -95,9 +95,9 @@
             </ul>
           </li>
           
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file-pdf"></i>
+              <i class="nav-icon fas fa-file-pdf" ></i>
               <p>
                 Pdfs
                 <i class="right fas fa-angle-left"></i>
@@ -105,13 +105,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/cars" class="nav-link">
+                <a href="/pdfs" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Pdfs</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/cars/create" class="nav-link">
+                <a href="/archieve" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Archieve</p>
                 </a>
@@ -119,10 +119,169 @@
             </ul>
           </li>
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fa fa-user nav-icon" ></i>
+              <p>
+                Users
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/users" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All users</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/users/create" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fa fa-location-arrow nav-icon" ></i>
+              <p>
+                Zones
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/zones" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Zones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/zones/new" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fa fa-key nav-icon" ></i>
+              <p>
+                Imeis
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/imeis" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All imeis</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/imeis/new" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fa fa-server nav-icon" ></i>
+              <p>
+                Machines
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/machines" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Machines</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/machines/new" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/issues/notifications" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Issues</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/reports" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reports</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fa fa-map nav-icon" ></i>
+              <p>
+                Maps
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/maps" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Maps</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/maps/new" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="/postals" class="nav-link">
+              <i class="fa fa-envelope nav-icon" ></i>
+              <p>
+                Postals
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/scans" class="nav-link">
+              <i class="fa fa-trash nav-icon" ></i>
+              <p>
+                Scans
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/notifications" class="nav-link">
+              <i class="fa fa-bell nav-icon" ></i>
+              <p>
+                Notifications
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">Settings</li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
-                <i class="nav-icon fas fa-gear"></i>
+            <a href="/settings" class="nav-link">
+                <i class="nav-icon fa fa-cog"></i>
                 <p>
                   Settings
                 </p>

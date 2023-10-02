@@ -187,37 +187,46 @@ app.get('/archieve',async (req,res) =>{
 const PDF = require('./models/PDF')
 app.post('/api/archieves', async (req,res) =>{
     try{
-        let pdfs = await PDF.find({}).populate({
-            path:'userId',
-            ref:'User'
-        })
+        let pdfs = await PDF.find({})
 
         for(let pdf of pdfs){
-            let isExisting = await PDFArchieve.findOne({
-                accountId: pdf.userId.accountId,
-                link:pdf.link,
-                createdAt:pdf.createdAt
-            })
-
-            if(isExisting){
-                continue;
+            try{
+                let pop = await pdf.populate({
+                    path: 'userId',
+                    ref: 'User'
+                })
+                
+                if(pdf == null){
+                    continue
+                }
+    
+                let isExisting = await PDFArchieve.findOne({
+                    accountId: pdf.userId.accountId,
+                    link:pdf.link,
+                    createdAt:pdf.createdAt
+                })
+    
+                if(!isExisting){
+                    continue;
+                }
+    
+                let archieve = new PDFArchieve({
+                    name:pdf.name,
+                    username:pdf.userId.name,
+                    accountId:pdf.userId.accountId,
+                    link:pdf.link,
+                    createdAt:pdf.createdAt,
+                })
+    
+                await archieve.save()
+            }catch(err){
+                continue
             }
-
-            let archieve = new PDFArchieve({
-                name:pdf.name,
-                username:pdf.userId.name,
-                accountId:pdf.userId.accountId,
-                link:pdf.link,
-                createdAt:pdf.createdAt,
-            })
-
-            await archieve.save()
         }
 
         return res.sendStatus(200) 
     }catch(error){
-        console.log(error.message)
-        return res.status(500).send(error.message)
+        return res.status(500).json(error.message)
     }
 })
 
@@ -272,6 +281,8 @@ app.use((req,res,next) =>{
         || req.url.includes('/images/')
         || req.url.includes('/profiles/')
         || req.url.includes('/css/')
+        || req.url.includes('/dist/')
+        || req.url.includes('/plugins/')
     ){
       return next()
     }else{

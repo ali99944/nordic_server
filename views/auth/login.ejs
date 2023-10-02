@@ -1,66 +1,49 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html>
     <head>
         <title>Nordic Admin logg inn</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <style>
-            body {
-                background-image: url('your-background-image.jpg'); /* Replace with your background image */
-                background-size: cover;
-            }
-
-            .login-container {
-                background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            }
-
-            h1 {
-                margin-bottom: 20px;
-                font-weight: bold;
-            }
-
-            .input-group label {
-                font-weight: bold;
-            }
-
-            .input-group input {
-                border-radius: 5px;
-            }
-
-            button {
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
-
-        </style>
+        <%- include('../components/headers') %>
     </head>
-    <body>
-    <div class="container">
-        <div class="row justify-content-center align-items-center" style="height: 100vh;">
-            <div class="col-md-6">
-                <div class="login-container">
-                    <h1 class="text-center">Administrasjonspanel</h1>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="username">brukernavn</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+    <body class="hold-transition login-page">
+        <div class="container-fluid login-box">
+            <div class="card">
+                <div class="card-body login-card-body">
+                  <p class="login-box-msg">Sign in to start your session</p>
+            
+                  <form id="loginForm">
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Username" id="username">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-user"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="password">passord</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" placeholder="Password" id="password">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-lock"></span>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Logg Inn</button>
-                        </div>
-                    </form>
+                      </div>
+                    </div>
+
+                      <!-- /.col -->
+                      <div class="col-4 float-sm-right">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                  </form>
+            
+            
                 </div>
-            </div>
+                <!-- /.login-card-body -->
+              </div>
         </div>
-    </div>
     </body>
 
+    <%- include('../components/scripts') %>
     <script>
         onload = () =>{
             let form = document.querySelector('#loginForm')
