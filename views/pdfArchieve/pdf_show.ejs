@@ -4,8 +4,7 @@
     <title>PDF</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf_viewer.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-
+    <%- include('../components/headers') %>
     <style>
         body{
             width: 100vw;
@@ -13,9 +12,19 @@
         }
     </style>
 </head>
-<body>
-    <body style="margin:0px;padding:0px;overflow:hidden">
-        <iframe src="/plugins/pdfjs/web/viewer.html?file=<%= link %>" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
-    </body>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <%- include('../components/sidebar') %>
+
+        <div class="content-wrapper">
+            <div class="content" style="height: 100vh;">
+            <iframe src="/plugins/pdfjs/web/viewer.html?file=<%= link %>" frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
+            </div>
+        </div>
+
+        <%- include('../components/footer') %>
+    </div>
+    
+    <%- include('../components/scripts.ejs') %>
 </body>
 </html>

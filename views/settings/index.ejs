@@ -313,7 +313,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="createIMEIModalLabel">Opprett IMEI</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
                         </div>
                         <div class="modal-body">
                             <form>
@@ -329,7 +331,7 @@
               
                                 <div class="mb-3">
                                   <label for="zone" class="form-label">Velg Sone</label>
-                                  <select id="zone" name="zone" class="form-select" required>
+                                  <select id="zone" name="zone" class="form-select custom-select" required>
                                       <!-- Options will be added dynamically using JavaScript -->
                                   </select>
                               </div>
@@ -350,12 +352,14 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="createZoneModalLabel">Opprett sone</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
                         </div>
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                    <label for="zoneNameInput" class="form-label">Sonenavn:</label>
+                                    <label for="zoneNameInput" class="form-label">Sonenavn</label>
                                     <input type="text" class="form-control" id="zoneNameInput" placeholder="Enter zone name" required>
                                 </div>
                                 <!-- Add more input fields for other zone-related data as needed -->

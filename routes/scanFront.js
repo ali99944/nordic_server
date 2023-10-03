@@ -20,7 +20,8 @@ router.get('/scans/:id', async (req, res) => {
       if (!scan) {
           return res.status(404).json({ error: 'PDF not found' });
       }
-      return res.status(200).render('scans/postal_show', { scan });
+      let link = pdf.link.split('.in')[1]
+      return res.status(200).render('scans/postal_show', { link });
   } catch (error) {
     console.log(error.message)
       return res.status(500).json({ error: 'Internal Server Error' });
