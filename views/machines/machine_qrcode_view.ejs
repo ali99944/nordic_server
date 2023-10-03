@@ -46,6 +46,7 @@
         </style>
 
         <script type="text/javascript" src="/dist/canvas/html2canvas.js"></script>
+        <script type="text/javascript" src="/dist/canvas/canvas2image.js"></script>
 
     </head>
     <body>
@@ -60,12 +61,14 @@
                             <h2 class="text">QR-kode</h2>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-6 text-center">
-                                <p class="frame-header">
-                                    scan me
-                                </p>
-                                <div class="frame">
-                                    <img src="<%= machine.qrcode %>" alt="QR Code" class="img-fluid">
+                            <div class="col-md-6 text-center p-2">
+                                <div class="frame-container p-4" id="only-frame" style="max-width: 250px;">
+                                    <p class="frame-header">
+                                        scan me
+                                    </p>
+                                    <div class="frame">
+                                        <img src="<%= machine.qrcode %>" alt="QR Code" class="img-fluid">
+                                    </div>
                                 </div>
                                 <div class="mt-3">
                                     <a href="<%= machine.qrcode %>" class="btn btn-info mr-2" download>Nedlasting</a>
@@ -86,16 +89,21 @@
 
         <script>
             const saveImage = async () =>{
-                let x = await html2canvas(document.body, {
-                onrendered: async function (canvas) {
-                    let o = await Canvas2Image.saveAsPNG(canvas);
-                    console.log(o);
-                },
-            });
+                let qrcode = document.getElementById('only-frame');
+                let canvas = await html2canvas(qrcode);
+                document.body.appendChild(canvas);
 
-            document.body.appendChild(x);
+                var a = document.createElement('a');
+                // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                a.href = canvas.toDataURL("image/png").replace("image/jpeg", "image/octet-stream");
+                a.download = `${Date.now()}.jpg`;
+                a.click();
 
-            console.log(x);
+                // let url = canvas.toDataURL();
+                // console.log(url);
+
+                // let image = await Canvas2Image.saveAsPNG(canvas);
+                // console.log(image);
             }
         </script>
     </body>
