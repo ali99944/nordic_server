@@ -34,7 +34,8 @@ router.get('/pdfs/:id', async (req, res) => {
         if (!pdf) {
             return res.status(404).json({ error: 'PDF not found' });
         }
-        return res.status(200).render('pdf/pdf_show.ejs', { pdf });
+        let link = pdf.link.split('.in')[1]
+        return res.status(200).render('pdf/pdf_show.ejs', { link });
     } catch (error) {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
