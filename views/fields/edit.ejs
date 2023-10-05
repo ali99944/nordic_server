@@ -204,7 +204,7 @@ var Toast = Swal.mixin({
 
         const formFieldId = '<%= formField._id %>';
 
-        fetch(`/api/formFields/${formFieldId}`, {
+        fetch(`/admin/api/formFields/${formFieldId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'

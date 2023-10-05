@@ -81,7 +81,7 @@ let notice = document.querySelector('#notice')
 let text = document.querySelector('#text')
 
 
-let response = await fetch(`/api/groups/${groupId}`, {
+let response = await fetch(`/admin/api/groups/${groupId}`, {
     method: 'PUT',
     headers:{
       'Content-Type':'application/json; charset=utf-8'

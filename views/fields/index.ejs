@@ -193,7 +193,7 @@
         });
 
         function deleteField(id) {
-        fetch(`/api/formFields/${id}`, {
+        fetch(`/admin/api/formFields/${id}`, {
             method: 'DELETE',
         })
             .then(async response => {
@@ -223,7 +223,7 @@
 
     function deleteAllFields() {
 
-        fetch(`/api/formFields`, {
+        fetch(`/admin/api/formFields`, {
             method: 'DELETE',
         })
             .then(async response => {

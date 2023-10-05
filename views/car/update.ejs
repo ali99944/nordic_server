@@ -159,7 +159,7 @@ var Toast = Swal.mixin({
         };
             const carId = '<%= car._id %>';
 
-            let response = await fetch(`/api/cars/${carId}`, {
+            let response = await fetch(`/admin/api/cars/${carId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

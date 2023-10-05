@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
     if (isMatch) {
       const token = jwt.sign(
         { userId: user._id, accountId: user.accountId, role: 'user' },
-        'your-secret-key',
+        'your-secret-key'
       );
 
       return res.status(200).json({

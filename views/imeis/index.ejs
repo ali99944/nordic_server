@@ -182,7 +182,7 @@
 
         async function deleteImei(id){
             // Send DELETE request
-            fetch(`/api/imeis/${id}`, {
+            fetch(`/admin/api/imeis/${id}`, {
                     method: 'DELETE'
                 })
                 .then(async response => {

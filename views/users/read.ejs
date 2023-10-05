@@ -179,7 +179,7 @@
 
     async function deleteAllUsers(){
         try {
-            const response = await fetch(`/api/users`, {
+            const response = await fetch(`/admin/api/users`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -212,7 +212,7 @@
 
     async function deleteUser(userId) {
         try {
-            const response = await fetch(`/api/users/${userId}`, {
+            const response = await fetch(`/admin/api/users/${userId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'

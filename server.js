@@ -3,6 +3,10 @@ require('./utils/mongodbConnection')
 const qr = require('qr-image');
 const fs = require('fs')
 const admin = require('./utils/firebase');
+const User = require('./models/usersModel')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const Manager = require('./models/Manager')
 
 
 const express = require('express')
@@ -23,7 +27,6 @@ app.use(cors({
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
-
 
 const IMEI = require('./models/IMEI')
 
@@ -244,9 +247,13 @@ app.get('/archieves/:id', async (req, res) => {
     }
 });
 
-app.get('/api/logout',(req,res) =>{
+app.get('/admin/api/logout',(req,res) =>{
 
     res.cookie('isLogged',{
+        expires: Date.now()
+    })
+
+    res.cookie('jwt_token',{
         expires: Date.now()
     })
 
@@ -255,46 +262,48 @@ app.get('/api/logout',(req,res) =>{
 
 const path = require('path')
 
-app.post('/api/login', async (req,res) =>{
+app.post('/admin/api/login', async (req,res) =>{
     const { username, password } = req.body
-    const file = fs.readFileSync('data/credentials.json',{
-        encoding:'utf-8'
-    })
+    const manager = await Manager.findOne({ username });
 
-    const json = JSON.parse(file)
+    if (!manager) {
+      return res.status(404).json({ error: 'Manager not found' });
+    }
 
+    const isMatch = await bcrypt.compare(password, manager.password);
 
+    if (isMatch) {
+      const token = jwt.sign(
+        { 
+            id: manager._id,
+            role: manager.role,
+        },
+        process.env.JWT_SECRET_KEY
+      );
 
-    if(username == json.username && password == json.password){
-        res.cookie('isLogged','true',{
-            maxAge: 36000000000000, // Cookie expiration time in milliseconds (1 hour in this case)
+        // Cookie expiration time in milliseconds (3 hours in this case)
+        res.cookie('is_logged','true',{
+            maxAge: 1000 * 60 * 60 * 3, 
             httpOnly: true,
         })
 
-        res.redirect('/')
-    }else{
-        return res.status(500).json({ message: "Error Message"})
-    }
-})
-app.use((req,res,next) =>{
-    if(
-        req.url.includes('/api/')
-        || req.url.includes('/images/')
-        || req.url.includes('/profiles/')
-        || req.url.includes('/css/')
-        || req.url.includes('/dist/')
-        || req.url.includes('/plugins/')
-    ){
-      return next()
-    }else{
-        if(req.cookies.isLogged == "true" && (req.url != "/login" ) ){
-            next();
-        }else{
-            return res.redirect('/login')
-        }
-    }
+        // Cookie expiration time in milliseconds (3 hours in this case)
+        res.cookie('jwt_token', token,{
+            maxAge: 1000 * 60 * 60 * 3,
+            httpOnly: true,
+        })  
 
+        return res.status(200).json({
+            role: manager.role
+        })
+    } else {
+      return res.status(401).json('Invalid password');
+    }
 })
+
+const { authorize_front, authorize_admin_api } = require('./middlewares/authorize');
+
+
 
 const driverRouter = require('./routes/driverRoute')
 const groupRouter = require('./routes/groupRoute')
@@ -320,8 +329,40 @@ const issueNotificationRouter = require('./routes/issueNotificationRoute')
 const issuesRouter = require('./routes/issuesRoute')
 const reportRouter = require('./routes/reportRoute')
 
+
 app.use(
     '/api',
+    vpsRouter,
+    reportRouter,
+    issuesRouter,
+    issueNotificationRouter,
+    machinesRouter,
+    scanRouter,
+    notificationRouter,
+    mapRouter,
+    postalRouter,
+    violationRouter,
+    accidentRouter,
+    informationRouter,
+    driverRouter,
+    settingsRouter,
+    groupRouter,
+    fieldRouter,
+    userRouter,
+    pdfRouter,
+    carRouter,
+    locationRouter,
+    imeiRouter,
+    zoneRouter
+    )
+    
+
+    const managerRoute = require('./routes/managerRoute')
+
+app.use(
+    '/admin/api',
+    authorize_admin_api,
+    managerRoute,
     vpsRouter,
     reportRouter,
     issuesRouter,
@@ -363,10 +404,18 @@ const scanFront = require('./routes/scanFront')
 const machineFront = require('./routes/machinesFront')
 const issueNotificationFront = require('./routes/issueNotificationFront')
 const issueReportFront = require('./routes/issueReportFront')
+const managerFront = require('./routes/managerFront')
+
+
+const authenticate_front = require('./middlewares/authenticate');
+
 
 
 app.use(
+    authenticate_front,
+    authorize_front,
     mapFront,
+    managerFront,
     scanFront,
     issueNotificationFront,
     notificationFront,
@@ -387,7 +436,7 @@ app.use(
 
 
 
-const Violation = require('./models/Violation')
+const Violation = require('./models/Violation');
 app.get('/',async (req,res) =>{
     let violations = await Violation.find({});
 

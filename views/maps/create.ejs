@@ -116,7 +116,7 @@
 <script src="/plugins/toastr/toastr.min.js"></script>
 <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/admin/api/js?key=AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI&libraries=places"></script>
 
 
 
@@ -171,8 +171,8 @@
             try {
                 const zoneDropdown = document.getElementById('zone');
 
-                // Fetch zones data from /api/zones
-                const response = await fetch('/api/zones');
+                // Fetch zones data from /admin/api/zones
+                const response = await fetch('/admin/api/zones');
                 const zones = await response.json();
 
                 // Populate the dropdown options
@@ -217,7 +217,7 @@
         };
 
         // Send a fetch request to create the map
-        fetch('/api/maps', {
+        fetch('/admin/api/maps', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

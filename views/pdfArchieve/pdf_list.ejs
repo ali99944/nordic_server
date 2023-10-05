@@ -191,7 +191,7 @@
 
     async function archieveAll(){
         try{
-            let response = await fetch('/api/archieves',{
+            let response = await fetch('/admin/api/archieves',{
                 method:'POST'
             })
 
@@ -216,7 +216,7 @@
 
     function deletePdf(pdfId) {
 
-        fetch(`/api/pdfs/${pdfId}`, {
+        fetch(`/admin/api/pdfs/${pdfId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -251,7 +251,7 @@
         deleteAllPdfModal.classList.add('show');
         deleteAllPdfModal.style.display = 'block';
 
-        fetch(`/api/pdfs`, {
+        fetch(`/admin/api/pdfs`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

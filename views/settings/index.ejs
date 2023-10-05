@@ -394,13 +394,13 @@
         });
   </script>
     <script>
-      // Function to populate the zone dropdown with data from /api/zones
+      // Function to populate the zone dropdown with data from /admin/api/zones
 async function populateZoneDropdown() {
             try {
                 const zoneDropdown = document.getElementById('zone');
 
-                // Fetch zones data from /api/zones
-                const response = await fetch('/api/zones');
+                // Fetch zones data from /admin/api/zones
+                const response = await fetch('/admin/api/zones');
                 const zones = await response.json();
 
                 // Populate the dropdown options
@@ -428,8 +428,8 @@ async function populateZoneDropdown() {
     let zonesOptions = document.getElementById('zones-options')
     let imeiOptions = document.getElementById('imei-options')
   
-    let zones = await (await fetch('/api/zones')).json()
-    let imeis = await (await fetch('/api/imeis')).json()
+    let zones = await (await fetch('/admin/api/zones')).json()
+    let imeis = await (await fetch('/admin/api/imeis')).json()
 
   console.log(zones);
   console.log(imeis);
@@ -488,7 +488,7 @@ const imeiInput = document.getElementById('imeiInput').value;
 const zone = document.getElementById('zone').value;
 
 
-let response = await fetch('/api/imeis',{
+let response = await fetch('/admin/api/imeis',{
   method: 'POST',
   headers:{
     'Content-Type': 'application/json; charset=utf-8'
@@ -526,7 +526,7 @@ if(response.status == 200){
           // Retrieve data from input fields
           const zoneInput = document.getElementById('zoneNameInput').value;
 
-          let response = await fetch('/api/zones',{
+          let response = await fetch('/admin/api/zones',{
             method: 'POST',
             headers:{
               'Content-Type': 'application/json; charset=utf-8'
@@ -563,7 +563,7 @@ if(response.status == 200){
     <script>
       async function sendNotification(){
         try{
-          let response = await fetch('/api/notifications/users',{
+          let response = await fetch('/admin/api/notifications/users',{
             method:'POST',
             headers:{
               'Content-Type': 'application/json; charset=utf-8'
@@ -599,7 +599,7 @@ if(response.status == 200){
           }
 
           
-          let response = await fetch('/api/notifications/zones',{
+          let response = await fetch('/admin/api/notifications/zones',{
             method:'POST',
             headers:{
               'Content-Type': 'application/json; charset=utf-8'
@@ -634,7 +634,7 @@ if(response.status == 200){
             toSendImeis.push(finalSelectedImeis.item(i).textContent)
           }
 
-          let response = await fetch('/api/notifications/devices',{
+          let response = await fetch('/admin/api/notifications/devices',{
             method:'POST',
             headers:{
               'Content-Type': 'application/json; charset=utf-8'
@@ -663,7 +663,7 @@ if(response.status == 200){
     </script>
     <script>
       async function restartVPS() {
-        await fetch('/api/vps/restart').then(() =>{
+        await fetch('/admin/api/vps/restart').then(() =>{
           Toast.fire({
             icon: 'success',
             title: 'vps machine was successfully restarted'
@@ -677,7 +677,7 @@ if(response.status == 200){
       }
 
       async function updateNordic() {
-        await fetch('/api/vps/update').then(() =>{
+        await fetch('/admin/api/vps/update').then(() =>{
           Toast.fire({
             icon: 'success',
             title: 'Control panel was updated'
@@ -691,7 +691,7 @@ if(response.status == 200){
       }
 
       async function prepareBackup(){
-        await fetch('/api/vps/backup/prepare').then(() =>{
+        await fetch('/admin/api/vps/backup/prepare').then(() =>{
           Toast.fire({
             icon: 'success',
             title: 'Backup is done'
@@ -709,7 +709,7 @@ if(response.status == 200){
       async function updateShiftSelectText(){
         try{
           let shiftText = document.getElementById('shiftSelectText').value
-          let response = await fetch('/api/settings/shift',{
+          let response = await fetch('/admin/api/settings/shift',{
             method:'PUT',
             body:JSON.stringify({
               shift: shiftText
@@ -736,7 +736,7 @@ if(response.status == 200){
       async function updateCarSelectText(){
         try{
           let carText = document.getElementById('carSelectText').value
-          let response = await fetch('/api/settings/car',{
+          let response = await fetch('/admin/api/settings/car',{
             method:'PUT',
             body:JSON.stringify({
               car: carText
@@ -763,7 +763,7 @@ if(response.status == 200){
       async function updateServiceKilometersText(){
         try{
           let serviceKilometerText = document.getElementById('serviceKilometersText').value
-          let response = await fetch('/api/settings/kilometer',{
+          let response = await fetch('/admin/api/settings/kilometer',{
             method:'PUT',
             body:JSON.stringify({
               kilometer: serviceKilometerText
@@ -862,7 +862,7 @@ if(response.status == 200){
         let username = document.getElementById('username')
         let password = document.getElementById('password')
 
-        let response = await fetch('/api/settings/credentials',{
+        let response = await fetch('/admin/api/settings/credentials',{
           method:'PUT',
           headers:{
             'Content-Type': 'application/json; charset=utf-8'
@@ -883,7 +883,7 @@ if(response.status == 200){
 
       async function updateEmailTemplate(){
 
-        let response = await fetch('/api/settings/emailTemplate',{
+        let response = await fetch('/admin/api/settings/emailTemplate',{
           method:'PUT',
           headers:{
             'Content-Type': 'application/json; charset=utf-8'
@@ -905,7 +905,7 @@ if(response.status == 200){
       async function updateSmsTemplate(){
         let text = document.querySelector('.sms-template-preview')
 
-        let response = await fetch('/api/settings/smsTemplate',{
+        let response = await fetch('/admin/api/settings/smsTemplate',{
           method:'PUT',
           headers:{
             'Content-Type': 'application/json; charset=utf-8'

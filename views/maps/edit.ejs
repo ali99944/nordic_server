@@ -118,7 +118,7 @@
 <script src="/plugins/toastr/toastr.min.js"></script>
 <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/admin/api/js?key=AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI&libraries=places"></script>
 
 
 
@@ -213,13 +213,13 @@ document.getElementById('data').addEventListener('input', () => {
     </script>
 
     <script>
-      // Function to populate the zone dropdown with data from /api/zones
+      // Function to populate the zone dropdown with data from /admin/api/zones
       async function populateZoneDropdown() {
           try {
               const zoneDropdown = document.getElementById('zone');
 
-              // Fetch zones data from /api/zones
-              const response = await fetch('/api/zones');
+              // Fetch zones data from /admin/api/zones
+              const response = await fetch('/admin/api/zones');
               const zones = await response.json();
 
               // Populate the dropdown options
@@ -250,7 +250,7 @@ document.getElementById('data').addEventListener('input', () => {
                   zone
               };
 
-              const response = await fetch(`/api/maps/${mapId}`, {
+              const response = await fetch(`/admin/api/maps/${mapId}`, {
                   method: 'PUT',
                   headers: {
                       'Content-Type': 'application/json'

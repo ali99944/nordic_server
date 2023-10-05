@@ -263,7 +263,7 @@
 
         async function toggleSlider(id){
             console.log(id);
-            let response = await fetch(`/api/machines/${id}/activate`,{
+            let response = await fetch(`/admin/api/machines/${id}/activate`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -290,7 +290,7 @@
         function deleteMachine(id){
             
                     // Send a DELETE request to delete the machine
-                    fetch(`/api/machines/${id}`, {
+                    fetch(`/admin/api/machines/${id}`, {
                         method: 'DELETE',
                     })
                     .then((response) => {

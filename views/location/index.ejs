@@ -195,7 +195,7 @@
             timer: 3000
         });
     function deleteAllLocations() {
-        fetch(`/api/locations`, {
+        fetch(`/admin/api/locations`, {
             method: 'DELETE',
         })
             .then(async response => {
@@ -224,7 +224,7 @@
 
 
     function deleteLocation(id) {
-        fetch(`/api/locations/${id}`, {
+        fetch(`/admin/api/locations/${id}`, {
             method: 'DELETE',
         })
             .then(async response => {

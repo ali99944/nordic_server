@@ -151,7 +151,7 @@ var Toast = Swal.mixin({
 
         const userId = "<%= user._id %>";
 
-        fetch(`/api/users/${userId}`, {
+        fetch(`/admin/api/users/${userId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 name: name.value,

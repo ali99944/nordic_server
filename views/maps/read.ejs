@@ -245,7 +245,7 @@
         function deleteMap(id){
           console.log(id);
           // Send a fetch request to delete the map
-          fetch(`/api/maps/${id}`, {
+          fetch(`/admin/api/maps/${id}`, {
                     method: 'DELETE',
                 })
                 .then(async response => {

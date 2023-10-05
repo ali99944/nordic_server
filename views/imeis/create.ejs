@@ -128,13 +128,13 @@
     }
   });
 
-  // Function to populate the zone dropdown with data from /api/zones
+  // Function to populate the zone dropdown with data from /admin/api/zones
 async function populateZoneDropdown() {
             try {
                 const zoneDropdown = document.getElementById('zone');
 
-                // Fetch zones data from /api/zones
-                const response = await fetch('/api/zones');
+                // Fetch zones data from /admin/api/zones
+                const response = await fetch('/admin/api/zones');
                 const zones = await response.json();
 
                 // Populate the dropdown options
@@ -157,7 +157,7 @@ async function populateZoneDropdown() {
           const name = document.getElementById('name').value;
           const selectedZoneId = document.getElementById('zone').value;
 
-          let response = await fetch('/api/imeis',{
+          let response = await fetch('/admin/api/imeis',{
             method: 'POST',
             headers:{
               'Content-Type': 'application/json; charset=utf-8'

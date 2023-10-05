@@ -125,7 +125,7 @@
           // Retrieve data from input fields
           const zoneInput = document.getElementById('zoneName').value;
 
-          let response = await fetch('/api/zones',{
+          let response = await fetch('/admin/api/zones',{
             method: 'POST',
             headers:{
               'Content-Type': 'application/json; charset=utf-8'

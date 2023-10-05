@@ -45,6 +45,12 @@
 
     <%- include('../components/scripts') %>
     <script>
+      var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
         onload = () =>{
             let form = document.querySelector('#loginForm')
             form.addEventListener('submit',async (e) =>{
@@ -53,7 +59,7 @@
                 let username = document.querySelector('#username')
                 let password = document.querySelector('#password')
 
-                let response = await fetch('/api/login',{
+                let response = await fetch('/admin/api/login',{
                     method:'POST',headers:{'Content-Type':'application/json'}, body : JSON.stringify({
                         'username':username.value,
                         'password':password.value
@@ -61,10 +67,39 @@
                 })
 
                 if(response.status == 200){
-                    location.href = '/'
+                  Toast.fire({
+                      icon: 'success',
+                      title: 'Successfully logged in'
+                    })
+                    setTimeout(async () =>{
+                      let json = await response.json()
+                      if(json.role == 'admin'){
+                        location.href = '/'
+                      }else{
+                        location.href = '/managers/dashboard'
+                      }
+                    },2000)
                 }
-                else{
-                    alert("Kunne ikke logge på")
+                else if(response.status == 404){
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'There is not such user'
+                    })
+                }else if(response.status == 403){
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Not a staff'
+                  })
+                }else if(response.status == 401){
+                  Toast.fire({
+                      icon: 'error',
+                      title: 'Password not correct'
+                    })
+                }else{
+                  Toast.fire({
+                    icon: 'error',
+                    title: 'Unknown status'
+                  })
                 }
             })
         }

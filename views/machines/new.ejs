@@ -160,7 +160,7 @@
             };
 
             try {
-                const response = await fetch('/api/machines', {
+                const response = await fetch('/admin/api/machines', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -191,13 +191,13 @@
         }
     }
 
-        // Function to populate the zone dropdown with data from /api/zones
+        // Function to populate the zone dropdown with data from /admin/api/zones
         async function populateZoneDropdown() {
             try {
                 const zoneDropdown = document.getElementById('zone');
 
-                // Fetch zones data from /api/zones
-                const response = await fetch('/api/zones');
+                // Fetch zones data from /admin/api/zones
+                const response = await fetch('/admin/api/zones');
                 const zones = await response.json();
 
                 // Populate the dropdown options

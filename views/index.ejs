@@ -186,8 +186,6 @@
 <%- include('./components/scripts') %>
 <script src="/plugins/chart.js/Chart.min.js"></script>
 
-<script src="https://kit.fontawesome.com/7d365a7c21.js" crossorigin="anonymous"></script>
-
 
 <script>
     const data = <%- violations %>;
@@ -274,8 +272,8 @@
         const value = selectVio.value;
 
         try {
-            let responseData = await fetchData(`/api/violations/${value}`);
-            let responseRmData = await fetchData(`/api/violations/removed/gn/${value}`);
+            let responseData = await fetchData(`/admin/api/violations/${value}`);
+            let responseRmData = await fetchData(`/admin/api/violations/removed/gn/${value}`);
             console.log(responseRmData);
             vioHolder.textContent = responseData;
             vioRmHolder.textContent = responseRmData;
@@ -285,21 +283,21 @@
 
 
         try{
-            let responseData = await fetchData(`/api/info/pdfs`);
+            let responseData = await fetchData(`/admin/api/info/pdfs`);
             pdfHolder.textContent = responseData;
         }catch(error){
             console.log(error)
         }
 
         try{
-            let responseData = await fetchData(`/api/info/users`);
+            let responseData = await fetchData(`/admin/api/info/users`);
             userHolder.textContent = responseData;
         }catch(error){
             console.log(error)
         }
 
         try{
-            let responseData = await fetchData(`/api/info/accidents`);
+            let responseData = await fetchData(`/admin/api/info/accidents`);
             accidentHolder.textContent = responseData;
         }catch(error){
             console.log(error)

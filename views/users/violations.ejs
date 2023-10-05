@@ -40,6 +40,8 @@
 
 </div>
 
+<%- include('../components/scripts') %>
+
 <script>
     // Your existing code here
 
@@ -83,7 +85,7 @@ function filterViolations() {
     // Function to display violations
     async function displayViolations() {
     
-        let response = await fetch(`/api/violations/user/${'<%- accountId %>'}`)
+        let response = await fetch(`/admin/api/violations/user/${'<%- accountId %>'}`)
         let violationsData = await response.json()
 
 
@@ -144,7 +146,7 @@ function filterViolations() {
         const value = selectVio.value;
 
         try {
-            let responseData = await fetchData(`/api/violations/removed/${value}`);
+            let responseData = await fetchData(`/admin/api/violations/removed/${value}`);
             vioHolder.textContent = responseData;
         } catch (error) {
             console.error(error);
