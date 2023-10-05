@@ -24,8 +24,6 @@ router.get('/managers/:id/update', async (req, res) => {
     try{
         let { id } = req.params
         let manager = await Manager.findById(id)
-        console.log(manager);
-        console.log(manager.permissions);
         return res.render('managers/update', {
             manager,
             managerPermissions: JSON.stringify(manager.permissions)

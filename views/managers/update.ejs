@@ -56,32 +56,34 @@
                             <input type="text" class="form-control" placeholder="Password" id="password">
                           </div>
 
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="form-group flex-grow-1">
-                                <select class="custom-select" id="method">
-                                  <option value="GET">Read</option>
-                                  <option value="POST">Create</option>
-                                  <option value="DELETE">Delete</option>
-                                  <option value="PUT">Update</option>
-                                </select>
-                              </div>
-
+                          <% if(manager.role != 'admin'){ %>
+                            <div class="d-flex justify-content-between align-items-center">
                               <div class="form-group flex-grow-1">
-                                <select class="custom-select" id="route">
-                                  <option value="users">Users</option>
-                                  <option value="cars">Cars</option>
-                                  <option value="maps">Maps</option>
-                                  <option value="routes">Routes</option>
-                                  <option value="zones">Zones</option>
-                                  <option value="machines">Machines</option>
-                                  <option value="imeis">Imeis</option>
-                                </select>
-                              </div>
-
-                              <div class="btn btn-info btn-sm" onclick="addPermission()">Add</div>
-
-
-                          </div>
+                                  <select class="custom-select" id="method">
+                                    <option value="GET">Read</option>
+                                    <option value="POST">Create</option>
+                                    <option value="DELETE">Delete</option>
+                                    <option value="PUT">Update</option>
+                                  </select>
+                                </div>
+  
+                                <div class="form-group flex-grow-1">
+                                  <select class="custom-select" id="route">
+                                    <option value="users">Users</option>
+                                    <option value="cars">Cars</option>
+                                    <option value="maps">Maps</option>
+                                    <option value="routes">Routes</option>
+                                    <option value="zones">Zones</option>
+                                    <option value="machines">Machines</option>
+                                    <option value="imeis">Imeis</option>
+                                  </select>
+                                </div>
+  
+                                <div class="btn btn-info btn-sm" onclick="addPermission()">Add</div>
+  
+  
+                            </div>
+                          <% } %>
 
                           <div class="wrap-options" id="permissions">
                                   
