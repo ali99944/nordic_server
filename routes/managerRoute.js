@@ -54,7 +54,7 @@ router.delete('/managers/:id', async (req, res) => {
 
         let isDeleted = await Manager.deleteOne({ _id: id })
         if (!isDeleted) {
-            return res.status(200).json({
+            return res.status(304).json({
                 success: false,
                 message: 'manager was not deleted'
             })
@@ -65,7 +65,7 @@ router.delete('/managers/:id', async (req, res) => {
             message: 'manager was deleted successfully'
         })
     }catch(e){
-        return res.status(200).json({
+        return res.status(500).json({
             success: false,
             message: e.message
         })

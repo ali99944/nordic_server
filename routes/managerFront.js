@@ -5,10 +5,18 @@ const jwt = require('jsonwebtoken')
 
 router.get('/managers', async (req, res) => {
     try {
+        let jwt_access_token = req.cookies.jwt_token
+        let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+        let manager = await Manager.findOne({ _id: decoded.id })
+
         let managers = await Manager.find({})
 
+
+
         return res.status(200).render('managers/index', { 
-            managers
+            managers,
+            isAdmin: decoded.role === 'admin',
+      permissions: manager.permissions
          })
     }catch (err) {
         console.log(err.message);
@@ -17,16 +25,30 @@ router.get('/managers', async (req, res) => {
 })
 
 router.get('/managers/create', async (req, res) => {
-    return res.render('managers/create')
+    let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager = await Manager.findOne({ _id: decoded.id })
+
+    return res.render('managers/create',{
+        isAdmin: decoded.role === 'admin',
+      permissions: manager.permissions
+    })
 })
 
 router.get('/managers/:id/update', async (req, res) => {
     try{
+        let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager_control = await Manager.findOne({ _id: decoded.id })
+
         let { id } = req.params
         let manager = await Manager.findById(id)
         return res.render('managers/update', {
             manager,
-            managerPermissions: JSON.stringify(manager.permissions)
+            managerPermissions: JSON.stringify(manager.permissions),
+
+            isAdmin: decoded.role === 'admin',
+            permissions: manager_control.permissions
         })
     }catch(e){
         console.log(e.message);

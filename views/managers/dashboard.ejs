@@ -8,10 +8,11 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="wrapper-content">
+            <%- include('../components/navbar') %>
+            <%- include('../components/manager_sidebar',{ permissions: permissions }) %>
+            <div class="content-wrapper">
                 <div class="content">
-                    <%- include('../components/navbar') %>
-                    <%- include('../components/manager_sidebar',{ permissions: permissions }) %>
+                    
                 </div>
             </div>
 

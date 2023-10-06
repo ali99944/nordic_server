@@ -31,7 +31,11 @@
     <body>
         <div class="wrapper">
             <%- include('../components/navbar') %>
-            <%- include('../components/sidebar') %>
+            <% if(isAdmin){ %>
+            <%- include('../components/sidebar') %> 
+        <% } else{%>
+            <%- include('../components/manager_sidebar', { permissions }) %> 
+        <% } %> 
             <div class="content-wrapper">
                 <div class="content">
                     <form class="container-fluid mt-5" id="createStaffForm">
@@ -56,8 +60,8 @@
                             <input type="text" class="form-control" placeholder="Password" id="password">
                           </div>
 
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="form-group flex-grow-1">
+                          <div class="d-flex justify-content-between align-items-start">
+                            <div class="form-group flex-grow-1 mr-2">
                                 <select class="custom-select" id="method">
                                   <option value="GET">Read</option>
                                   <option value="POST">Create</option>
@@ -66,7 +70,7 @@
                                 </select>
                               </div>
 
-                              <div class="form-group flex-grow-1">
+                              <div class="form-group flex-grow-1 mr-2">
                                 <select class="custom-select" id="route">
                                   <option value="users">Users</option>
                                   <option value="cars">Cars</option>
@@ -78,7 +82,7 @@
                                 </select>
                               </div>
 
-                              <div class="btn btn-info btn-sm" onclick="addPermission()">Add</div>
+                              <div class="btn btn-info" onclick="addPermission()">Add</div>
 
 
                           </div>
@@ -99,9 +103,13 @@
     </body>
 
     <%- include('../components/scripts') %>
-    <!-- Select2 -->
-    <script src="/plugins/select2/js/select2.full.min.js"></script>
     <script>
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
         let permissions = []
         let method = document.getElementById('method')
         let route = document.getElementById('route')
@@ -143,12 +151,25 @@
                 })
 
                 if(respones.status === 200) {
-                    alert('Success response')
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Manager created successfully'
+                    })
+
+                    setTimeout(() =>{
+                      location.href = '/managers'
+                    },3000)
                 }else{
-                    console.log(await respones.text());
+                  Toast.fire({
+                      icon: 'error',
+                      title: await respones.json()
+                    })
                 }
             }catch(e){
-                console.log(e.message);
+              Toast.fire({
+                      icon: 'error',
+                      title: e.message
+                    })
             }
         }
     </script>

@@ -24,7 +24,11 @@
 
     <div class="wrapper">
         <%- include('../components/navbar') %>
-    <%- include('../components/sidebar') %>    
+    <% if(isAdmin){ %>
+            <%- include('../components/sidebar') %> 
+        <% } else{%>
+            <%- include('../components/manager_sidebar', { permissions }) %> 
+        <% } %>     
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

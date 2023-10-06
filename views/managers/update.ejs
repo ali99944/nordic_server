@@ -31,7 +31,11 @@
     <body>
         <div class="wrapper">
             <%- include('../components/navbar') %>
-            <%- include('../components/sidebar') %>
+            <% if(isAdmin){ %>
+            <%- include('../components/sidebar') %> 
+        <% } else{%>
+            <%- include('../components/manager_sidebar', { permissions }) %> 
+        <% } %> 
             <div class="content-wrapper">
                 <div class="content">
                     <form class="container-fluid mt-5" id="createStaffForm">
@@ -101,8 +105,6 @@
     </body>
 
     <%- include('../components/scripts') %>
-    <!-- Select2 -->
-    <script src="/plugins/select2/js/select2.full.min.js"></script>
     <script>
         var Toast = Swal.mixin({
             toast: true,
@@ -138,12 +140,8 @@
 
         function removePermission(route,method){
 
-          console.log(route);
-          console.log(method);
-          console.log(permissions);
           permissions = permissions.filter(p => {
             let condition = !(p.route == route && p.method == method)
-            console.log(condition);
             return condition
           })
 

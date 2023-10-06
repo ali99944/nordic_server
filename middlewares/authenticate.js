@@ -15,9 +15,9 @@ const authenticate_front = (req,res,next) => {
             return next()
         }
         
-        return res.render('errors/401',{
-            url: req.url
-        })
+        // return res.render('errors/401',{
+        //     url: req.url
+        // })
     }catch(e){
         return res.redirect('/login')
     }
