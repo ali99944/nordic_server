@@ -181,9 +181,15 @@ app.get('/login', (req,res) =>{
 const PDFArchieve = require('./models/PdfArchieve')
 
 app.get('/archieve',async (req,res) =>{
+    let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager = await Manager.findOne({ _id: decoded.id })
+
     let archieves = await PDFArchieve.find({})
     return res.status(200).render('pdfArchieve/pdf_list',{
-        pdfs: archieves
+        pdfs: archieves,
+        isAdmin: decoded.role === 'admin',
+      permissions: manager.permissions
     })
 })
 
@@ -236,12 +242,20 @@ app.post('/api/archieves', async (req,res) =>{
 // READ - Get a specific PDF by ID
 app.get('/archieves/:id', async (req, res) => {
     try {
+        let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager = await Manager.findOne({ _id: decoded.id })
+
         const pdf = await PDFArchieve.findById(req.params.id);
         if (!pdf) {
             return res.status(404).json({ error: 'PDF not found' });
         }
         let link = pdf.link.split('.in')[1]
-        return res.status(200).render('pdfArchieve/pdf_show.ejs', { link });
+        return res.status(200).render('pdfArchieve/pdf_show.ejs', { 
+            link,
+            isAdmin: decoded.role === 'admin',
+      permissions: manager.permissions
+         });
     } catch (error) {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
