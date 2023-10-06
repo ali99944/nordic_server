@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+
 
   <style>
     thead input {
@@ -74,6 +76,20 @@
 
             </div><!-- /.container-fluid -->
             </div>
+
+            <div class="row container-fluid">
+              <div class="col-lg-6 col-md-9 col-sm-12">
+                  <div class="form-group">
+                      <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                          <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
 
             <div class="content">
                 <div class="row">
@@ -150,6 +166,7 @@
 <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
 
 <script>
     $(function () {
@@ -192,6 +209,27 @@
       event.stopPropagation();
     });
 
+    function filterTableByDate(date) {
+      oTable = $('#example1').dataTable();
+      oTable.fnFilter(date, 0);
+    }
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    })
+
+    $('#reservationdate').on('change.datetimepicker',function(e) {
+        let date =  moment(e.date._d).format('YYYY-MM-DD')
+        filterTableByDate(date)
+    })
+
+    $(document).ready(function() {
+      const now = new Date();
+      const localDate = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+      const localDateString = localDate.toISOString().split('T')[0];
+      filterTableByDate(localDateString)
+    });
 </script>
 </body>
 </html>
