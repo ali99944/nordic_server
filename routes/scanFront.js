@@ -32,7 +32,7 @@ router.get('/scans/:id', async (req, res) => {
       if (!scan) {
           return res.status(404).json({ error: 'PDF not found' });
       }
-      let link = pdf.link.split('.in')[1]
+      let link = scan.link.split('.in')[1]
       return res.status(200).render('scans/postal_show', { 
         link,
         isAdmin: decoded.role === 'admin',
