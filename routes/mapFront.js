@@ -41,7 +41,7 @@ router.get('/maps/:id/edit', async (req, res) => {
 });
 
 // Render the create form for a map
-router.get('/maps/new',async (req, res) => {
+router.get('/maps/create',async (req, res) => {
     let jwt_access_token = req.cookies.jwt_token
     let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
     let manager = await Manager.findOne({ _id: decoded.id })

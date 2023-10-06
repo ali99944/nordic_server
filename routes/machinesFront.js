@@ -37,7 +37,7 @@ router.get('/machines', async (req, res) => {
   });
   
 
-router.get('/machines/new', async (req, res) => {
+router.get('/machines/create', async (req, res) => {
     try{
       let jwt_access_token = req.cookies.jwt_token
     let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
