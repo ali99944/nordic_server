@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const PDF = require('../models/PDF');
+const jwt = require('jsonwebtoken')
+const Manager = require('../models/Manager')
 
 
 // CREATE - Create a new PDF
