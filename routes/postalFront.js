@@ -31,7 +31,7 @@ router.get('/postals/:id', async (req, res) => {
       if (!postal) {
           return res.status(404).json({ error: 'PDF not found' });
       }
-      let link = pdf.link.split('.in')[1]
+      let link = postal.link.split('.in')[1]
       return res.status(200).render('postals/postal_show', { 
         link,
         isAdmin: decoded.role === 'admin',
