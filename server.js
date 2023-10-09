@@ -1,9 +1,5 @@
 require('dotenv').config()
 require('./utils/mongodbConnection')
-const qr = require('qr-image');
-const fs = require('fs')
-const admin = require('./utils/firebase');
-const User = require('./models/usersModel')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const Manager = require('./models/Manager')
@@ -27,152 +23,6 @@ app.use(cors({
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
-
-const IMEI = require('./models/IMEI')
-
-
-const NotificationModel = require('./models/NotificationModel')
-
-app.post('/api/notifications/users', async (req,res) =>{
-    try{
-        const now = new Date();
-        const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-        const localDateString = localDate.toISOString().split('T')[0];
-
-
-        const message = {
-            data: {
-            title: req.body.title,
-            body: req.body.body,
-            type: 'users',
-            },
-            topic: 'nordic', // Replace with the topic you want to use
-        };
-        
-        admin
-            .messaging()
-            .send(message)
-            .then(async (response) => {
-            console.log('Message sent:', response);
-            let notification = new NotificationModel({
-                title: req.body.title,
-                body: req.body.body,
-                date:localDateString,
-                fullDate: localDate.toDateString()
-            })
-        
-            await notification.save()
-            })
-            .catch((error) => {
-            console.error('Error sending message:', error);
-            });
-              
-        return res.sendStatus(200)
-    }catch(error){
-        console.log(error.message)
-        return res.status(500).json(error.message)
-    }
-})
-
-
-app.post('/api/notifications/zones', async (req,res) =>{
-    try{
-        const now = new Date();
-        const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-        const localDateString = localDate.toISOString().split('T')[0];
-   
-        
-        let imeis = await IMEI.find({
-            zone: {
-                $in: req.body.zones
-            }
-        })
-
-        imeis = imeis.map(e =>{
-            return e.serial
-        })
-
-        const message = {
-            data: {
-              title: req.body.title,
-              body: req.body.body,
-              type: 'zone',
-              imeis: JSON.stringify(imeis)
-            },
-            topic: 'nordic', // Replace with the topic you want to use
-          };
-          
-          admin
-            .messaging()
-            .send(message)
-            .then(async (response) => {
-              console.log('Message sent:', response);
-              let notification = new NotificationModel({
-                title: req.body.title,
-                body: req.body.body,
-                zones: req.body.zones,
-                imeis:imeis,
-                date:localDateString,
-                fullDate: localDate.toDateString()
-            })
-        
-            await notification.save()
-            })
-            .catch((error) => {
-              console.error('Error sending message:', error);
-            });
-          
-    
-        return res.sendStatus(200)
-    }catch(error){
-        console.log(error.message)
-        return res.status(500).json(error.message)
-    }
-})
-
-app.post('/api/notifications/devices', async (req,res) =>{
-    try{
-        const now = new Date();
-        const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-        const localDateString = localDate.toISOString().split('T')[0];
-    
-        const message = {
-            data: {
-              title: req.body.title,
-              body: req.body.body,
-              type: 'device',
-              imei:JSON.stringify(req.body.imeis)
-            },
-            topic: 'nordic', // Replace with the topic you want to use
-          };
-          
-          admin
-            .messaging()
-            .send(message)
-            .then(async (response) => {
-              console.log('Message sent:', response);
-              let notification = new NotificationModel({
-                title: req.body.title,
-                body: req.body.body,
-                zones: [],
-                imeis:req.body.imeis,
-                date:localDateString,
-                fullDate: localDate.toDateString()
-            })
-        
-            await notification.save()
-            })
-            .catch((error) => {
-              console.error('Error sending message:', error);
-            });
-          
-    
-        return res.sendStatus(200)
-    }catch(error){
-        console.log(error.message)
-        return res.status(500).json(error.message)
-    }
-})
 
 app.get('/login', (req,res) =>{
     return res.status(200).render('auth/login')
@@ -257,13 +107,13 @@ app.get('/archieves/:id', async (req, res) => {
       permissions: manager.permissions
          });
     } catch (error) {
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: error.message });
     }
 });
 
 app.get('/admin/api/logout',(req,res) =>{
 
-    res.cookie('isLogged',{
+    res.cookie('is_logged',{
         expires: Date.now()
     })
 
@@ -477,6 +327,6 @@ const combinedViolations = violations.reduce((result, v) => {
 })
 
 
-const port = process.env.port || 3000
-app.listen(port, () => console.log(`Server is running on port ${port}`))
+const port = process.env.port || 9090
+app.listen(port, () => console.log(`Server is running on http://localhost:${9090}`))
 
