@@ -28,10 +28,10 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/cars">Cars</a></li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item"><a href="/cars">Biler</a></li>
                     <li class="breadcrumb-item"><a href="/cars"><%= car.boardNumber %></a></li>
-                    <li class="breadcrumb-item active">Update</li>
+                    <li class="breadcrumb-item active">Oppdater</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -45,7 +45,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Update Car
+                                Oppdater bil
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -59,7 +59,7 @@
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fa fa-car"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Board Number" name="boardNumber" id="boardNumber" value="<%= car.boardNumber %>">
+                                                    <input type="text" class="form-control" placeholder="Styrenummer" name="boardNumber" id="boardNumber" value="<%= car.boardNumber %>">
                                                   </div>
 
 
@@ -67,19 +67,19 @@
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fa fa-key"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Private Number" name="privateNumber" id="privateNumber" value="<%= car.privateNumber %>">
+                                                    <input type="text" class="form-control" placeholder="Privat nummer" name="privateNumber" id="privateNumber" value="<%= car.privateNumber %>">
                                                   </div>
 
                                                   <div class="input-group form-group mb-3">
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                                     </div>
-                                                    <input type="number" class="form-control" placeholder="kilometers" name="kilometers" id="kilometers" value="<%= car.kilometers %>">
+                                                    <input type="number" class="form-control" placeholder="kilometer" name="kilometers" id="kilometers" value="<%= car.kilometers %>">
                                                   </div>
 
                                                   <div class="btn-group d-flex justify-content-center align-items-center">
-                                                    <button type="button" onclick="updateCar()" class="btn btn-info">Update</button>
-                                                    <a href="/cars" class="btn btn-secondary" >Cancel</a>
+                                                    <button type="button" onclick="updateCar()" class="btn btn-info">Oppdater</button>
+                                                    <a href="/cars" class="btn btn-secondary" >Avbryt</a>
                                                 </div>
                                                 
                                                 

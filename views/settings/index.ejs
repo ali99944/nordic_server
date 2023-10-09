@@ -45,8 +45,8 @@
             <div class="row mb-2">
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-left">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Settings</li>
+                <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                <li class="breadcrumb-item active">Innstillinger</li>
                 </ol>
             </div><!-- /.col -->
             </div><!-- /.row -->
@@ -61,22 +61,22 @@
                   <div class="card-header p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">General</a>
+                        <a class="nav-link active" id="custom-tabs-one-Hjem-tab" data-toggle="pill" href="#custom-tabs-one-Hjem" role="tab" aria-controls="custom-tabs-one-Hjem" aria-selected="true">Generell</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Application</a>
+                        <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">applikasjon</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">VPS</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Notifications</a>
+                        <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Varsler</a>
                       </li>
                     </ul>
                   </div>
                   <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
-                      <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                      <div class="tab-pane fade show active" id="custom-tabs-one-Hjem" role="tabpanel" aria-labelledby="custom-tabs-one-Hjem-tab">
                         <div class="container tabcontent" id="general">        
                   
                           <div class="card mb-4">
@@ -488,7 +488,7 @@ let response = await fetch('/admin/api/imeis',{
 if(response.status == 200){
   Toast.fire({
     icon: 'success',
-    title: 'Imei was successfully saved'
+    title: 'Imei ble reddet'
   })
   setTimeout(() =>{
     location.reload()
@@ -525,7 +525,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'zone was successfully saved'
+              title: 'sonen ble lagret'
             })
             setTimeout(() =>{
               location.reload()
@@ -563,7 +563,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'notification was sent successfully to all devices and users'
+              title: 'varsel ble sendt til alle enheter og brukere'
             })
           }
         }catch(error){
@@ -600,7 +600,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'notification was successfully sent to all selected zones'
+              title: 'varsel ble sendt til alle valgte soner'
             })
           }
         }catch(error){
@@ -635,7 +635,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'notification was successfully sent to all selected devices'
+              title: 'varselet ble sendt til alle valgte enheter'
             })
           }
         }catch(error){
@@ -652,7 +652,7 @@ if(response.status == 200){
         await fetch('/admin/api/vps/restart').then(() =>{
           Toast.fire({
             icon: 'success',
-            title: 'vps machine was successfully restarted'
+            title: 'vps-maskinen ble startet på nytt'
           })
         }).catch(err => {
           Toast.fire({
@@ -666,7 +666,7 @@ if(response.status == 200){
         await fetch('/admin/api/vps/update').then(() =>{
           Toast.fire({
             icon: 'success',
-            title: 'Control panel was updated'
+            title: 'Kontrollpanelet ble oppdatert'
           })
         }).catch(err => {
           Toast.fire({
@@ -708,7 +708,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'shift information updated'
+              title: 'skiftinformasjon oppdatert'
             })
           }
         }catch(error){
@@ -735,7 +735,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'Car information was updated'
+              title: 'Bilinformasjonen ble oppdatert'
             })
           }
         }catch(error){
@@ -762,7 +762,7 @@ if(response.status == 200){
           if(response.status == 200){
             Toast.fire({
               icon: 'success',
-              title: 'Service Kilometer information was updated'
+              title: 'Service Kilometer informasjon ble oppdatert'
             })
           }
         }catch(error){
@@ -860,7 +860,7 @@ if(response.status == 200){
         if(response.status == 200){
           Toast.fire({
             icon: 'success',
-            title: 'Email Template was updated successfully'
+            title: 'E-postmalen ble oppdatert'
           })
         }
       }
@@ -881,7 +881,7 @@ if(response.status == 200){
         if(response.status == 200){
           Toast.fire({
             icon: 'success',
-            title: 'SMS Template was updated successfully'
+            title: 'SMS-malen ble oppdatert'
           })
         }
       }

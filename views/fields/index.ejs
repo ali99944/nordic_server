@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fields</title>
+    <title>Enger</title>
 
     <%- include('../components/headers') %>
 
@@ -39,8 +39,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Fields</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item active">Enger</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -51,11 +51,11 @@
             <div class="d-flex justify-content-end align-items-center mb-2 container-fluid">
                 <a href="/fields/create" class="btn btn-info btn-sm mr-1">
                     <i class="fa fa-plus"></i>
-                    <span>Create</span>
+                    <span>Skape</span>
                 </a>
                 <button data-toggle="modal" data-target="#confirmAllDeleteModal" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash"></i>
-                    <span>Delete All</span>
+                    <span>Slett Alle</span>
                 </button>
             </div>
 
@@ -65,7 +65,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Form Fields Data
+                                Skjemafeltdata
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -84,7 +84,7 @@
                                     <tbody>
                                     <%if(formFields.length == 0){%>
                                         <tr>
-                                            <td colspan="6">No Fields Yet</td>
+                                            <td colspan="6">Ingen felt ennå</td>
                                         </tr>
                                     <%} else{%>
                                         <% formFields.forEach(formField => { %>
@@ -114,7 +114,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Do you want to delete this field?
+                                                            Vil du slette dette feltet?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbrytt</button>
@@ -142,13 +142,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Delete all fields confirmation</h5>
+                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Slett alle feltbekreftelse</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Do you want to delete all fields?
+                    Vil du slette alle feltene?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
@@ -204,7 +204,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'Field was deleted'
+                        title: "Felt ble slettet"
                     })
 
                     setTimeout(() =>{
@@ -234,7 +234,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'All fields were deleted'
+                        title: 'Alle felt ble slettet'
                     })
 
                     setTimeout(() =>{

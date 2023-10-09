@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Route</title>
+    <title>Lag rute</title>
     <!-- Add Bootstrap CSS link -->
     <%- include('../components/headers') %>
       <!-- SweetAlert2 -->
@@ -29,9 +29,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
                     <li class="breadcrumb-item"><a href="/locations">Routes</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item active">Skape</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -45,7 +45,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Create Route
+                                Lag rute
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -58,7 +58,7 @@
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fa fa-location-arrow"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Location" name="location" id="location">
+                                                    <input type="text" class="form-control" placeholder="plassering" name="location" id="location">
                                                   </div>
                                                 <div class="d-flex justify-content-around">
                                                     <div class="form-group">
@@ -168,12 +168,14 @@
         },
         messages: {
             'days[]': {
-                required: "You must check at least 1 box",
+                required: "Du må sjekke minst 1 dag",
             },
             'shifts[]': {
-                required: "You must check at least 1 box",
+                required: "Du må sjekke minst 1 skift",
             },
-            location: "You must enter location"
+            location: {
+                required: "Du må angi plassering"
+            }
         },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -229,7 +231,7 @@ body: JSON.stringify({
     if (response.status === 200) {
         Toast.fire({
                 icon: 'success',
-                title: 'Location was created successfully'
+                title: 'Plasseringen ble opprettet'
             })
         setTimeout(() => {
             window.location.href = '/locations'; // Redirect to the location list page

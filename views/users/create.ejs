@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legg ny bil</title>
+    <title>Opprett bruker</title>
     <!-- Add Bootstrap CSS link -->
     <%- include('../components/headers.ejs') %>
       <!-- SweetAlert2 -->
@@ -29,9 +29,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/users">Users</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item"><a href="/users">Brukere</a></li>
+                    <li class="breadcrumb-item active">Opprett</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -45,7 +45,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Create User
+                                Opprett bruker
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -59,24 +59,24 @@
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fa fa-user"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="name" name="name" id="name">
+                                                    <input type="text" class="form-control" placeholder="Navn" name="name" id="name">
                                                   </div>
                                                 <div class="input-group form-group mb-3">
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fa fa-id-card"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="account pnid" name="accountId" id="accountId">
+                                                    <input type="text" class="form-control" placeholder="regnskap pnid" name="accountId" id="accountId">
                                                   </div>
                                                 <div class="input-group form-group mb-3">
                                                     <div class="input-group-prepend">
                                                       <span class="input-group-text"><i class="fa fa-key"></i></span>
                                                     </div>
-                                                    <input type="password" class="form-control" placeholder="password" name="password" id="password">
+                                                    <input type="password" class="form-control" placeholder="passord" name="password" id="password">
                                                   </div>
                                                 <div class="d-flex justify-content-center btn-group">
-                                                    <button type="button" class="btn btn-info" onclick="createUser()">Create</button>
+                                                    <button type="button" class="btn btn-info" onclick="createUser()">Opprett</button>
                                         
-                                                    <a href="/users" class="btn btn-secondary">Cancel</a>
+                                                    <a href="/users" class="btn btn-secondary">Avbryt</a>
                                                 </div>
                                             </form>
                                         </div>
@@ -126,12 +126,14 @@
     },
     messages: {
       name: {
-        required: "enter user name",
+        required: "Skriv inn brukernavn",
       },
       accountId: {
-        required: "enter user pnid",
+        required: "skriv inn bruker pnid",
       },
-      password: "enter password",
+      password: {
+        required: "Skriv passord"
+      },
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -167,7 +169,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'User was successfully created',
+                        title: 'Brukeren ble opprettet',
                     })
                     setTimeout(() =>{
                         window.location.href = '/users';

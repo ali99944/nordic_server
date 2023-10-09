@@ -39,8 +39,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Cars</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item active">Biler</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -51,11 +51,11 @@
             <div class="d-flex justify-content-end align-items-center mb-2 container-fluid">
                 <a href="/cars/create" class="btn btn-info btn-sm mr-1">
                     <i class="fa fa-plus"></i>
-                    <span>Create</span>
+                    <span>Skape</span>
                 </a>
                 <button data-toggle="modal" data-target="#confirmAllDeleteModal" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash"></i>
-                    <span>Delete All</span>
+                    <span>Slette alle</span>
                 </button>
             </div>
 
@@ -65,7 +65,7 @@
                         <div class="card">  
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Cars Data
+                                Bildata
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -111,13 +111,13 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteModalLabel">Delete confirmation</h5>
+                                                            <h5 class="modal-title" id="deleteModalLabel">Slett bekreftelse</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure you want to delete <%= car.boardNumber %>
+                                                            Er du sikker på at du vil slette <%= car.boardNumber %>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbrytt</button>
@@ -149,13 +149,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Delete all cars confirmation</h5>
+                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Slett alle biler bekreftelse</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Do you want to delete all cars?
+                    Vil du slette alle biler?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
@@ -205,7 +205,7 @@
         if(response.status == 200){
             Toast.fire({
                     icon: 'success',
-                    title: 'Car kilometers was successfully reset'
+                    title: "Bilkilometer ble tilbakestilt"
                 })
             setTimeout(() =>{
                 location.reload()
@@ -226,7 +226,7 @@
                 if (response.ok) {
                     Toast.fire({
                     icon: 'success',
-                    title: 'Car was deleted successfully'
+                    title: "Bil ble slettet"
                 })
                     setTimeout(() => {
                         window.location.reload(); // Refresh the page to reflect the changes
@@ -255,7 +255,7 @@
                 if (response.ok) {
                     Toast.fire({
                     icon: 'success',
-                    title: 'All cars were deleted successfully'
+                    title: "Alle biler ble slettet"
                 })
                     setTimeout(() => {
                         window.location.reload(); // Refresh the page to reflect the changes

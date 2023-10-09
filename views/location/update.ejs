@@ -30,10 +30,10 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
                     <li class="breadcrumb-item"><a href="/locations">Routes</a></li>
                     <li class="breadcrumb-item"><a href="/locations"><%= location.location %></a></li>
-                    <li class="breadcrumb-item active">Update</li>
+                    <li class="breadcrumb-item active">Oppdater</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -47,7 +47,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Update Route
+                                Oppdater rute
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -116,8 +116,8 @@
                                                 </div>
                                 
                                                 <div class="row d-flex btn-group align-items-center">
-                                                    <a type="button" onclick="updateLocation()" class="btn btn-info btn-block col-md-6">Update</a>
-                                                    <a href="/locations" class="btn btn-secondary col-md-6">Cancel</a>
+                                                    <a type="button" onclick="updateLocation()" class="btn btn-info btn-block col-md-6">Oppdater</a>
+                                                    <a href="/locations" class="btn btn-secondary col-md-6">Avbryt</a>
                                                 </div>
                                             </form>
                      
@@ -168,12 +168,14 @@
         },
         messages: {
             'days[]': {
-                required: "You must check at least 1 box",
+                required: "Du må sjekke minst 1 dag",
             },
             'shifts[]': {
-                required: "You must check at least 1 box",
+                required: "Du må sjekke minst 1 skift",
             },
-            location: "You must enter location"
+            location: {
+                required: "Du må angi plassering"
+            }
         },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -232,7 +234,7 @@
         if (response.status === 200) {
             Toast.fire({
                 icon: 'success',
-                title: 'Location was updated successfully'
+                title: 'Plasseringen ble oppdatert'
             })
 
             setTimeout(() =>{

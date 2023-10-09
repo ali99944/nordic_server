@@ -35,8 +35,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">daily-reports</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item active">daglige rapporter</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -47,12 +47,12 @@
             <div class="d-flex justify-content-end align-items-center mb-2 container-fluid">
                 <button onclick="archieveAll()" class="btn btn-info btn-sm mr-1">
                     <i class="fa fa-save"></i>
-                    <span>Archieve All</span>
+                    <span>Arkiv alle</span>
                 </button>
 
                 <button data-toggle="modal" data-target="#confirmAllDeleteModal" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash"></i>
-                    <span>Delete All</span>
+                    <span>Slett alle</span>
                 </button>
             </div>
 
@@ -205,8 +205,18 @@
     $(function () {
       $("#example1").DataTable({
         "responsive": true, "lengthChange": true, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],       
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],     
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      $('#example1').dataTable({
+        "language": {
+        "emptyTable": "No data available in table",
+        "infoEmpty": "No data available in table Info",
+        "zeroRecords": "Ingen oppføringer å vise"
+        } ,
+
+        "bDestroy": true
+       })
     });
   </script>
 <script>
@@ -227,7 +237,7 @@
             if(response.status == 200){
                 Toast.fire({
                     icon: 'success',
-                    title: 'All pdf files were successfully archived'
+                    title: 'Alle pdf-filer ble arkivert'
                 })
             }else{
                 Toast.fire({
@@ -255,7 +265,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'pdf was deleted successfully'
+                        title: 'pdf ble slettet'
                     })
                     setTimeout(() => location.reload(),3000)
                 } else {
@@ -290,7 +300,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'All pdfs were deleted successfully'
+                        title: 'Alle pdf-er ble slettet'
                     })
                     setTimeout(() => location.reload(),3000)
                 } else {

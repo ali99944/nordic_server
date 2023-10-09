@@ -8,11 +8,11 @@
         <div class="container-fluid login-box">
             <div class="card">
                 <div class="card-body login-card-body">
-                  <p class="login-box-msg">Sign in to start your session</p>
+                  <p class="login-box-msg">Logg på for å starte økten</p>
             
                   <form id="loginForm">
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Username" id="username">
+                      <input type="text" class="form-control" placeholder="Brukernavn" id="username">
                       <div class="input-group-append">
                         <div class="input-group-text">
                           <span class="fas fa-user"></span>
@@ -20,7 +20,7 @@
                       </div>
                     </div>
                     <div class="input-group mb-3">
-                      <input type="password" class="form-control" placeholder="Password" id="password">
+                      <input type="password" class="form-control" placeholder="Passord" id="password">
                       <div class="input-group-append">
                         <div class="input-group-text">
                           <span class="fas fa-lock"></span>
@@ -30,7 +30,7 @@
 
                       <!-- /.col -->
                       <div class="col-4 float-sm-right">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block">Logg inn</button>
                       </div>
                       <!-- /.col -->
                     </div>
@@ -69,7 +69,7 @@
                 if(response.status == 200){
                   Toast.fire({
                       icon: 'success',
-                      title: 'Successfully logged in'
+                      title: "Logg inn"
                     })
                     setTimeout(async () =>{
                       let json = await response.json()
@@ -83,22 +83,22 @@
                 else if(response.status == 404){
                     Toast.fire({
                       icon: 'error',
-                      title: 'There is not such manager/admin'
+                      title: "Det er ikke en slik leder/admin"
                     })
                 }else if(response.status == 403){
                   Toast.fire({
                     icon: 'error',
-                    title: 'Not a staff'
+                    title: "Ikke en stab"
                   })
                 }else if(response.status == 401){
                   Toast.fire({
                       icon: 'error',
-                      title: 'Password not correct'
+                      title: "Passordet er ikke riktig"
                     })
                 }else{
                   Toast.fire({
                     icon: 'error',
-                    title: 'Unknown status'
+                    title: "Ukjent status"
                   })
                 }
             })

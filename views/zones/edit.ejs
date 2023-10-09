@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legg ny bil</title>
+    <title>Rediger sone</title>
     <!-- Add Bootstrap CSS link -->
     <%- include('../components/headers.ejs') %>
       <!-- SweetAlert2 -->
@@ -29,10 +29,10 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/zones">Zones</a></li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item"><a href="/zones">Soner</a></li>
                     <li class="breadcrumb-item"><a href="/zones"><%= zone.name %></a></li>
-                    <li class="breadcrumb-item active">Update</li>
+                    <li class="breadcrumb-item active">Oppdater</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -46,7 +46,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Update zone
+                                Oppdater sone
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -109,7 +109,7 @@
     },
     messages: {
       name: {
-        required: "enter zone name",
+        required: "skriv inn sonenavn",
       },
     },
     errorElement: 'span',
@@ -149,7 +149,7 @@
                 if (response.status == 200) {
                   Toast.fire({
                     icon: 'success',
-                    title: 'Zone was updated'
+                    title: 'Sonen ble oppdatert'
                   })
 
 

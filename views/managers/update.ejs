@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Oppdateringsbehandler</title>
         <%- include('../components/headers') %>
           <!-- Select2 -->
         <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
@@ -43,54 +43,54 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Username" id="username" value="<%= manager.username %>">
+                            <input type="text" class="form-control" placeholder="Brukernavn" id="username" value="<%= manager.username %>">
                           </div>
 
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-text-height"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Name" id="name" value="<%= manager.name %>">
+                            <input type="text" class="form-control" placeholder="Navn" id="name" value="<%= manager.name %>">
                           </div>
 
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Password" id="password">
+                            <input type="text" class="form-control" placeholder="Passord" id="password">
                           </div>
 
                           <% if(manager.role != 'admin'){ %>
                             <div class="d-flex justify-content-between align-items-center">
-                              <div class="form-group flex-grow-1">
-                                  <select class="custom-select" id="method">
-                                    <option value="GET">Read</option>
-                                    <option value="POST">Create</option>
-                                    <option value="DELETE">Delete</option>
-                                    <option value="PUT">Update</option>
-                                  </select>
-                                </div>
-  
-                                <div class="form-group flex-grow-1">
-                                  <select class="custom-select" id="route">
-                                    <option value="users">Users</option>
-                                    <option value="cars">Cars</option>
-                                    <option value="maps">Maps</option>
-                                    <option value="locations">Routes</option>
-                                    <option value="zones">Zones</option>
-                                    <option value="machines">Machines</option>
-                                    <option value="imeis">Imeis</option>
-                                    <option value="postals">Postals</option>
-                                    <option value="scans">Scans</option>
-                                    <option value="notifications">Notifications</option>
-                                    <option value="settings">Settings</option>
-                                    <option value="archieve">Archieves</option>
-                                    <option value="reports">Reports</option>
-                                    <option value="issues/notifications">Issue Notifications</option>
-                                    <option value="pdfs">Pdfs</option>
-                                    <option value="fields">Fields</option>
-                                  </select>
-                                </div>
+                              <div class="form-group flex-grow-1 mr-2">
+                                <select class="custom-select" id="method">
+                                  <option value="GET">Lese</option>
+                                  <option value="POST">Skape</option>
+                                  <option value="DELETE">Slett</option>
+                                  <option value="PUT">Oppdater</option>
+                                </select>
+                              </div>
+
+                              <div class="form-group flex-grow-1 mr-2">
+                                <select class="custom-select" id="route">
+                                  <option value="users">Brukere</option>
+                                  <option value="cars">Biler</option>
+                                  <option value="maps">Kart</option>
+                                  <option value="locations">Ruter</option>
+                                  <option value="zones">Soner</option>
+                                  <option value="machines">Maskiner</option>
+                                  <option value="imeis">Imeis</option>
+                                  <option value="postals">Post</option>
+                                  <option value="scans">Skanner</option>
+                                  <option value="notifications">Varsler</option>
+                                  <option value="settings">Innstillinger</option>
+                                  <option value="archieve">Arkiv</option>
+                                  <option value="reports">Rapporter</option>
+                                  <option value="issues/notifications">Utsted varsler</option>
+                                  <option value="pdfs">PDFS</option>
+                                  <option value="fields">Enger</option>
+                                </select>
+                              </div>
   
                                 <div class="btn btn-info btn-sm" onclick="addPermission()">Add</div>
   
@@ -103,8 +103,8 @@
                           </div>
 
                           <div class="btn-group d-flex">
-                            <button type="button" class="btn btn-info btn-sm" onclick="updateManager()">Update</button>
-                            <a href="/staffs" class="btn btn-secondary btn-sm">Cancel</a>
+                            <button type="button" class="btn btn-info btn-sm" onclick="updateManager()">Oppdater</button>
+                            <a href="/managers" class="btn btn-secondary btn-sm">Avbryt</a>
                           </div>
                     </form>
                 </div>
@@ -193,7 +193,7 @@
                 if(respones.status === 200) {
                     Toast.fire({
                       icon: 'success',
-                      title: 'manager was successfully updated'
+                      title: 'manager ble oppdatert'
                     })
                 }else{
                   Toast.fire({

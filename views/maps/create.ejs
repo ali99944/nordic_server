@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legg ny bil</title>
+    <title>Lag kart</title>
     <!-- Add Bootstrap CSS link -->
     <%- include('../components/headers.ejs') %>
       <!-- SweetAlert2 -->
@@ -43,9 +43,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/maps">Maps</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item"><a href="/maps">Kart</a></li>
+                    <li class="breadcrumb-item active">Skape</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -59,7 +59,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Create Map
+                                Lag kart
                               </h3>
                             </div>
 
@@ -71,12 +71,12 @@
                                         <div id="map"></div>
                                   
                                           <div class="mb-3 form-group">
-                                            <label for="initialCoordinates" class="form-label">latitude</label>
+                                            <label for="initialCoordinates" class="form-label">breddegrad</label>
                                               <input type="text" id="lati" name="lati" class="form-control mr-2" placeholder="Breddegrad">
                                         </div>
 
                                           <div class="mb-3 form-group">
-                                            <label for="initialCoordinates" class="form-label">longitude</label>
+                                            <label for="initialCoordinates" class="form-label">lengdegrad</label>
                                             <input type="text" id="long" name="long" class="form-control" placeholder="Lengdegrad">
                                         </div>
 
@@ -90,12 +90,12 @@
                                       </div>
                                   
                                           <div class="mb-3 form-group">
-                                              <label for="data" class="form-label">GeoJSON Data <a href="https://geojson.io/" target="_blank">open to create</a></label>
+                                              <label for="data" class="form-label">GeoJSON Data <a href="https://geojson.io/" target="_blank">åpen for å lage</a></label>
                                               <textarea id="data" name="data" class="form-control" rows="5"  placeholder="Enter area json data"></textarea>
                                           </div>
                                           <div class="d-flex justify-content-center align-items-center mt-3 mb-3 btn-group">
-                                              <button class="btn btn-info me-3 ps-3 pe-3" id="createButton" type="button" onclick="createMap()">Create</button>
-                                              <a href="/maps" class="btn btn-secondary ps-3 pe-3">Cancel</a>
+                                              <button class="btn btn-info me-3 ps-3 pe-3" id="createButton" type="button" onclick="createMap()">Skape</button>
+                                              <a href="/maps" class="btn btn-secondary ps-3 pe-3">Avbryt</a>
                                           </div>
                                       </form>
                                 </div>                    
@@ -149,15 +149,17 @@
     },
     messages: {
       lati: {
-        required: "latitude is needed",
+        required: "breddegrad er nødvendig",
       },
       long: {
-        required: "longitude is needed",
+        required: "lengdegrad er nødvendig",
       },
       zone: {
-        required:"select zone"
+        required:"velg sone"
       },
-      data:"you must enter map data"
+      data:{
+        required: "du må legge inn kartdata"
+      }
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -232,7 +234,7 @@
             if (response.status == 200) {
                 Toast.fire({
                     icon: 'success',
-                    title: 'Map was successfully created'
+                    title: 'Kartet ble opprettet'
                 })
 
                 setTimeout(() =>{

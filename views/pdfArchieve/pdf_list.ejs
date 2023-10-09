@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archives</title>
+    <title>Arkiv</title>
 
     <%- include('../components/headers') %>
 
@@ -31,8 +31,8 @@
                 <div class="row mb-2">
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-left">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Archives</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item active">Arkiv</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -59,7 +59,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Archives Data
+                                Arkiv Data
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -70,7 +70,7 @@
                                     <th>Dato</th>
                                     <th>Bruker</th>
                                     <th>ID</th>
-                                    <th>Pdf</th>
+                                    <th>PDF</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -131,13 +131,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Delete all pdfs confirmation</h5>
+                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Slett alle pdf-bekreftelser</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Do you want to delete all pdfs?
+                    Vil du slette alle pdf-er?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
@@ -202,7 +202,7 @@
             if(response.status == 200){
                 Toast.fire({
                     icon: 'success',
-                    title: 'All pdf files were successfully archived'
+                    title: 'Alle pdf-filer ble arkivert'
                 })
             }else{
                 Toast.fire({
@@ -230,7 +230,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'pdf was deleted successfully'
+                        title: 'pdf ble slettet'
                     })
                     setTimeout(() => location.reload(),3000)
                 } else {
@@ -265,7 +265,7 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon: 'success',
-                        title: 'All pdfs were deleted successfully'
+                        title: 'Alle pdf-er ble slettet'
                     })
                     setTimeout(() => location.reload(),3000)
                 } else {

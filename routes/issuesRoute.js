@@ -259,8 +259,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
             // await sendAlertSMS({
             //     text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
-            //     // to: `4747931499`
-            //     to: '4740088605'
+            //     to: `4747931499`
+            //     // to: '4740088605'
             // })
 
 
@@ -290,8 +290,8 @@ Grunn: ${reason}
 
         // await sendAlertSMS({
         //     text: smsMessageFormatted,
-        //     to: `4740088605`
-        //     // to: `4747931499`
+        //     // to: `4740088605`
+        //     to: `4747931499`
         // })
 
         // await sendAlertSMS({

@@ -477,6 +477,6 @@ const combinedViolations = violations.reduce((result, v) => {
 })
 
 
-const port = process.env.port || 9090
-app.listen(port, () => console.log(`Socket Server is running on port ${port}`))
+const port = process.env.port || 3000
+app.listen(port, () => console.log(`Server is running on port ${port}`))
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billiste</title>
+    <title>Soner</title>
 
     <%- include('../components/headers') %>
 
@@ -39,8 +39,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Zones</li>
+                    <li class="breadcrumb-item"><a href="/">Hjem</a></li>
+                    <li class="breadcrumb-item active">Soner</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -51,11 +51,11 @@
             <div class="d-flex justify-content-end align-items-center mb-2 container-fluid">
                 <a href="/zones/new" class="btn btn-info btn-sm mr-1">
                     <i class="fa fa-plus"></i>
-                    <span>Create</span>
+                    <span>Skape</span>
                 </a>
                 <button data-toggle="modal" data-target="#confirmAllDeleteModal" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash"></i>
-                    <span>Delete All</span>
+                    <span>Slette alle</span>
                 </button>
             </div>
 
@@ -65,7 +65,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Zones Data
+                                Sonedata
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -102,7 +102,7 @@
         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    do you want to delete this zone?
+                                                        vil du slette denne sonen?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
@@ -129,17 +129,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Delete all cars confirmation</h5>
+                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Slett alle soner bekreftelse</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Do you want to delete all cars?
+                    Vil du slette alle soner?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllCars()" id="confirmAllDeleteBtn">Slett</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllZones()" id="confirmAllDeleteBtn">Slett</button>
                 </div>
             </div>
         </div>
@@ -187,7 +187,7 @@
                     if (response.status == 200) {
                         Toast.fire({
                             icon: 'success',
-                            title: 'Zone deleted successfully'
+                            title: 'Sonen ble slettet'
                         })
                         setTimeout(() =>{
                           location.reload();
@@ -203,6 +203,34 @@
                     Toast.fire({
                         icon:'error',
 
+                        title: error.message
+                    })
+                });
+        }
+
+        async function deleteAllZones() {
+            fetch(`/admin/api/zones`, {
+                    method: 'DELETE'
+                })
+                .then(async response => {
+                    if (response.status == 200) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Alle soner ble slettet'
+                        })
+                        setTimeout(() =>{
+                          location.reload();
+                        },3000)
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: (await response.json())
+                        })
+                    }
+                })
+                .catch(error => {
+                    Toast.fire({
+                        icon:'error',
                         title: error.message
                     })
                 });
