@@ -157,8 +157,6 @@ const createNewDriver = async (req,res) =>{
 
         let filename = `Betjent_${user.accountId}_${localDateString}.pdf`
 
-        console.log(filename);
-
         // Generate PDF from filled template
         await page.setContent(filledTemplate);
         await page.pdf({ path: `./public/profiles/${filename}`,
