@@ -93,6 +93,16 @@ router.delete('/machines/:id', async (req, res) => {
     }
 })
 
+router.delete('/machines', async (req, res) => {
+    try{
+        let isDeleted = await Machine.deleteMany()
+        return res.status(200).json(isDeleted)
+    }catch(err){
+        console.log(err.message)
+        return res.status(500).json({message: err.message});
+    }
+})
+
 router.post('/machines/:id/activate', async (req, res) => {
     try{
         let machine = await Machine.findOne({_id:req.params.id}).populate({

@@ -142,7 +142,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllCars()" id="confirmAllDeleteBtn">Slett</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllImeis()" id="confirmAllDeleteBtn">Slett</button>
                 </div>
             </div>
         </div>
@@ -173,9 +173,9 @@
         "responsive": true, "lengthChange": true, "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
         "language": {
-        "emptyTable": "No data available in table",
-        "infoEmpty": "No data available in table Info",
-        "zeroRecords": "Ingen oppføringer å vise"
+        "emptyTable": "Ingen data tilgjengelig",
+        "infoEmpty": "Ingen data tilgjengelig Info",
+        "zeroRecords": "Det er ingen samsvarende data"
         } ,
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
@@ -199,6 +199,35 @@
                         Toast.fire({
                             icon: 'success',
                             title: "Imei ble slettet"
+                        })
+                        setTimeout(() =>{
+                          location.reload();
+                        },3000)
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: await response.json()
+                        })
+                    }
+                })
+                .catch(error => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: error.message
+                    })
+                });
+        }
+
+        async function deleteAllImeis(){
+            // Send DELETE request
+            fetch(`/admin/api/imeis`, {
+                    method: 'DELETE'
+                })
+                .then(async response => {
+                    if (response.status == 200) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Alle imeis ble slettet"
                         })
                         setTimeout(() =>{
                           location.reload();
