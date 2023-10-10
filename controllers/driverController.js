@@ -21,7 +21,7 @@ const createNewDriver = async (req,res) =>{
         const { data, token } = req.headers
         const information = JSON.parse(decodeURIComponent(data))
 
-        let decodedToken = jwt.verify(token,'your-secret-key')
+        let decodedToken = jwt.verify(token,process.env.JWT_SECRET_KEY)
         let user = await User.findOne({ _id: decodedToken.userId })
 
 
