@@ -6,7 +6,7 @@ const admin = require('../utils/firebase');
 
 
 
-router.post('/api/notifications/users', async (req,res) =>{
+router.post('/notifications/users', async (req,res) =>{
   try{
       const now = new Date();
       const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
@@ -48,7 +48,7 @@ router.post('/api/notifications/users', async (req,res) =>{
 })
 
 
-router.post('/api/notifications/zones', async (req,res) =>{
+router.post('/notifications/zones', async (req,res) =>{
   try{
       const now = new Date();
       const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
@@ -103,7 +103,7 @@ router.post('/api/notifications/zones', async (req,res) =>{
   }
 })
 
-router.post('/api/notifications/devices', async (req,res) =>{
+router.post('/notifications/devices', async (req,res) =>{
   try{
       const now = new Date();
       const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));

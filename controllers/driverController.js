@@ -150,7 +150,14 @@ const createNewDriver = async (req,res) =>{
 
         const filledTemplate = Handlebars.compile(htmlTemplate)(template_data);
 
-        let filename = `driver_${Date.now()}.pdf`
+        const now = new Date();
+        const localDate = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+        const localDateString = localDate.toISOString().split('T')[0];
+        const localTimeString = localDate.toISOString().split('T')[1];
+
+        let filename = `Betjent_${user.accountId}_${localDateString}.pdf`
+
+        console.log(filename);
 
         // Generate PDF from filled template
         await page.setContent(filledTemplate);
@@ -159,11 +166,6 @@ const createNewDriver = async (req,res) =>{
         printBackground: true,
 
         format: 'A3' });
-
-        const now = new Date();
-        const localDate = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
-        const localDateString = localDate.toISOString().split('T')[0];
-        const localTimeString = localDate.toISOString().split('T')[1];
 
         let pdf = new PDF({
             name: filename,
