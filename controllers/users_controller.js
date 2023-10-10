@@ -59,9 +59,9 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ accountId: accountId });
     const technician = await Manager.findOne({ username: accountId });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
     if(user){
+      const isMatch = await bcrypt.compare(password, user.password);
+
       if (isMatch) {
         const token = jwt.sign(
           { 
@@ -83,6 +83,8 @@ exports.login = async (req, res) => {
     }
 
     if(technician){
+      const isMatch = await bcrypt.compare(password, technician.password);
+
       if (isMatch) {
         const token = jwt.sign(
           { 
