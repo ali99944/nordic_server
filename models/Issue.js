@@ -11,6 +11,16 @@ const IssueSchema = new mongoose.Schema({
         required: true
     },
 
+    fixedAt: {
+        type: String,
+        default: null
+    },
+
+    processes:{
+        type: [String],
+        default: []
+    },
+
     boardNumber: {
         type: String,
         required: true

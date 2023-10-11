@@ -91,7 +91,10 @@ router.post('/issues', async (req, res) => {
                 serial: machine.serial,
                 zone: machine.zone.name,
                 zoneLocation: machine.zoneLocation,
-                boardNumber: boardNumber
+                boardNumber: boardNumber,
+                processes:[
+                    `client ${boardNumber} uploaded issue at `,
+                ]
             })
 
 
