@@ -7,6 +7,8 @@ const IssueReport = require('../models/IssueReport');
 const admin = require('../utils/firebase');
 const { sendAlertSMS } = require('../utils/sms_service')
 const Machine = require('../models/Machine')
+const moment = require('moment');
+console.log(moment.format());
 
 
 router.get('/issues/complete', async (req, res) => {
