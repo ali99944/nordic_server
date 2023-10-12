@@ -22,7 +22,14 @@ router.get('/issues/categories', async (req, res) => {
 })
 
 router.get('/issues/categories/create', async (req, res) => {
-    return res.render('issues/categories_create')
+    let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager = await Manager.findOne({ _id: decoded.id })
+
+    return res.render('issues/categories_create',{
+        isAdmin: decoded.role === 'admin',
+            permissions: manager.permissions
+    })
 })
 
 module.exports = router
