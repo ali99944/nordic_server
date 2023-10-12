@@ -35,7 +35,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
                     <li class="breadcrumb-item"><a href="/">Hjem</a></li>
-                    <li class="breadcrumb-item active">Maskiner</li>
+                    <li class="breadcrumb-item active"><a href="/issues">Issues</a></li>
+                    <li class="breadcrumb-item active">Categories</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -72,36 +73,24 @@
                               <table id="example1" class="table table-bordered table-striped text-center">
                                 <thead>
                                 <tr>
-                                    <th>Gruppe nr:</th>
-                                    <th>Status</th>
-                                    <th>Rute</th>
-                                    <th>Hvor?</th>
-                                    <th>QR kode</th>
+                                    <th>Name</th>
+                                    <th>importance</th>
+                                    <th>Problems</th>
                                     <th>Handlinger</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <% machines.forEach(machine => { %>
+                                    <% categories.forEach(category => { %>
                                         <tr>
-                                            <td><%= machine.serial %></td>
-                                            <td style="color: <%= machine.status == 'active' ? 'green' : 'red' %>; font-weight:bold"><%= machine.status == 'active' ? 'Active' : 'Inactive' %></td>
-                                            <td><%= machine.zone?.name ?? '---' %></td>
-                                            <td><%= machine.zoneLocation %></td>
-                                            <td>
-                                                <a href="/machines/<%= machine._id %>/qrcode">
-                                                    <i class="fas fa-qrcode fa-2x"></i>
-                                                </a>
-                                            </td>
+                                            <td><%= category.name %></td>
+                                            <td><%= category.importanceLevel  %></td>
+                                            <td><%= category.problems%></td>
                                             <td class="d-flex justify-content-center align-items-center">
-                                                <a href="/machines/<%= machine._id %>/edit" class="btn btn-sm btn-info mr-1">
+                                                <a href="/machines/<%= category._id %>/edit" class="btn btn-sm btn-info mr-1">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-
-                                                <div class="btn btn-sm btn-secondary mr-1" onclick="toggleControlSide('<%= machine._id %>','<%= machine.status %>')">
-                                                    <i class="fa fa-cog"></i>
-                                                </div>
                                                 <!-- Add delete button if needed -->
-                                                <div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal<%= machine._id %>">
+                                                <div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal<%= category._id %>">
                                                     <i class="fa fa-trash"></i>
                                                 </div>
                                                 
@@ -111,7 +100,7 @@
                                             </td>
                                         </tr>
                     
-                                        <div class="modal fade" id="deleteConfirmationModal<%= machine._id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="deleteConfirmationModal<%= category._id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -123,7 +112,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-                                                        <button type="button" class="btn btn-danger" id="confirmDelete" onclick="deleteMachine('<%= machine._id %>')" data-dismiss="modal">Slett</button>
+                                                        <button type="button" class="btn btn-danger" id="confirmDelete" onclick="deleteMachine('<%= category._id %>')" data-dismiss="modal">Slett</button>
                                                         
                                                     </div>
                                                 </div>

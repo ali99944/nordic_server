@@ -8,8 +8,85 @@ const admin = require('../utils/firebase');
 const { sendAlertSMS } = require('../utils/sms_service')
 const Machine = require('../models/Machine')
 const moment = require('moment');
-console.log(moment.format());
+const IssueCategory = require('../models/IssueCategory')
 
+router.get('/issues/categories', async (req, res) => {
+    try{
+        const categories = await IssueCategory.find({})
+        console.log(categories);
+        return res.status(200).json(categories)
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
+router.post('/issues/categories', async (req, res) => {
+    try{
+        const {
+            name,
+            importanceLevel,
+            problems
+        } = req.body
+
+        const category = new IssueCategory({
+            name: name,
+            importanceLevel: importanceLevel,
+            problems: problems
+        })
+
+        await category.save()
+
+        return res.status(200).json(category)
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
+router.delete('/issues/categories/:id', async (req, res) => {
+    try{
+        const {
+            id
+        } = req.params
+
+        let isDeleted = await IssueCategory.deleteOne({
+            _id: id
+        })
+
+        if(isDeleted){
+            return res.status(200).json('deleted')
+        }else{
+            return res.status(404).json('issue category not found')
+        }
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
+router.put('/issues/categories/:id', async (req, res) => {
+    try{
+        const {
+            id
+        } = req.params
+
+        const {
+            name,
+            importanceLevel,
+            problems
+        } = req.body
+
+        let isUpdated = await IssueCategory.updateOne({
+            _id: id
+        },{ name,importanceLevel,problems })
+
+        if(isUpdated){
+            return res.status(200).json('updated')
+        }else{
+            return res.status(404).json('issue category not found')
+        }
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
 
 router.get('/issues/complete', async (req, res) => {
     try{
@@ -84,6 +161,8 @@ router.post('/issues', async (req, res) => {
             })
 
             await issueNotification.save()
+
+            let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
             const issue = new Issue({
                 title: `Feil på Automat ${machine.zoneLocation}`,
                 description: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
@@ -95,7 +174,7 @@ router.post('/issues', async (req, res) => {
                 zoneLocation: machine.zoneLocation,
                 boardNumber: boardNumber,
                 processes:[
-                    `client ${boardNumber} uploaded issue at `,
+                    `client ${boardNumber} uploaded issue at ${currentDate}`,
                 ]
             })
 
@@ -227,11 +306,20 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
 
         await issueNotification.save()
 
-        let currentIssueUpdated = await Issue.updateOne({
-            _id: req.params.id,
-        },{
-            status: 'complete',
-        })
+        let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
+
+        // let currentIssueUpdated = await Issue.updateOne({
+        //     _id: req.params.id,
+        // },{
+        //     status: 'complete',
+        //     fixedAt: currentDate
+        // })
+
+        let issue = await Issue.findOne({ _id: req.params.id })
+        issue.status = 'complete'
+        issue.fixedAt = currentDate
+        issue.processes.push(`issue was fixed and closed by ${currentUser.name} at ${currentDate}`)
+        await issue.save()
 
         if(currentIssueUpdated){
             console.log('Issue updated and closed');
@@ -285,6 +373,10 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
         const issue = await Issue.findOne({
             _id: req.params.id
         })
+
+        let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
+
+        issue.processes.push(`issue couldn't be fixed and notified managers at ${currentDate}`)
 
         let smsMessageFormatted = `
 Feil på P-Automat ${issue.serial}  på ${issue.zoneLocation} ute av drift.

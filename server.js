@@ -269,7 +269,7 @@ const machineFront = require('./routes/machinesFront')
 const issueNotificationFront = require('./routes/issueNotificationFront')
 const issueReportFront = require('./routes/issueReportFront')
 const managerFront = require('./routes/managerFront')
-
+const issuesFront = require('./routes/issuesFront')
 
 const authenticate_front = require('./middlewares/authenticate');
 
@@ -278,6 +278,7 @@ const authenticate_front = require('./middlewares/authenticate');
 app.use(
     authenticate_front,
     authorize_front,
+    issuesFront,
     mapFront,
     managerFront,
     scanFront,
@@ -326,6 +327,9 @@ const combinedViolations = violations.reduce((result, v) => {
     })
 })
 
+app.get('*', (req, res) => {
+    return res.render('errors/404')
+})
 
 const port = process.env.port || 9090
 app.listen(port, () => console.log(`Server is running on http://localhost:${9090}`))

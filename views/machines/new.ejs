@@ -25,10 +25,8 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                <div class="col-sm-6">
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-left">
                     <li class="breadcrumb-item"><a href="/">Hjem</a></li>
                     <li class="breadcrumb-item"><a href="/machines">Maskiner</a></li>
                     <li class="breadcrumb-item active">Skape</li>
@@ -66,6 +64,13 @@
                                                   <div class="form-group">
                                                     <label>Rute</label>
                                                     <select class="custom-select" id="zone" name="zone">
+                                                  
+                                                    </select>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label>Category</label>
+                                                    <select class="custom-select" id="category" name="category">
                                                   
                                                     </select>
                                                   </div>
@@ -216,10 +221,64 @@
             }
         }
 
+        // Function to populate the zone dropdown with data from /admin/api/zones
+        async function populateCategoryDropdown() {
+            try {
+                const categoryDropdown = document.getElementById('category');
+
+                // Fetch zones data from /admin/api/zones
+                const response = await fetch('/admin/api/issues/categories');
+                const categories = await response.json();
+
+                let jumpColors = {
+                    1: 'red',
+                    2: 'gold',
+                    3: 'green'
+                }
+
+                // Populate the dropdown options
+                categories.forEach((category) => {
+                    const option = document.createElement('option');
+                    option.value = category._id;
+                    option.text = category.name;
+                    option.setAttribute('data-color',category.importanceLevel)
+
+                    option.style.background = jumpColors[category.importanceLevel]
+                    categoryDropdown.appendChild(option);
+                });
+
+                categoryDropdown.addEventListener('change', function (e) {
+                        e.preventDefault();
+                        let selected = categoryDropdown.selectedIndex
+                        let selectedOption = categoryDropdown.options[selected]
+                        console.log(selectedOption);
+                        categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
+                    })
+
+            // initializeFirstSelectedColor();
+
+            } catch (error) {
+                console.error('Error fetching and populating zones:', error);
+            }
+        }
+
+        function initializeFirstSelectedColor(){
+            let jumpColors = {
+                    1: 'red',
+                    2: 'gold',
+                    3: 'green'
+                }
+            const categoryDropdown = document.getElementById('category');
+            let selected = categoryDropdown.selectedIndex
+            let selectedOption = categoryDropdown.options[selected]
+            categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
+        }
+
         // Invoke the code when the DOM content is loaded
         document.addEventListener('DOMContentLoaded', () => {
             // Populate the zone dropdown when the page loads
             populateZoneDropdown();
+            populateCategoryDropdown();
         });
 
     </script>
