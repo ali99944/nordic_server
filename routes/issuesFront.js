@@ -21,4 +21,8 @@ router.get('/issues/categories', async (req, res) => {
     }
 })
 
+router.get('/issues/categories/create', async (req, res) => {
+    return res.render('issues/categories_create')
+})
+
 module.exports = router
