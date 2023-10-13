@@ -80,10 +80,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    <% 
+                                        let importanceLevelJumpTable = {
+                                            1: 'High',
+                                            2: 'Medium',
+                                            3: 'Low',
+                                        }    
+
+                                        let importanceLevelColorJumpTable = {
+                                            1: 'red',
+                                            2: 'gold',
+                                            3: 'green'
+                                        }
+                                    %>
                                     <% categories.forEach(category => { %>
                                         <tr>
                                             <td><%= category.name %></td>
-                                            <td><%= category.importanceLevel  %></td>
+                                            <td style="color: <%= importanceLevelColorJumpTable[category.importanceLevel] %>;"><%= importanceLevelJumpTable[category.importanceLevel]  %></td>
                                             <td><%= category.problems%></td>
                                             <td class="d-flex justify-content-center align-items-center">
                                                 <a href="/machines/<%= category._id %>/edit" class="btn btn-sm btn-info mr-1">

@@ -28,8 +28,8 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-left">
                     <li class="breadcrumb-item"><a href="/">Hjem</a></li>
-                    <li class="breadcrumb-item"><a href="/machines">Maskiner</a></li>
-                    <li class="breadcrumb-item active">Skape</li>
+                    <li class="breadcrumb-item"><a href="/issues/categories">Machine Categories</a></li>
+                    <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -43,7 +43,7 @@
                         <div class="card">
                             <div class="card-header">
                               <h3 class="card-title d-flex justify-content-between align-items-center">
-                                Lag maskin
+                                Create category
                               </h3>
                             </div>
                             <!-- /.card-header -->
@@ -62,7 +62,7 @@
                      
                      
                                                   <div class="form-group">
-                                                    <label>Rute</label>
+                                                    <label>Importance</label>
                                                     <select class="custom-select" id="importanceLevel" name="importanceLevel">
                                                         <option value="1">High</option>
                                                         <option value="2">Medium</option>
@@ -70,23 +70,27 @@
                                                     </select>
                                                   </div>
 
-                                                  <div class="form-group">
-                                                    <label>Category</label>
-                                                    <select class="custom-select" id="category" name="category">
-                                                  
-                                                    </select>
+                                
+
+                                                  <div class="d-flex align-items-center">
+                                                    <div class="input-group form-group mr-2">
+                                                        <div class="input-group-prepend">
+                                                          <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Problem" name="problem" id="problem">
+                                                      </div>
+                                                      
+                                                      <div class="btn btn-info fa fa-plus align-self-start" onclick="addProblem()">
+                                                      </div>
                                                   </div>
 
-                                                  <div class="input-group form-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                      <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
-                                                    </div>
-                                                    <input type="text" class="form-control" placeholder="sone plassering" name="zoneLocation" id="zoneLocation">
+                                                  <div id="problems-container" class="d-flex">
+
                                                   </div>
                                         
                                         
                                                 <div class="d-flex justify-content-center align-items-center btn-group">
-                                                    <button type="button" id="createButton" class="btn btn-info me-3" onclick="createMachine()">Lage</button>
+                                                    <button type="button" id="createButton" class="btn btn-info me-3" onclick="createCategory()">Lage</button>
                                                     <a href="/machines" class="btn btn-secondary">Avbryt</a>
                                                 </div>
                                             </form>
@@ -125,24 +129,20 @@
 
         $('#createMachineForm').validate({
     rules: {
-      serial: {
+      name: {
         required: true,
       },
-      zone: {
+      importanceLevel: {
         required: true,
-      },
-      zoneLocation: {
-        required: true
       },
     },
     messages: {
-      serial: {
-        required: "skriv inn serienummer",
+      name: {
+        required: "Enter category name",
       },
-      zone: {
-        required: "du må velge en sone",
+      importanceLevel: {
+        required: "please choose importance level",
       },
-      zoneLocation: "Vennligst oppgi soneplassering",
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -156,22 +156,24 @@
       $(element).removeClass('is-invalid');
     }
   });
+
+  let problems = []
+
      
   // Function to create a new machine using Fetch API
-  async function createMachine() {
+  async function createCategory() {
             if($('#createMachineForm').valid()){
-                const serial = document.getElementById('serial').value;
-            const zone = document.getElementById('zone').value;
-            const zoneLocation = document.getElementById('zoneLocation').value;
+                const name = document.getElementById('name').value;
+            const importanceLevel = document.getElementById('importanceLevel').value;
 
             const machineData = {
-                serial,
-                zone,
-                zoneLocation
+                name,
+                importanceLevel,
+                problems
             };
 
             try {
-                const response = await fetch('/admin/api/machines', {
+                const response = await fetch('/admin/api/issues/categories', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -182,10 +184,10 @@
                 if (response.status == 200) {
                     Toast.fire({
                         icon : 'success',
-                        title : "Maskinen ble opprettet"
+                        title : "Category created successfully"
                     })
                     setTimeout(() =>{
-                        location.href = '/machines'
+                        location.href = '/issues/categories'
                     },3000)
                 } else {
                     Toast.fire({
@@ -202,86 +204,65 @@
         }
     }
 
-        // Function to populate the zone dropdown with data from /admin/api/zones
-        async function populateZoneDropdown() {
-            try {
-                const zoneDropdown = document.getElementById('zone');
 
-                // Fetch zones data from /admin/api/zones
-                const response = await fetch('/admin/api/zones');
-                const zones = await response.json();
+    function addProblem(){
+        let problem = document.getElementById('problem');
+        if(problem.value == ''){
+            Toast.fire({
+                icon : 'error',
+                title: 'You have to enter data first'
+            })
+        }else{
+            if(!problems.includes(problem.value)){
+                problems.push(problem.value);
 
-                // Populate the dropdown options
-                zones.forEach((zone) => {
-                    const option = document.createElement('option');
-                    option.value = zone._id;
-                    option.text = zone.name;
-                    zoneDropdown.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error fetching and populating zones:', error);
+                renderProblems(problems)
+            }else{
+                Toast.fire({
+                    icon : 'error',
+                    title: 'problem already exists'
+                })  
             }
         }
+    }
 
-        // Function to populate the zone dropdown with data from /admin/api/zones
-        async function populateCategoryDropdown() {
-            try {
-                const categoryDropdown = document.getElementById('category');
+    function removeProblem(txt){
+        problems = problems.filter(p => p != txt)
+        renderProblems(problems)
+    }
 
-                // Fetch zones data from /admin/api/zones
-                const response = await fetch('/admin/api/issues/categories');
-                const categories = await response.json();
+    function renderProblems(pbs){
+        let problemContainer = document.getElementById('problems-container');
+        problemContainer.innerHTML = ''
 
-                let jumpColors = {
-                    1: 'red',
-                    2: 'gold',
-                    3: 'green'
-                }
+        for(let problem of pbs){
 
-                // Populate the dropdown options
-                categories.forEach((category) => {
-                    const option = document.createElement('option');
-                    option.value = category._id;
-                    option.text = category.name;
-                    option.setAttribute('data-color',category.importanceLevel)
+            const holder = document.createElement('div');
+            holder.className = 'd-flex justify-content-between align-items-center'
+            holder.style.backgroundColor = '#d9eaf7'
+            holder.style.padding = '8px'
+            holder.style.borderRadius = '8px'
+            holder.style.marginBottom = '8px'
+            holder.style.marginRight = '8px'
 
-                    option.style.background = jumpColors[category.importanceLevel]
-                    categoryDropdown.appendChild(option);
-                });
+            let problemText = document.createElement('span')
+            let problemRemove = document.createElement('i')
+            problemRemove.className = 'fa fa-trash'
+            problemRemove.style.color = 'red'
+            problemRemove.style.cursor  = 'pointer'
 
-                categoryDropdown.addEventListener('change', function (e) {
-                        e.preventDefault();
-                        let selected = categoryDropdown.selectedIndex
-                        let selectedOption = categoryDropdown.options[selected]
-                        console.log(selectedOption);
-                        categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
-                    })
+            problemText.textContent = problem
+            problemText.style.marginRight = '8px'
+            holder.appendChild(problemText)
 
-            // initializeFirstSelectedColor();
-
-            } catch (error) {
-                console.error('Error fetching and populating zones:', error);
-            }
+            problemRemove.addEventListener('click', function(event){
+                removeProblem(problem)
+            })
+            holder.appendChild(problemRemove)
+            problemContainer.appendChild(holder)
         }
+    }
 
-        function initializeFirstSelectedColor(){
-            let jumpColors = {
-                    1: 'red',
-                    2: 'gold',
-                    3: 'green'
-                }
-            const categoryDropdown = document.getElementById('category');
-            let selected = categoryDropdown.selectedIndex
-            let selectedOption = categoryDropdown.options[selected]
-            categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
-        }
-
-        // Invoke the code when the DOM content is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Populate the zone dropdown when the page loads
-            populateZoneDropdown();
-            populateCategoryDropdown();
-        });
 
     </script>
 
