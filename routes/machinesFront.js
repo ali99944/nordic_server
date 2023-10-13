@@ -10,10 +10,17 @@ router.get('/machines', async (req, res) => {
     let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
     let manager = await Manager.findOne({ _id: decoded.id })
 
-      let machines = await Machine.find({}).populate({
-        path: 'zone',
-        ref: 'Zone'
-      });
+      let machines = await Machine.find({}).populate([
+        {
+          path: 'zone',
+          ref: 'Zone'
+        },
+
+        {
+          path: 'category',
+          ref: 'IssueCategory'
+        }
+      ]);
   
       // Sort the machines array so that "inactive" machines come first
       machines.sort((a, b) => {

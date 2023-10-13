@@ -24,6 +24,12 @@ const machineSchema = mongoose.Schema({
     zoneLocation:{
       type: String,
       required: true
+    },
+
+    category:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'IssueCategory',
+      required: true
     }
   }
 );

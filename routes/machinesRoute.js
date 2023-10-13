@@ -11,10 +11,17 @@ const admin = require('../utils/firebase');
 
 router.get('/machines', async (req, res) => {
     try{
-        let machines = await Machine.find({}).populate({
-            path: 'zone',
-            ref: 'Zone'
-        })
+        let machines = await Machine.find({}).populate([
+            {
+                path: 'zone',
+                ref: 'Zone'
+            },
+
+            {
+                path: 'category',
+                ref: 'IssueCategory'
+            }
+        ])
         return res.status(200).json(machines)
     }catch(err){
         console.log(err.message)
@@ -39,12 +46,13 @@ router.get('/machines/:id', async (req, res) => {
 
 router.post('/machines', async (req, res) => {
     try{
-        const { serial,zone,shiftNumber,zoneLocation } = req.body
+        const { serial,zone,shiftNumber,zoneLocation,category } = req.body
         let machine = new Machine({
             serial,
             zone,
             zoneLocation,
             shiftNumber,
+            category
         })
         await machine.save()
 
