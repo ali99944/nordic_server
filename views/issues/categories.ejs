@@ -97,9 +97,14 @@
                                         <tr>
                                             <td><%= category.name %></td>
                                             <td style="color: <%= importanceLevelColorJumpTable[category.importanceLevel] %>;"><%= importanceLevelJumpTable[category.importanceLevel]  %></td>
-                                            <td><%= category.problems%></td>
+                                            <td style="text-align: start;">
+                                                <% for(let problem of category.problems){%>
+                                                    <span><%= problem %></span>
+                                                    <br>
+                                                <% } %>
+                                            </td>
                                             <td class="d-flex justify-content-center align-items-center">
-                                                <a href="/machines/<%= category._id %>/edit" class="btn btn-sm btn-info mr-1">
+                                                <a href="/issues/categories/<%= category._id %>/update" class="btn btn-sm btn-info mr-1">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <!-- Add delete button if needed -->
@@ -125,7 +130,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-                                                        <button type="button" class="btn btn-danger" id="confirmDelete" onclick="deleteMachine('<%= category._id %>')" data-dismiss="modal">Slett</button>
+                                                        <button type="button" class="btn btn-danger" id="confirmDelete" onclick="deleteIssueCategory('<%= category._id %>')" data-dismiss="modal">Slett</button>
                                                         
                                                     </div>
                                                 </div>
@@ -158,17 +163,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Slett alle maskiner bekreftelse</h5>
+                    <h5 class="modal-title" id="confirmAllDeleteModalLabel">Delete all issue categories confirmation</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Vil du slette alle maskiner?
+                    Do you want to delete all issue categories?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllMachines()" id="confirmAllDeleteBtn">Slett</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAllIssueCategories()" id="confirmAllDeleteBtn">Slett</button>
                 </div>
             </div>
         </div>
@@ -215,90 +220,18 @@
             timer: 3000
         });
 
-        function toggleControlSide(id,status){
-        let controlContent = document.getElementById('control-content');
 
-        controlContent.innerHTML = ''
-        controlContent.classList
-            .add('pl-4')
-        controlContent.classList
-            .add('pr-2')
-        let e = document.createElement('div')
-            
-        e.setAttribute('data-widget', 'control-sidebar')
-        e.setAttribute('data-slide', 'true')
-        e.setAttribute('href', '#')
-        e.setAttribute('role', 'button')
-
-        if(status == 'active'){
-            let p = document.createElement('p')
-            p.textContent = 'Machine is active, All Is Fine'
-            controlContent.appendChild(p)
-        }else{
-            let p = document.createElement('p')
-            p.textContent = 'Machine is inactive'
-            controlContent.appendChild(p)
-
-            let button = document.createElement('button')
-            button.className = 'btn btn-info btn-sm'
-            button.textContent = 'Activate Machine'
-            button.addEventListener('click', (e) =>{
-                e.preventDefault()
-                toggleSlider(id)
-            })
-
-            let container = document.createElement('div')
-            container.className = 'd-flex justify-content-end align-items-center'
-            container.appendChild(button)
-
-            controlContent.appendChild(container)
-        }
-
-        document.body.appendChild(e)
-
-
-
-        e.click()
-            
-    }
-
-        async function toggleSlider(id){
-            console.log(id);
-            let response = await fetch(`/admin/api/machines/${id}/activate`,{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            if(response.status === 200){
-                Toast.fire({
-                    icon: 'success',
-                    title: "Maskin aktivert"
-                })
-
-                setTimeout(() => {
-                    location.reload();
-                },3000)
-            }else{
-                Toast.fire({
-                    icon: 'error',
-                    title: await response.json()
-                })
-            }
-        }
-
-        function deleteMachine(id){
+        function deleteIssueCategory(id){
             
                     // Send a DELETE request to delete the machine
-                    fetch(`/admin/api/machines/${id}`, {
+                    fetch(`/admin/api/issues/categories/${id}`, {
                         method: 'DELETE',
                     })
                     .then(async (response) => {
                         if (response.status == 200) {
                             Toast.fire({
                                 icon: 'success',
-                                title: "Maskin aktivert"
+                                title: "Issue Category deleted successfully"
                             })
 
                             setTimeout(() => location.reload(),3000)
@@ -317,10 +250,10 @@
                     });
         }
 
-        function deleteAllMachines(){
+        function deleteAllIssueCategories(){
             
             // Send a DELETE request to delete the machine
-            fetch(`/admin/api/machines`, {
+            fetch(`/admin/api/issues/categories`, {
                 method: 'DELETE',
             })
             .then(async (response) => {

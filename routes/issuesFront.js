@@ -22,13 +22,37 @@ router.get('/issues/categories', async (req, res) => {
 })
 
 router.get('/issues/categories/create', async (req, res) => {
+    try{
+        let jwt_access_token = req.cookies.jwt_token
+        let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+        let manager = await Manager.findOne({ _id: decoded.id })
+    
+        return res.render('issues/categories_create',{
+            isAdmin: decoded.role === 'admin',
+                permissions: manager.permissions
+        })
+    }catch(err){
+        return res.status(500).render('errors/internal',{
+            error: err.message
+        })
+    }
+})
+
+router.get('/issues/categories/:id/update', async (req, res) => {
     let jwt_access_token = req.cookies.jwt_token
     let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
     let manager = await Manager.findOne({ _id: decoded.id })
 
-    return res.render('issues/categories_create',{
+    const { id } = req.params
+    let category = await IssueCategory.findOne({
+        _id: id
+    })
+
+    return res.render('issues/categories_update',{
         isAdmin: decoded.role === 'admin',
-            permissions: manager.permissions
+        permissions: manager.permissions,
+        category: category,
+        problems: JSON.stringify(category.problems)
     })
 })
 

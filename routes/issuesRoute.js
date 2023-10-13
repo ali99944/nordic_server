@@ -62,6 +62,16 @@ router.delete('/issues/categories/:id', async (req, res) => {
     }
 })
 
+router.delete('/issues/categories', async (req, res) => {
+    try{
+
+        await IssueCategory.deleteMany({})
+        return res.status(200).json('All issue categories deleted')
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
 router.put('/issues/categories/:id', async (req, res) => {
     try{
         const {
