@@ -18,7 +18,7 @@ router.get('/machines', async (req, res) => {
             },
 
             {
-                path: 'category',
+                path: 'categories',
                 ref: 'IssueCategory'
             }
         ])
