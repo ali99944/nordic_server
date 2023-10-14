@@ -28,7 +28,7 @@ const IssueSchema = new mongoose.Schema({
 
     boardNumber: {
         type: String,
-        required: true
+        default: null
     },
 
     title: {
