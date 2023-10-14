@@ -26,8 +26,8 @@ const machineSchema = mongoose.Schema({
       required: true
     },
 
-    category:{
-      type: mongoose.Schema.Types.ObjectId,
+    categories:{
+      type: [mongoose.Schema.Types.ObjectId],
       ref: 'IssueCategory',
       required: true
     }

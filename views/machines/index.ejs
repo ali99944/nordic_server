@@ -88,7 +88,7 @@
                                             <td style="color: <%= machine.status == 'active' ? 'green' : 'red' %>; font-weight:bold"><%= machine.status == 'active' ? 'Active' : 'Inactive' %></td>
                                             <td><%= machine.zone?.name ?? '---' %></td>
                                             <td><%= machine.zoneLocation %></td>
-                                            <td><%= machine.category.name %></td>
+                                            <td><%= machine.categories.map(e => e.name) %></td>
                                             <td>
                                                 <a href="/machines/<%= machine._id %>/qrcode">
                                                     <i class="fas fa-qrcode fa-2x"></i>

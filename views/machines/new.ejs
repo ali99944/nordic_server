@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Toastr -->
     <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+
+      <!-- Select2 -->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -70,7 +74,7 @@
 
                                                   <div class="form-group">
                                                     <label>Category</label>
-                                                    <select class="custom-select" id="category" name="category">
+                                                    <select class="select2" id="category" name="category"  multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                                                   
                                                     </select>
                                                   </div>
@@ -110,10 +114,14 @@
     <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
     <!-- Toastr -->
 <script src="/plugins/toastr/toastr.min.js"></script>
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+
 
 
 
     <script>
+        $('.select2').select2()
+
         var Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -161,15 +169,14 @@
                 const serial = document.getElementById('serial').value;
             const zone = document.getElementById('zone').value;
             const zoneLocation = document.getElementById('zoneLocation').value;
-            const category = document.getElementById('category').value;
-
+            const categories = $("#category").val()
 
 
             const machineData = {
                 serial,
                 zone,
                 zoneLocation,
-                category
+                categories
             };
 
             try {
