@@ -102,9 +102,6 @@ router.get('/issues/complete', async (req, res) => {
     try{
         let issues = await Issue.find({
             status: 'complete'
-        }).populate({
-            path: 'machine',
-            ref: 'Machine'
         })
         return res.status(200).json(issues.reverse())
     }catch(err){
@@ -116,9 +113,6 @@ router.get('/issues/current', async (req, res) => {
     try{
         let issues = await Issue.find({
             status: 'incomplete'
-        }).populate({
-            path: 'machine',
-            ref: 'machine'
         })
 
         return res.status(200).json(issues.reverse())
