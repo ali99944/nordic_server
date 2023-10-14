@@ -11,6 +11,16 @@ const IssueSchema = new mongoose.Schema({
         default: null
     },
 
+    totalTime: {
+        type: String,
+        default: null
+    },
+
+    fixedBy:{
+        type: String,
+        default: null
+    },
+
     processes:{
         type: [String],
         default: []
@@ -39,7 +49,7 @@ const IssueSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'incomplete',
-        enum: ['complete', 'incomplete', 'in-maintenance', 'require-parts']
+        enum: ['complete', 'incomplete', 'in-maintenance', 'require-parts','redirected']
     },
 
     zone:{
@@ -54,6 +64,21 @@ const IssueSchema = new mongoose.Schema({
 
     serial:{
         type: String,
+        required: true
+    },
+
+    category:{
+        type: String,
+        required: true
+    },
+
+    problem:{
+        type: String,
+        required: true
+    },
+
+    importanceLevel:{
+        type: Number,
         required: true
     }
 })

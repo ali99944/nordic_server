@@ -134,6 +134,9 @@ router.post('/issues', async (req, res) => {
             boardNumber,
             notes,
             id,
+            category,
+            problem,
+            importanceLevel
         } = req.body
 
         const machine = await Machine.findOne({
@@ -185,7 +188,9 @@ router.post('/issues', async (req, res) => {
                 boardNumber: boardNumber,
                 processes:[
                     `client ${boardNumber} uploaded issue at ${currentDate}`,
-                ]
+                ],
+                category: category,
+                problem: problem
             })
 
 
