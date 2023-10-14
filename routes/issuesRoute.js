@@ -190,7 +190,8 @@ router.post('/issues', async (req, res) => {
                     `client ${boardNumber} uploaded issue at ${currentDate}`,
                 ],
                 category: category,
-                problem: problem
+                problem: problem,
+                importanceLevel: importanceLevel
             })
 
 
