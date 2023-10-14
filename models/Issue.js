@@ -1,11 +1,6 @@
 const mongoose = require('mongoose')
 
 const IssueSchema = new mongoose.Schema({
-    machine: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'machine'
-    },
-
     date: {
         type: String,
         required: true
@@ -38,12 +33,13 @@ const IssueSchema = new mongoose.Schema({
 
     notes:{
         type: String,
-        default: 'No Notes'
+        default: null
     },
 
     status: {
         type: String,
-        default: 'incomplete'
+        default: 'incomplete',
+        enum: ['complete', 'incomplete', 'in-maintenance', 'require-parts']
     },
 
     zone:{
