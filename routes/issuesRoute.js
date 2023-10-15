@@ -125,6 +125,16 @@ router.get('/issues/current', async (req, res) => {
     }
 })
 
+router.get('/issues/waiting', async (req, res) => {
+    try{
+        let issues = await Issue.find({
+            status: 'waiting'
+        })
+        return res.status(200).json(issues.reverse())
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
 
 router.post('/issues', async (req, res) => {
     try{
