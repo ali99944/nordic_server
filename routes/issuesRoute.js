@@ -141,6 +141,9 @@ router.put('/issues/:id/waiting', async (req, res) => {
         const { id } = req.params
         const { reason } = req.body
         let issue = await Issue.findOne({ _id: id })
+        let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
+
+        issue.processes = issue.processes.push(`Issue is in waiting state at ${currentDate}`)
         issue.status = 'waiting'
         issue.statusText = reason
 
