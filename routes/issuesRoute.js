@@ -154,7 +154,7 @@ router.post('/issues', async (req, res) => {
         //     .messaging()
         //     .send(message)
 
-            console.log('Message sent:', response);
+            // console.log('Message sent:', response);
             const now = new Date();
             const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
             const localDateString = localDate.toISOString().split('T')[0];
