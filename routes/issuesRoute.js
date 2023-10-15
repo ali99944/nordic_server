@@ -114,7 +114,7 @@ router.get('/issues/current', async (req, res) => {
     try{
         let issues = await Issue.find({
             $or:[
-                {status: 'complete'},
+                {status: 'incomplete'},
                 {status: 'redirected'}
             ]
         })
