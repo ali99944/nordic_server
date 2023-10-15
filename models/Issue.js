@@ -49,7 +49,7 @@ const IssueSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'incomplete',
-        enum: ['complete', 'incomplete', 'in-maintenance', 'require-parts','redirected']
+        enum: ['complete', 'incomplete', 'waiting','redirected']
     },
 
     zone:{
