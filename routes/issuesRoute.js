@@ -136,6 +136,21 @@ router.get('/issues/waiting', async (req, res) => {
     }
 })
 
+router.put('/issues/:id/waiting', async (req, res) => {
+    try{
+        const { id } = req.params
+        const { reason } = req.body
+        let issue = await Issue.findOne({ _id: id })
+        issue.status = 'waiting'
+        issue.statusText = reason
+
+        await issue.save()
+        return res.status(200).json('moved to waiting')
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
 router.post('/issues', async (req, res) => {
     try{
         const {
