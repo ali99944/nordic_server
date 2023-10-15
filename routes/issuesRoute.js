@@ -191,11 +191,25 @@ router.post('/issues', async (req, res) => {
 
             await issue.save()
 
-                // await sendAlertSMS({
-                //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                //     to: '4740088605'
-                //     // to: `4747931499`
-                // })
+                if(importanceLevel == 3 || importanceLevel == 2){
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
+                }else if(importanceLevel == 1){
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
+
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
+                }
             await Machine.updateOne({
                 _id:id,
             },{ status: 'inactive' })

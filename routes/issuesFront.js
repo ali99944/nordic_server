@@ -3,6 +3,7 @@ const router = express.Router()
 const IssueCategory = require('../models/IssueCategory')
 const jwt = require('jsonwebtoken')
 const Manager = require('../models/Manager')
+const Issue = require('../models/Issue')
 
 router.get('/issues/categories', async (req, res) => {
     try{
@@ -55,5 +56,20 @@ router.get('/issues/categories/:id/update', async (req, res) => {
         problems: JSON.stringify(category.problems)
     })
 })
+
+router.get('/issues', async (req, res) => {
+    let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager = await Manager.findOne({ _id: decoded.id })
+
+    let issues = await Issue.find({})
+
+    return res.render('issues/categories_update',{
+        isAdmin: decoded.role === 'admin',
+        permissions: manager.permissions,
+        issues: issues
+    })
+})
+
 
 module.exports = router
