@@ -150,9 +150,9 @@ router.post('/issues', async (req, res) => {
             topic: 'nordic', // Replace with the topic you want to use
           };
           
-          let response = await admin
-            .messaging()
-            .send(message)
+        //   let response = await admin
+        //     .messaging()
+        //     .send(message)
 
             console.log('Message sent:', response);
             const now = new Date();
@@ -192,12 +192,14 @@ router.post('/issues', async (req, res) => {
             await issue.save()
 
                 if(importanceLevel == 3 || importanceLevel == 2){
+                    console.log('ok i was 2 or 3');
                     // await sendAlertSMS({
                     //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
                     //     to: '4740088605'
                     //     // to: `4747931499`
                     // })
                 }else if(importanceLevel == 1){
+                    console.log('ok i was 1 and that is very serious');
                     // await sendAlertSMS({
                     //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
                     //     to: '4740088605'
