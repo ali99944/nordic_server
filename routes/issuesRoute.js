@@ -16,6 +16,7 @@ router.get('/issues/categories', async (req, res) => {
         console.log(categories);
         return res.status(200).json(categories)
     }catch(err){
+        console.log(err.message);
         return res.status(500).json(err.message)
     }
 })

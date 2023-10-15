@@ -266,24 +266,23 @@
                         categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
                     })
 
-            // initializeFirstSelectedColor();
 
             } catch (error) {
                 console.error('Error fetching and populating zones:', error);
             }
         }
 
-        function initializeFirstSelectedColor(){
-            let jumpColors = {
-                    1: 'red',
-                    2: 'gold',
-                    3: 'green'
-                }
-            const categoryDropdown = document.getElementById('category');
-            let selected = categoryDropdown.selectedIndex
-            let selectedOption = categoryDropdown.options[selected]
-            categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
-        }
+        // function initializeFirstSelectedColor(){
+        //     let jumpColors = {
+        //             1: 'red',
+        //             2: 'gold',
+        //             3: 'green'
+        //         }
+        //     const categoryDropdown = document.getElementById('category');
+        //     let selected = categoryDropdown.selectedIndex
+        //     let selectedOption = categoryDropdown.options[selected]
+        //     categoryDropdown.style.background = jumpColors[selectedOption.getAttribute('data-color')];
+        // }
 
         // Invoke the code when the DOM content is loaded
         document.addEventListener('DOMContentLoaded', () => {
