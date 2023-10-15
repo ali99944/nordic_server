@@ -52,6 +52,11 @@ const IssueSchema = new mongoose.Schema({
         enum: ['complete', 'incomplete', 'waiting','redirected']
     },
 
+    statusText: {
+        type: String,
+        default: ''
+    },
+
     zone:{
         type: String,
         required: true
