@@ -136,6 +136,21 @@ router.get('/issues/waiting', async (req, res) => {
     }
 })
 
+router.get('/issues/verified', async (req, res) => {
+    try{
+        let issues = await Issue.find({
+            $or:[
+                { status: 'redirected' },
+                { publisher: 'driver' }
+            ]
+        })
+        return res.status(200).json(issues.reverse())
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
+
 router.put('/issues/:id/waiting', async (req, res) => {
     try{
         const { id } = req.params
@@ -162,7 +177,8 @@ router.post('/issues', async (req, res) => {
             id,
             category,
             problem,
-            importanceLevel
+            importanceLevel,
+            publisher
         } = req.body
 
         const machine = await Machine.findOne({
@@ -213,11 +229,12 @@ router.post('/issues', async (req, res) => {
                 zoneLocation: machine.zoneLocation,
                 boardNumber: boardNumber,
                 processes:[
-                    `client ${boardNumber} uploaded issue at ${currentDate}`,
+                    `${publisher} uploaded issue at ${currentDate}`,
                 ],
                 category: category,
                 problem: problem,
-                importanceLevel: importanceLevel
+                importanceLevel: importanceLevel,
+                publisher: publisher
             })
 
 
@@ -435,6 +452,8 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
         let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
 
         issue.processes.push(`issue couldn't be fixed and notified managers at ${currentDate}`)
+        issue.status = 'redirected'
+        await issue.save()
 
         let smsMessageFormatted = `
 Feil på P-Automat ${issue.serial}  på ${issue.zoneLocation} ute av drift.
