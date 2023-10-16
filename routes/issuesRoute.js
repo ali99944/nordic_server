@@ -453,6 +453,7 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
 
         issue.processes.push(`issue couldn't be fixed and notified managers at ${currentDate}`)
         issue.status = 'redirected'
+        issue.statusText = reason
         await issue.save()
 
         let smsMessageFormatted = `
