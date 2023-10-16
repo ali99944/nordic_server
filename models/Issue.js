@@ -18,7 +18,7 @@ const IssueSchema = new mongoose.Schema({
 
     publisher:{
         type: String,
-        required: true
+        default: 'unknown'
     },
 
     fixedBy:{
