@@ -112,12 +112,7 @@ router.get('/issues/complete', async (req, res) => {
 
 router.get('/issues/current', async (req, res) => {
     try{
-        let issues = await Issue.find({
-            $or:[
-                {status: 'incomplete'},
-                {status: 'redirected'}
-            ]
-        })
+        let issues = await Issue.find({status: 'incomplete'})
 
         return res.status(200).json(issues.reverse())
     }catch(err){
