@@ -261,51 +261,51 @@ router.post('/issues', async (req, res) => {
 
             if(publisher == 'client' && phone){
                 console.log(phone);
-//                 await sendAlertSMS({
-//                     text: 
-// `
-// Hei, 
-// Vi har mottatt din klager på ${machine.zoneLocation} og vi snart der for å fikse saken.
+                await sendAlertSMS({
+                    text: 
+`
+Hei, 
+Vi har mottatt din klager på ${machine.zoneLocation} og vi snart der for å fikse saken.
 
-// Takk for beskjed.
-// `,
-//                     to: phone
-//                     // to: `4747931499`
-//                 })
+Takk for beskjed.
+`,
+                    to: phone
+                    // to: `4747931499`
+                })
             }
 
                 if(importanceLevel == 3 || importanceLevel == 2){
                     console.log('ok i was 2 or 3');
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
 
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
                 }else if(importanceLevel == 1){
                     console.log('ok i was 1 and that is very serious');
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
 
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
 
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
                 }
             await Machine.updateOne({
                 _id:id,
@@ -354,8 +354,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
         let currentIssue = await Issue.findOne({_id: req.params.id})
         const currentUser = await User.findOne({
-            // accountId: pnid.toUpperCase(),
-            accountId: pnid,
+            accountId: pnid.toUpperCase(),
+            // accountId: pnid,
         })
 
 
@@ -466,15 +466,15 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             topic: 'nordic', // Replace with the topic you want to use
           };
           
-        //   let response = await admin
-        //     .messaging()
-        //     .send(message)
+          let response = await admin
+            .messaging()
+            .send(message)
 
-            // await sendAlertSMS({
-            //     text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
-            //     // to: `4747931499`
-            //     to: '4740088605'
-            // })
+            await sendAlertSMS({
+                text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
+                // to: `4747931499`
+                to: '4740088605'
+            })
 
 
 
