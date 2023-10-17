@@ -57,7 +57,6 @@ exports.login = async (req, res) => {
     console.log(req.body)
 
     const user = await User.findOne({ accountId: accountId });
-    const technician = await Manager.findOne({ username: accountId });
 
     if(user){
       const isMatch = await bcrypt.compare(password, user.password);
@@ -72,6 +71,12 @@ exports.login = async (req, res) => {
           process.env.JWT_SECRET_KEY
         );
   
+        console.log({
+          token: token,
+          user: user,
+          role: 'user'
+        });
+        
         return res.status(200).json({
           token: token,
           user: user,
@@ -81,6 +86,9 @@ exports.login = async (req, res) => {
         return res.status(401).json('Invalid password');
       }
     }
+
+    
+    const technician = await Manager.findOne({ username: accountId });
 
     if(technician){
       const isMatch = await bcrypt.compare(password, technician.password);
