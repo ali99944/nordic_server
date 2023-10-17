@@ -182,7 +182,8 @@ router.post('/issues', async (req, res) => {
             category,
             problem,
             importanceLevel,
-            publisher
+            publisher,
+            phone
         } = req.body
 
         const machine = await Machine.findOne({
@@ -202,9 +203,9 @@ router.post('/issues', async (req, res) => {
             topic: 'nordic', // Replace with the topic you want to use
           };
           
-          let response = await admin
-            .messaging()
-            .send(message)
+        //   let response = await admin
+        //     .messaging()
+        //     .send(message)
 
             console.log('Message sent:', response);
             const now = new Date();
@@ -222,11 +223,13 @@ router.post('/issues', async (req, res) => {
             await issueNotification.save()
 
             let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
+            let localeDate = moment(moment.now()).format('yyyy-MM-DD')
+
             const issue = new Issue({
                 title: `Feil på Automat ${machine.zoneLocation}`,
                 description: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
                 notes: notes ?? null,
-                date: currentDate,
+                date: localeDate,
                 machine: id ,
                 serial: machine.serial,
                 zone: machine.zone.name,
@@ -244,38 +247,53 @@ router.post('/issues', async (req, res) => {
 
             await issue.save()
 
+            if(publisher == 'client' && phone){
+                console.log(phone);
+//                 await sendAlertSMS({
+//                     text: 
+// `
+// Hei, 
+// Vi har mottatt din klager på ${machine.zoneLocation} og vi snart der for å fikse saken.
+
+// Takk for beskjed.
+// `,
+//                     to: phone
+//                     // to: `4747931499`
+//                 })
+            }
+
                 if(importanceLevel == 3 || importanceLevel == 2){
                     console.log('ok i was 2 or 3');
-                    await sendAlertSMS({
-                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                        to: '4740088605'
-                        // to: `4747931499`
-                    })
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
 
-                    await sendAlertSMS({
-                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                        to: '4740088605'
-                        // to: `4747931499`
-                    })
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
                 }else if(importanceLevel == 1){
                     console.log('ok i was 1 and that is very serious');
-                    await sendAlertSMS({
-                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                        to: '4740088605'
-                        // to: `4747931499`
-                    })
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
 
-                    await sendAlertSMS({
-                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                        to: '4740088605'
-                        // to: `4747931499`
-                    })
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
 
-                    await sendAlertSMS({
-                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                        to: '4740088605'
-                        // to: `4747931499`
-                    })
+                    // await sendAlertSMS({
+                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                    //     to: '4740088605'
+                    //     // to: `4747931499`
+                    // })
                 }
             await Machine.updateOne({
                 _id:id,
