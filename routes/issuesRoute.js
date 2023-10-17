@@ -140,9 +140,7 @@ router.get('/issues/verified', async (req, res) => {
                     $and: [
                         { publisher: 'driver' },
                         {
-                            $nor: {
-                                status: 'waiting' 
-                            }
+                            status: 'incomplete'
                         },
                     ]
                 }
