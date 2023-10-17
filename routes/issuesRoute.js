@@ -202,11 +202,11 @@ router.post('/issues', async (req, res) => {
             topic: 'nordic', // Replace with the topic you want to use
           };
           
-        //   let response = await admin
-        //     .messaging()
-        //     .send(message)
+          let response = await admin
+            .messaging()
+            .send(message)
 
-            // console.log('Message sent:', response);
+            console.log('Message sent:', response);
             const now = new Date();
             const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
             const localDateString = localDate.toISOString().split('T')[0];
@@ -226,7 +226,7 @@ router.post('/issues', async (req, res) => {
                 title: `Feil på Automat ${machine.zoneLocation}`,
                 description: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
                 notes: notes ?? null,
-                date: localDateString,
+                date: currentDate,
                 machine: id ,
                 serial: machine.serial,
                 zone: machine.zone.name,
@@ -246,24 +246,36 @@ router.post('/issues', async (req, res) => {
 
                 if(importanceLevel == 3 || importanceLevel == 2){
                     console.log('ok i was 2 or 3');
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
+
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
                 }else if(importanceLevel == 1){
                     console.log('ok i was 1 and that is very serious');
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
 
-                    // await sendAlertSMS({
-                    //     text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
-                    //     to: '4740088605'
-                    //     // to: `4747931499`
-                    // })
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
+
+                    await sendAlertSMS({
+                        text: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,                    // to: `4747931499`
+                        to: '4740088605'
+                        // to: `4747931499`
+                    })
                 }
             await Machine.updateOne({
                 _id:id,
@@ -429,11 +441,11 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             .messaging()
             .send(message)
 
-            // await sendAlertSMS({
-            //     text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
-            //     to: `4747931499`
-            //     // to: '4740088605'
-            // })
+            await sendAlertSMS({
+                text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
+                // to: `4747931499`
+                to: '4740088605'
+            })
 
 
 
@@ -467,17 +479,17 @@ Den trenger teknikker.
 Grunn: ${reason}
         `
 
-        // await sendAlertSMS({
-        //     text: smsMessageFormatted,
-        //     // to: `4740088605`
-        //     to: `4747931499`
-        // })
+        await sendAlertSMS({
+            text: smsMessageFormatted,
+            to: `4740088605`
+            // to: `4747931499`
+        })
 
-        // await sendAlertSMS({
-        //     text: smsMessageFormatted,
-        //     to: `4740088605`
-        //     // to: `4747931499`
-        // })
+        await sendAlertSMS({
+            text: smsMessageFormatted,
+            to: `4740088605`
+            // to: `4747931499`
+        })
 
         return res.status(200).json({message: smsMessageFormatted})
     }catch(error){

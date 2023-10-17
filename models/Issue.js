@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const IssueSchema = new mongoose.Schema({
+    machine:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+
     date: {
         type: String,
         required: true
