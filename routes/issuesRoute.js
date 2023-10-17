@@ -164,6 +164,15 @@ router.put('/issues/:id/waiting', async (req, res) => {
     }
 })
 
+router.delete('/issues/:id', async (req, res) => {
+    try{
+        await Issue.deleteOne({ _id: req.params.id })
+        return res.status(200).json('deleted')
+    }catch(err){
+        return res.status(500).json(err.message)
+    }
+})
+
 router.post('/issues', async (req, res) => {
     try{
         const {
