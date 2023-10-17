@@ -205,21 +205,6 @@ router.post('/issues', async (req, res) => {
             ref: 'Zone'
         })
 
-        const message = {
-            data: {
-                title: `Feil på ${machine.zoneLocation} Automat`,
-                body: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
-                type: 'issue',
-                id:id,
-            },
-            topic: 'nordic', // Replace with the topic you want to use
-          };
-          
-          let response = await admin
-            .messaging()
-            .send(message)
-
-            console.log('Message sent:', response);
             const now = new Date();
             const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
             const localDateString = localDate.toISOString().split('T')[0];
@@ -258,6 +243,22 @@ router.post('/issues', async (req, res) => {
 
 
             await issue.save()
+
+            const message = {
+                data: {
+                    title: `Feil på ${machine.zoneLocation} Automat`,
+                    body: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med skilt nr ${boardNumber}`,
+                    type: 'issue',
+                    id:id,
+                },
+                topic: 'nordic', // Replace with the topic you want to use
+              };
+              
+              let response = await admin
+                .messaging()
+                .send(message)
+    
+                console.log('Message sent:', response);
 
             if(publisher == 'client' && phone){
                 console.log(phone);
