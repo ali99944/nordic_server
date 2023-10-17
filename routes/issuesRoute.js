@@ -136,7 +136,16 @@ router.get('/issues/verified', async (req, res) => {
         let issues = await Issue.find({
             $or:[
                 { status: 'redirected' },
-                { publisher: 'driver' }
+                {
+                    $and: [
+                        { publisher: 'driver' },
+                        {
+                            $not: {
+                                status: 'waiting' 
+                            }
+                        },
+                    ]
+                }
             ]
         })
         return res.status(200).json(issues.reverse())
@@ -166,6 +175,11 @@ router.put('/issues/:id/waiting', async (req, res) => {
 
 router.delete('/issues/:id', async (req, res) => {
     try{
+
+        let issue = await Issue.findOne({ _id: req.params.id })
+        await Machine.updateOne({ _id: issue.machine },{
+            'status': 'active',
+        })
         await Issue.deleteOne({ _id: req.params.id })
         return res.status(200).json('deleted')
     }catch(err){
