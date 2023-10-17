@@ -431,9 +431,7 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         issue.processes.push(`issue was fixed and closed by ${currentUser.name} at ${currentDate}`)
         await issue.save()
 
-        if(currentIssueUpdated){
-            console.log('Issue updated and closed');
-        }
+        console.log('Issue updated and closed');
 
         let machineId = currentIssue.machine
 
