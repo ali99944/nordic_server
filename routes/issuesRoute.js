@@ -342,7 +342,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         let image = process.env.BASE_URL + req.file.path.split('public')[1].replaceAll('\\','/')
         let currentIssue = await Issue.findOne({_id: req.params.id})
         const currentUser = await User.findOne({
-            accountId: pnid.toUpperCase(),
+            // accountId: pnid.toUpperCase(),
+            accountId: pnid,
         })
 
 
@@ -455,15 +456,15 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             topic: 'nordic', // Replace with the topic you want to use
           };
           
-          let response = await admin
-            .messaging()
-            .send(message)
+        //   let response = await admin
+        //     .messaging()
+        //     .send(message)
 
-            await sendAlertSMS({
-                text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
-                // to: `4747931499`
-                to: '4740088605'
-            })
+            // await sendAlertSMS({
+            //     text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
+            //     // to: `4747931499`
+            //     to: '4740088605'
+            // })
 
 
 
