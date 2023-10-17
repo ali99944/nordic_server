@@ -70,13 +70,7 @@ exports.login = async (req, res) => {
             },
           process.env.JWT_SECRET_KEY
         );
-  
-        console.log({
-          token: token,
-          user: user,
-          role: 'user'
-        });
-        
+
         return res.status(200).json({
           token: token,
           user: user,
