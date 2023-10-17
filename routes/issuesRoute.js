@@ -262,14 +262,15 @@ router.post('/issues', async (req, res) => {
 
             if(publisher == 'client' && phone){
                 console.log(phone);
-                await sendAlertSMS({
-                    text: 
+                let smsMessageFormatted = 
 `
 Hei, 
 Vi har mottatt din klager på ${machine.zoneLocation} og vi snart der for å fikse saken.
 
 Takk for beskjed.
-`,
+`
+                await sendAlertSMS({
+                    text: smsMessageFormatted,
                     to: phone.toString()
                     // to: `4747931499`
                 })
