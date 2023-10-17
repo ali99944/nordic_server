@@ -269,7 +269,7 @@ Vi har mottatt din klager på ${machine.zoneLocation} og vi snart der for å fik
 
 Takk for beskjed.
 `,
-                    to: phone
+                    to: phone.toString()
                     // to: `4747931499`
                 })
             }
