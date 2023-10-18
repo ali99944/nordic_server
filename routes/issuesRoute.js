@@ -580,6 +580,17 @@ Grunn: ${reason}
             // to: `4747931499`
         })
 
+        let drivers = [
+            
+        ]
+        let driversFormattedMessage = 
+`
+Hei,
+Ikke kontroll på ${issue.zoneLocation} til nærmere beskjed.
+
+Drift, Parknordic
+`
+
         return res.status(200).json({message: smsMessageFormatted})
     }catch(error){
         console.log(error.message)
