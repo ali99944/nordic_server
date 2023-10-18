@@ -9,6 +9,8 @@ const { sendAlertSMS } = require('../utils/sms_service')
 const Machine = require('../models/Machine')
 const moment = require('moment');
 const IssueCategory = require('../models/IssueCategory')
+const Manager = require('../models/Manager')
+const jwt = require('jsonwebtoken')
 
 router.get('/issues/categories', async (req, res) => {
     try{
@@ -342,6 +344,66 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.post('/issues/:id/technician/reports', async (req, res) => {
+    try{
+        const { id } = req.params
+        const { token } = req.headers
+        let decoded = jwt.verify(token,process.env.JWT_SECRET_KEY)
+
+
+
+        let currentIssue = await Issue.findOne({_id: id})
+        let currentTech = await Manager.findOne({
+            username: decoded.username
+        })
+
+
+        let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
+
+
+        let issue = await Issue.findOne({ _id: id })
+        issue.status = 'complete'
+        issue.fixedAt = currentDate
+        issue.processes.push(`issue was fixed and closed by ${currentTech.name} at ${currentDate}`)
+        await issue.save()
+
+        console.log('Issue updated and closed');
+
+        let machineId = currentIssue.machine
+
+        let machineActivation = await Machine.updateOne({
+            _id: machineId,
+        },{
+            status: 'active',
+        })
+
+        if(machineActivation){
+            console.log('Machine activated');
+        }
+
+        const message = {
+            data: {
+                title: `P-Autmat ${currentIssue.zoneLocation} er i orden`,
+                body: ` P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`,
+                type: 'issue_closed',
+            },
+            topic: 'nordic', // Replace with the topic you want to use
+          };
+          
+          let response = await admin
+            .messaging()
+            .send(message)
+
+            await sendAlertSMS({
+                text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`,
+                // to: `4747931499`
+                to: '4740088605'
+            })
+    }catch(error){
+
+    }
+})
+
 router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
     console.log(req.params);
     try{
@@ -372,9 +434,6 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         const now = new Date();
         const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
         const localDateString = localDate.toISOString().split('T')[0];
-
-        console.log(localDateString);
-        console.log(localDate);
 
         // Replace placeholders with dynamic data
         const template_data = {
