@@ -595,7 +595,7 @@ Drift, Parknordic
 
 for(let driver of drivers){
     await sendAlertSMS({
-        text: smsMessageFormatted,
+        text: driversFormattedMessage,
         to: driver
     })
 }
