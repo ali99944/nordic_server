@@ -399,8 +399,10 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
                 // to: `4747931499`
                 to: '4740088605'
             })
-    }catch(error){
 
+            return res.status(200).json('issue was successfully closed');
+    }catch(error){
+        return res.status(500).json(error.message)
     }
 })
 
