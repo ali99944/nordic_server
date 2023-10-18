@@ -581,7 +581,7 @@ Grunn: ${reason}
         })
 
         let drivers = [
-            
+            '4740088605'
         ]
         let driversFormattedMessage = 
 `
@@ -590,6 +590,13 @@ Ikke kontroll på ${issue.zoneLocation} til nærmere beskjed.
 
 Drift, Parknordic
 `
+
+for(let driver of drivers){
+    await sendAlertSMS({
+        text: smsMessageFormatted,
+        to: driver
+    })
+}
 
         return res.status(200).json({message: smsMessageFormatted})
     }catch(error){
