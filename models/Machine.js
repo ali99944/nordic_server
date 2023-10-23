@@ -26,6 +26,16 @@ const machineSchema = mongoose.Schema({
       required: true
     },
 
+    longitude:{
+      type: Number,
+      required: true
+    },
+
+    latitude:{
+      type: Number,
+      required: true
+    },
+
     categories:{
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'IssueCategory',

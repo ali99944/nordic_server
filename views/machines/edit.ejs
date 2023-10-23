@@ -61,19 +61,17 @@
                                                     <label for="serial" class="form-label">Gruppe nr:</label>
                                                     <input type="number" id="serial" class="form-control" value="<%= machine.serial %>" required>
                                                 </div>
-                                        
-                                                <div class="mb-3">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input" type="radio" id="active" name="status" value="active" <%= machine.status == 'active' ? 'checked' : '' %>>
-                                                        <label for="active" class="custom-control-label">Aktiv</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input custom-control-input-danger" type="radio" id="inactive" name="status" value="inactive" <%= machine.status == 'inactive' ? 'checked' : '' %>>
-                                                        <label for="inactive" class="custom-control-label">Inaktiv</label>
-                                                    </div>
-                                                      
-                                                
+
+                                                <div class="mb-3 form-group">
+                                                    <label for="initialCoordinates" class="form-label">breddegrad</label>
+                                                      <input type="text" id="lati" name="lati" class="form-control mr-2" placeholder="Breddegrad">
                                                 </div>
+        
+                                                  <div class="mb-3 form-group">
+                                                    <label for="initialCoordinates" class="form-label">lengdegrad</label>
+                                                    <input type="text" id="long" name="long" class="form-control" placeholder="Lengdegrad">
+                                                </div>
+                                
                                                 <div class="form-group">
                                                     <label>Route</label>
                                                     <select class="custom-select" id="zone">
@@ -172,9 +170,9 @@ var Toast = Swal.mixin({
   async function updateMachine() {
             const machineId = '<%= machine._id %>';
             const serial = document.getElementById('serial').value;
-            const statusActive = document.getElementById('active').checked;
-            const status = statusActive ? 'active' : 'inactive';
             const zoneLocation = document.getElementById('zoneLocation').value;
+            const latitude = document.getElementById('lati').value;
+            const longitude = document.getElementById('long').value;
             const zone = document.getElementById('zone').value;
             const categories = $("#category").val()
 
@@ -185,6 +183,8 @@ var Toast = Swal.mixin({
                 zone,
                 zoneLocation,
                 categories,
+                latitude,
+                longitude
             };
 
             try {
