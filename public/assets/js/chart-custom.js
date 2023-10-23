@@ -5942,6 +5942,8 @@ if (jQuery('#calendar1').length) {
 
       // Exclude Antartica
       polygonSeries.exclude = ["AQ"];
+      polygonSeries.include = ["NO"]
+
 
       // Make map load polygon (like country names) data from GeoJSON
       polygonSeries.useGeodata = true;
@@ -5970,7 +5972,7 @@ if (jQuery('#calendar1').length) {
       circle.propertyFields.fill = "color";
 
       var circle2 = imageSeries.mapImages.template.createChild(am4core.Circle);
-      circle2.radius = 3;
+      circle2.radius = 5;
       circle2.propertyFields.fill = "color";
 
 
@@ -5980,106 +5982,19 @@ if (jQuery('#calendar1').length) {
 
 
       function animateBullet(circle) {
-        var animation = circle.animate([{ property: "scale", from: 1, to: 3 }, { property: "opacity", from: 1, to: 0 }], 1000, am4core.ease.circleOut);
+        var animation = circle.animate([{ property: "scale", from: 1, to: 6 }, { property: "opacity", from: 1, to: 0 }], 1000, am4core.ease.circleOut);
         animation.events.on("animationended", function (event) {
           animateBullet(event.target.object);
         })
       }
 
-      var colorSet = new am4core.ColorSet();
+      // var colorSet = new am4core.ColorSet();
 
       imageSeries.data = [{
-        "title": "Brussels",
-        "latitude": 50.8371,
-        "longitude": 4.3676,
-        "color": colorSet.next()
-      }, {
-        "title": "Copenhagen",
-        "latitude": 55.6763,
-        "longitude": 12.5681,
-        "color": colorSet.next()
-      }, {
-        "title": "Paris",
-        "latitude": 48.8567,
-        "longitude": 2.3510,
-        "color": colorSet.next()
-      }, {
-        "title": "Reykjavik",
-        "latitude": 64.1353,
-        "longitude": -21.8952,
-        "color": colorSet.next()
-      }, {
-        "title": "Moscow",
-        "latitude": 55.7558,
-        "longitude": 37.6176,
-        "color": colorSet.next()
-      }, {
-        "title": "Madrid",
-        "latitude": 40.4167,
-        "longitude": -3.7033,
-        "color": colorSet.next()
-      }, {
-        "title": "London",
-        "latitude": 51.5002,
-        "longitude": -0.1262,
-        "url": "http://www.google.co.uk",
-        "color": colorSet.next()
-      }, {
-        "title": "Peking",
-        "latitude": 39.9056,
-        "longitude": 116.3958,
-        "color": colorSet.next()
-      }, {
-        "title": "New Delhi",
-        "latitude": 28.6353,
-        "longitude": 77.2250,
-        "color": colorSet.next()
-      }, {
-        "title": "Tokyo",
-        "latitude": 35.6785,
-        "longitude": 139.6823,
-        "url": "http://www.google.co.jp",
-        "color": colorSet.next()
-      }, {
-        "title": "Ankara",
-        "latitude": 39.9439,
-        "longitude": 32.8560,
-        "color": colorSet.next()
-      }, {
-        "title": "Buenos Aires",
-        "latitude": -34.6118,
-        "longitude": -58.4173,
-        "color": colorSet.next()
-      }, {
-        "title": "Brasilia",
-        "latitude": -15.7801,
-        "longitude": -47.9292,
-        "color": colorSet.next()
-      }, {
-        "title": "Ottawa",
-        "latitude": 45.4235,
-        "longitude": -75.6979,
-        "color": colorSet.next()
-      }, {
-        "title": "Washington",
-        "latitude": 38.8921,
-        "longitude": -77.0241,
-        "color": colorSet.next()
-      }, {
-        "title": "Kinshasa",
-        "latitude": -4.3369,
-        "longitude": 15.3271,
-        "color": colorSet.next()
-      }, {
-        "title": "Cairo",
-        "latitude": 30.0571,
-        "longitude": 31.2272,
-        "color": colorSet.next()
-      }, {
-        "title": "Pretoria",
-        "latitude": -25.7463,
-        "longitude": 28.1876,
-        "color": colorSet.next()
+        "title": "No Te",
+        "latitude": 62.620874,
+        "longitude": 11.051608,
+        "color": 'green'
       }];
 
       const body = document.querySelector('body')
