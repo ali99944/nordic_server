@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="card card-block card-stretch card-height">
@@ -57,11 +57,10 @@
                                     <div class="bg-danger icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-funnel-dollar"></i>
                                     </div>
-                                    <span class="text-primary"><i class="ri-arrow-up-fill mr-1"></i> +12.12%</span>
                                 </div>
                                 <div class="mt-4 ">
-                                    <h3>76.64k</h3>
-                                    <span class="mb-0">Google ads Conversions</span>
+                                    <h3><%= totalIssues %></h3>
+                                    <span class="mb-0">Total Issues</span>
                                 </div>
                             </div>
                         </div>
@@ -73,12 +72,11 @@
                                     <div class="bg-white icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-money-check-alt text-primary"></i>
                                     </div>
-                                    <span class="text-white"><i class="ri-arrow-down-line mr-1"></i> -42.72% </span>
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3 class="text-white">$7,323.34</h3>
-                                    <span class="mb-0  text-white">Google Ads Cost</span>
+                                    <h3 class="text-white"><%= completedIssues %></h3>
+                                    <span class="mb-0  text-white">Completed Issues</span>
                                 </div>
                             </div>
                         </div>
@@ -90,12 +88,11 @@
                                     <div class="bg-success icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="lar la-hand-pointer"></i>
                                     </div>
-                                    <span class="text-primary"> <i class="ri-arrow-up-fill mr-1"></i> +42.72%</span>
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3>4,043</h3>
-                                    <span class="mb-0">Google Ads Clicks</span>
+                                    <h3><%= waitingIssues %></h3>
+                                    <span class="mb-0">Issues In Wait</span>
                                 </div>
                             </div>
                         </div>
@@ -107,13 +104,12 @@
                                     <div class="bg-info icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-file-invoice-dollar"></i>
                                     </div>
-                                    <span class="text-danger"><i class="ri-arrow-down-line mr-1"></i> -42.72%
                                         </span>
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3>76.56.23%</h3>
-                                    <span class="mb-0">Google Ads Conversions Rate</span>
+                                    <h3><%= inCompletedIssues %></h3>
+                                    <span class="mb-0">In-Completed Issues</span>
                                 </div>
                             </div>
                         </div>
@@ -125,12 +121,11 @@
                                     <div class="bg-orange icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-signal"></i>
                                     </div>
-                                    <span class="text-primary"><i class="ri-arrow-up-fill mr-1"></i> +42.72%</span>
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3>76.64k</h3>
-                                    <span class="mb-0">Google ads cost Conversions</span>
+                                    <h3><%= issuePublishedByDriver %></h3>
+                                    <span class="mb-0">Issues By Driver</span>
                                 </div>
                             </div>
                         </div>
@@ -142,70 +137,19 @@
                                     <div class="bg-skyblue icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-mouse-pointer"></i>
                                     </div>
-                                    <span class="text-danger"><i class="ri-arrow-down-line mr-1"></i> -42.72%
-                                        </span>
+                                 
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3>53.6k</h3>
-                                    <span class="mb-0">Google ads Impressions Rate</span>
+                                    <h3><%= issueSolvedByDriver %></h3>
+                                    <span class="mb-0">Issue Solved By Driver</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card card-block card-stretch card-height rtl-card">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Top Keywords (Conversions)</h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="iq-details">
-                            <h5 class="title">Agency Analytics</h5>
-                            <div class="iq-progress-bar bg-primary-light mt-2">
-                                <span class="bg-primary iq-progress progress-1" data-percent="67">
-                                    <span class="progress-text-one bg-primary">67%</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">Seo Report</h5>
-                            <div class="iq-progress-bar bg-orange-light mt-2 text-white">
-                                <span class="bg-orange iq-progress progress-1" data-percent="49">
-                                    <span class="progress-text-one bg-orange">49%</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">Social Media reporting</h5>
-                            <div class="iq-progress-bar bg-info-light mt-2">
-                                <span class="bg-info iq-progress progress-1" data-percent="86">
-                                    <span class="progress-text-one bg-info">86%</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">Web Ads</h5>
-                            <div class="iq-progress-bar bg-success-light mt-2">
-                                <span class="bg-success iq-progress progress-1" data-percent="47">
-                                    <span class="progress-text-one bg-success">47%</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">YouTube Ads</h5>
-                            <div class="iq-progress-bar bg-danger-light mt-2">
-                                <span class="bg-danger iq-progress progress-1" data-percent="79">
-                                    <span class="progress-text-one bg-danger">79%</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+       
             <div class="col-lg-8 col-md-6">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
@@ -219,16 +163,99 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-4 col-md-6">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
                         <div class="header-title">
-                            <h4 class="card-title mb-1">Statistic by gender</h4>
-                            <span class="mb-0">Mar 17 - Apr 03</span>
+                            <h4 class="card-title mb-1">Machines Statistic</h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <div id="layout-3-chart-02"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card card-block card-stretch card-height ">
+                    <div class="card-header border-none">   
+                        <div class="header-title">
+                            <h4 class="card-title">Current Issues</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table text-center mb-0 table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Dato</th>
+                                        <th>Seriell</th>
+                                        <th>Sone</th>
+                                        <th>Category</th>
+                                        <th>Problem</th>
+                                        <th>Importance</th>
+                                        <th>Rute</th>
+                                        <th>Status</th>
+                                        <th>Up Time</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% 
+                                        let importanceLevelJumpTable = {
+                                            1: 'High',
+                                            2: 'Medium',
+                                            3: 'Low',
+                                        }    
+
+                                        let importanceLevelColorJumpTable = {
+                                            1: 'red',
+                                            2: 'gold',
+                                            3: 'green'
+                                        }
+                                    %>
+                                        <% if (issues.length === 0) { %>
+                                            <tr>
+                                                <td colspan="6">Ingen problemrapporter ennå</td>
+                                            </tr>
+                                        <% } else { %>
+                                            <% issues.forEach(report => { %>
+                                                <tr>
+                                                    <td><%= report.date %></td>
+                                                    <td><%= report.serial %></td>
+                                                    <td><%= report.zone %></td>
+                                                    <td><%= report.category %></td>
+                                                    <td><%= report.problem %></td>
+                                                    <td style="color: <%= importanceLevelColorJumpTable[report.importanceLevel] %>;"><%= importanceLevelJumpTable[report.importanceLevel] %></td>
+                                                    <td><%= report.zoneLocation %></td>
+                                                    <td><%= report.status %></td>
+                                                    <td date="<%= report.date %>" class="live-time">-</td>
+                                                
+                                                </tr>
+                            
+                                                <div class="modal fade" id="deleteReportModal<%= report._id %>" tabindex="-1" aria-labelledby="deleteReportModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteReportModalLabel">Slett rapportbekreftelse</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Er du sikker på at du vil slette denne problemrapporten?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteReport('<%= report._id %>')" id="confirmDeleteBtn">Slett</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% }); %>
+                                        <% } %>
+                                        </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -248,11 +275,10 @@
                                     </div>
                                 </div>
                                 <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Anonymous</h5>
-                                    <p class="mb-0 font-size-14">Creative Performance</p>
+                                    <h5>Average Issue Solve Time</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4>268</h4>
+                                    <h4><%= issueSolvedHoursAverage %></h4>
                                 </div>
                             </li>
                             <li class="d-flex mb-4 align-items-center">
@@ -262,11 +288,10 @@
                                     </div>
                                 </div>
                                 <div class="media-support-info ml-3 rtl-ml-0 rtl-mr-3">
-                                    <h5>Excessive Clicking</h5>
-                                    <p class="mb-0 font-size-14">Media Performance</p>
+                                    <h5>Average Waiting Time</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4>4342</h4>
+                                    <h4><%= issueSolvedWaitingHoursAverage %></h4>
                                 </div>
                             </li>
                             <li class="d-flex mb-4 align-items-center">
@@ -276,11 +301,10 @@
                                     </div>
                                 </div>
                                 <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Premium Impressions</h5>
-                                    <p class="mb-0 font-size-14">Reach Performance</p>
+                                    <h5>Average Redirect Time</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4>6565</h4>
+                                    <h4><%= issueRedirectHoursAverage %></h4>
                                 </div>
                             </li>
                             <li class="d-flex  align-items-center">
@@ -290,11 +314,11 @@
                                     </div>
                                 </div>
                                 <div class="media-support-info ml-3 rtl-ml-0 rtl-mr-3">
-                                    <h5>Google Ads</h5>
-                                    <p class="mb-0 font-size-14">Premium Performance</p>
+                                    <h5>Fastest Person</h5>
+                                    <p class="mb-0 font-size-14"><%= fastestPerson %></p>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4>32423</h4>
+                                    <h4><%= fastestPersonAvgHours %></h4>
                                 </div>
                             </li>
                         </ul>
@@ -305,94 +329,85 @@
                 <div class="card card-block card-stretch card-height">
                 <div class="card-header border-none">
                     <div class="header-title">
-                        <h4 class="card-title">Facebook Overview</h4>
+                        <h4 class="card-title">Total Fix Average Time</h4>
                     </div>
                 </div>
                 <div class="card-body">
                     <div id="layout-1-chart-06"></div>
+                  
+                    <div>
+                        <label>Filter Data:</label>
+                        <input type="date" id="startDate" placeholder="Start Date">
+                        <input type="date" id="endDate" placeholder="End Date">
+                        <button id="applyFilter">Apply Filter</button>
+                      </div>
                 </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card card-block card-stretch card-height ">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Target Population for you brand</h4>
+                    <div class="card-header border-none">   
+                        <div class="header-title d-flex justify-content-between">
+                            <h4 class="card-title">Recent Reports</h4>
+                            <div class="btn btn-primary">Show All</div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table mb-0 table-borderless">
+                            <table class="table mb-0 table-borderless text-center">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Target Population</th>
-                                        <th scope="col">Visitor</th>
-                                        <th scope="col">Potential</th>
-                                        <th scope="col">Actual</th>
-                                        <th scope="col">Reached%</th>
+                                        <th>Dato</th>
+                                        <th>Seriell</th>
+                                        <th>Sone</th>
+                                        <th>Rute</th>
+                                        <th>PDF</th>
+                                        <th>Handlinger</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span>Man aged between<b> 18-24</b></span></td>
-                                        <td>45,332</td>
-                                        <td>25,500-32,000</td>
-                                        <td>36,070</td>
-                                        <td>
-                                            <div class="btn btn-primary">42.12% <i class="ri-arrow-up-fill"></i></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span>Man aged between<b> 25-34</b></span> </td>
-                                        <td>13,830</td>
-                                        <td>32,500-37,000</td>
-                                        <td>39,970</td>
-                                        <td>
-                                            <div class="btn btn-danger">12.93% <i class="ri-arrow-down-line"></i></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span>Man aged between<b>35-44</b></span></td>
-                                        <td>95,98</td>
-                                        <td>37,500-43,000</td>
-                                        <td>46,990</td>
-                                        <td>
-                                            <div class="btn btn-danger">02.76% <i class="ri-arrow-down-line"></i></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span>Man aged between<b> 44-60</b></span></td>
-                                        <td>58,732</td>
-                                        <td>44,500-49,000</td>
-                                        <td>50,555</td>
-                                        <td>
-                                            <div class="btn btn-primary">82.12% <i class="ri-arrow-up-fill"></i></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span>Man aged between<b> 60+</b></span></td>
-                                        <td>95,332</td>
-                                        <td>51,500-59,790</td>
-                                        <td>61,786</td>
-                                        <td>
-                                            <div class="btn btn-primary">92.41% <i class="ri-arrow-up-fill"></i></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                    </thead>
+                                    <tbody>
+                                        <% if (reports.length === 0) { %>
+                                            <tr>
+                                                <td colspan="6">Ingen problemrapporter ennå</td>
+                                            </tr>
+                                        <% } else { %>
+                                            <% reports.forEach(report => { %>
+                                                <tr>
+                                                    <td><%= report.date %></td>
+                                                    <td><%= report.serial %></td>
+                                                    <td><%= report.zone %></td>
+                                                    <td><%= report.zoneLocation %></td>
+                                                    <td><a href="<%= report.pdf %>" target="_blank">Se PDF</a></td>
+                                                    <td class="d-flex custom-issue-report-controls">
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteReportModal<%= report._id %>">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                            
+                                                <div class="modal fade" id="deleteReportModal<%= report._id %>" tabindex="-1" aria-labelledby="deleteReportModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteReportModalLabel">Slett rapportbekreftelse</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Er du sikker på at du vil slette denne problemrapporten?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteReport('<%= report._id %>')" id="confirmDeleteBtn">Slett</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% }); %>
+                                        <% } %>
+                                        </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Media Values</h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="layout-3-chart-04">
                         </div>
                     </div>
                 </div>
@@ -443,7 +458,7 @@
     <script src="/assets/js/rtl.js"></script>
     
     <!-- Chart Custom JavaScript -->
-    <script src="/assets/js/chart-custom.js"></script>
+    <!-- <script src="/assets/js/chart-custom.js"></script> -->
     
     <!-- slider JavaScript -->
     <script src="/assets/js/slider.js"></script>
@@ -451,6 +466,216 @@
     <!-- app JavaScript -->
     <script src="/assets/js/app.js"></script>
 
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+    <script>
+        "use strict";
+        if (jQuery('#layout-3-chart-02').length) {
+            console.log('yip');
+            console.log(jQuery('#layout-3-chart-02'));
+    Highcharts.chart('layout-3-chart-02', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        height: 300,
+        type: 'pie'
+      },
+      title: {
+        text: ''
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      accessibility: {
+        point: {
+          valueSuffix: '%'
+        }
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: false
+          },
+          showInLegend: true
+        }
+      },
+      colors: ["green", "gold","red"],
+      series: [{
+        name: 'Machines',
+        colorByPoint: true,
+        data: [{
+          name: 'Working',
+          y: <%- activeMachines %>,
+        }, {
+            name: 'Waiting',
+          y: <%- waitingMachines %>
+        },{
+          name: 'Out of service',
+          y: <%- inActiveMachines %>
+        }]
+      }]
+    });
+  }else{
+    console.log('not dounf');
+  }
+
+  am4core.ready(function () {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create map instance
+var chart = am4core.create("layout-3-chart-01", am4maps.MapChart);
+// Set map definition
+chart.geodata = am4geodata_worldLow;
+
+// Set projection
+chart.projection = new am4maps.projections.Miller();
+
+// Create map polygon series
+var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+
+// Exclude Antartica
+polygonSeries.exclude = ["AQ"];
+polygonSeries.include = ["NO"]
+
+
+// Make map load polygon (like country names) data from GeoJSON
+polygonSeries.useGeodata = true;
+
+// Configure series
+var polygonTemplate = polygonSeries.mapPolygons.template;
+polygonTemplate.fill = '#585858';
+
+polygonTemplate.tooltipText = "{name}";
+polygonTemplate.polygon.fillOpacity = 0.6;
+
+
+// Create hover state and set alternative fill color
+var hs = polygonTemplate.states.create("hover");
+hs.properties.fill = chart.colors.getIndex(0);
+
+// Add image series
+var imageSeries = chart.series.push(new am4maps.MapImageSeries());
+imageSeries.mapImages.template.propertyFields.longitude = "longitude";
+imageSeries.mapImages.template.propertyFields.latitude = "latitude";
+imageSeries.mapImages.template.tooltipText = "{title}";
+imageSeries.mapImages.template.propertyFields.url = "url";
+
+var circle = imageSeries.mapImages.template.createChild(am4core.Circle);
+circle.radius = 4;
+circle.propertyFields.fill = "color";
+
+var circle2 = imageSeries.mapImages.template.createChild(am4core.Circle);
+circle2.radius = 3;
+circle2.propertyFields.fill = "color";
+
+
+circle2.events.on("inited", function (event) {
+  animateBullet(event.target);
+})
+
+
+function animateBullet(circle) {
+  var animation = circle.animate([{ property: "scale", from: 1, to: 3 }, { property: "opacity", from: 1, to: 0 }], 1000, am4core.ease.circleOut);
+  animation.events.on("animationended", function (event) {
+    animateBullet(event.target.object);
+  })
+}
+
+// var colorSet = new am4core.ColorSet();
+
+let machines = <%- machines %>
+console.log(machines);
+imageSeries.data = machines.map(m => {
+    return {
+        "title": m.zoneLocation,
+        "latitude": m.latitude,
+        "longitude": m.longitude,
+        "color": m.status == 'active' ? 'green' : m.status == 'waiting' ? 'gold' : 'red'
+    }
+});
+
+const body = document.querySelector('body')
+if (body.classList.contains('dark')) {
+  amChartUpdate(chart, {
+    dark: true
+  })
+}
+
+document.addEventListener('ChangeColorMode', function (e) {
+  amChartUpdate(chart, e.detail)    
+})
+
+});
+
+// Sample data (you can replace this with your actual data)
+var initialData = <%- parsedGroupedDates %>
+
+function updateChart(data) {
+  var options = {
+    series: [
+      {
+        name: 'Total Likes',
+        data: data.map(item => item.value)
+      }
+    ],
+    chart: {
+      type: 'bar',
+      height: 310
+    },
+    xaxis: {
+      type: 'datetime',
+      categories: data.map(item => moment(item.date).format('YYYY-MM-DD'))
+    },
+
+    plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '30%',
+          },
+        }
+    // ... Other chart options ...
+  };
+
+  var chart = new ApexCharts(document.querySelector("#layout-1-chart-06"), options);
+  chart.render();
+}
+
+document.getElementById("applyFilter").addEventListener("click", function () {
+  var startDate = moment(document.getElementById("startDate").value);
+  var endDate = moment(document.getElementById("endDate").value);
+  
+  console.log(startDate);
+  console.log(endDate);
+  // Sample data filtering logic based on date range
+  var filteredData = initialData.filter(item => {
+    var currentDate = moment(item.date,'YYYY-MM-DD');
+    console.log(currentDate);
+    console.log(currentDate.isBetween(startDate, endDate, null, "[]"));
+    return currentDate.isBetween(startDate, endDate, null, "[]");
+  });
+  
+  updateChart(filteredData);
+});
+
+// Initial chart rendering
+updateChart(initialData);
+
+let liveTimes = document.querySelectorAll('.live-time')
+setInterval(() => {
+    for(let live in liveTimes) {
+        let startDate = moment(liveTimes.item(live).getAttribute('date'))
+        let endDate = moment(moment(moment.now()).format('yyyy-MM-DD HH:mm:ss'))
+        let diff = moment.duration(endDate.diff(startDate))
+        liveTimes.item(live).textContent = moment.utc(diff.asMilliseconds()).format("DD HH:mm:ss");
+    }
+},1000)
+    </script>
 </body>
 
 </html>

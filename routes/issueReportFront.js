@@ -4,7 +4,26 @@ const IssueReport = require('../models/IssueReport')
 const jwt = require('jsonwebtoken')
 const Manager = require('../models/Manager')
 
+const Machine = require('../models/Machine')
+const Issue = require('../models/Issue')
+const moment = require('moment');
 
+function findKeyWithLowestValue(obj) {
+  let lowestValue = Infinity;
+  let lowestKey = null;
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      if (value < lowestValue) {
+        lowestValue = value;
+        lowestKey = key;
+      }
+    }
+  }
+
+  return lowestKey;
+}
 
 router.get('/reports', async (req, res) => {
   try{
@@ -25,7 +44,178 @@ router.get('/reports', async (req, res) => {
 });
 
 router.get('/reports/dashboard', async (req, res) => {
-  return res.render('reports/dashboard')
+  let machines = await Machine.find()
+  let waitingMachines = await Machine.find({
+    status: 'waiting'
+  })
+  let activeMachines = await Machine.find({
+    status: 'active'
+  })
+  let inActiveMachines = await Machine.find({
+    status: 'inactive'
+  })
+
+  let issues = await Issue.find()
+  let waitingIssues = await Issue.find({
+    status: 'waiting'
+  })
+
+  let completedIssues = await Issue.find({
+    status: 'complete'
+  })
+
+  let inCompletedIssues = await Issue.find({
+    status: 'incomplete'
+  })
+
+  let issuePublishedByDriver = await Issue.find({
+    publisher: 'driver'
+  })
+
+  let issueSolvedByDriver = await Issue.find({
+    fixedBy: 'driver'
+  })
+
+  let issueSolvedHours = completedIssues.map(ic => {
+    let end = moment(ic.fixedAt)
+    let start = moment(ic.date)
+
+    let diff = moment.duration(end.diff(start))
+    return diff.asHours()
+  })
+
+  issueSolvedHours = issueSolvedHours.filter(Boolean)
+  let issueSolvedHoursSum = issueSolvedHours.reduce((sum, hour) => sum + hour,0)
+  let issueSolvedHoursAverage = (issueSolvedHoursSum / issueSolvedHours.length).toFixed(2)
+
+
+  let issuesWereInWaitingState = await Issue.find({
+    wasInWaitingState: true
+  })
+
+  let issueWaitingHours = issuesWereInWaitingState.map(iws => {
+    let end = moment(iws.WaitingEndTime)
+    let start = moment(iws.waitingStartTime)
+
+    let diff = moment.duration(end.diff(start))
+    return diff.asHours()
+  })
+
+  issueWaitingHours = issueWaitingHours.filter(Boolean)
+  let issueSolvedWaitingHoursSum = issueWaitingHours.reduce((sum, hour) => sum + hour,0)
+  let issueSolvedWaitingHoursAverage = issueWaitingHours.length > 0 ? 
+    (issueSolvedWaitingHoursSum / issueWaitingHours.length).toFixed(2) : 0
+
+  let issueWereRedirected = await Issue.find({
+    wasRedirected: true
+  })
+
+  let issueRedirectHours = issueWereRedirected.map(iwr =>{
+    let end = moment(iwr.fixedAt)
+    let start = moment(iwr.redirectStartTime)
+
+    let diff = moment.duration(end.diff(start))
+    return diff.asHours()
+  })
+
+  issueRedirectHours = issueRedirectHours.filter(Boolean)
+  let issueRedirectHoursSum = issueRedirectHours.reduce((sum, hour) => sum + hour, 0)
+  let issueRedirectHoursAverage = issueRedirectHours.length > 0 ?
+    (issueRedirectHoursSum / issueRedirectHours.length) : 0
+
+    let reports = (await IssueReport.find()).reverse()
+    reports = reports.slice(0,5)
+
+    let issueGroupedIntoIdentifiers = completedIssues.reduce((result, item) => {
+      const key = item.fixedByIdentifier;
+      if (key !== undefined && key !== null) {
+        if (!result[key]) {
+          result[key] = [];
+        }
+        result[key].push(item);
+      }
+      return result;
+    }, {});
+
+    
+
+    let holder = {}
+    
+    Object.keys(issueGroupedIntoIdentifiers).forEach((key) =>{
+      let list = issueGroupedIntoIdentifiers[key]
+      let sumx = list.reduce((sum, item) =>{
+        let end = moment(item.fixedAt)
+      let start = moment(item.date)
+
+   
+
+      let diff = moment.duration(end.diff(start))
+      return sum + diff.asHours()
+      },0)
+
+      avgx = sumx / list.length
+
+      holder[key] = avgx
+    })
+
+
+    let fastestIssueKeySolveTime = findKeyWithLowestValue(holder)
+
+
+    let issueGroupedIntoDates = completedIssues.reduce((result, item) => {
+      let key = item.date;
+      if (key !== undefined && key !== null) {
+        key = moment(key).format('YYYY-MM-DD')
+
+        if (!result[key]) {
+          result[key] = [];
+        }
+        let end = moment(item.fixedAt)
+        let start = moment(item.date)
+        
+        let diff = moment.duration(end.diff(start))
+        result[key].push(diff.asHours())
+        result[key] = result[key].filter(Boolean)
+      }
+      return result;
+    }, {});
+
+    let parsedGroupedDates = []
+    for(let key in issueGroupedIntoDates){
+      const values = issueGroupedIntoDates[key];
+    const sum = values.reduce((acc, value) => acc + value, 0);
+    const average = sum / values.length;
+    parsedGroupedDates.push({
+      date: key,
+      value: average.toFixed(2),
+    })
+    }
+
+
+  return res.render('reports/dashboard',{
+    machines: JSON.stringify(machines),
+    issues: [...inCompletedIssues,...waitingIssues],
+    waitingMachines: waitingMachines.length,
+    activeMachines: activeMachines.length,
+    inActiveMachines:inActiveMachines.length,
+
+    totalIssues: issues.length,
+    waitingIssues: waitingIssues.length,
+    completedIssues: completedIssues.length,
+    inCompletedIssues: inCompletedIssues.length,
+    issuePublishedByDriver: issuePublishedByDriver.length,
+    issueSolvedByDriver: issueSolvedByDriver.length,
+
+    issueSolvedHoursAverage,
+    issueSolvedWaitingHoursAverage,
+    issueRedirectHoursAverage,
+    reports,
+    fastestPerson: fastestIssueKeySolveTime,
+    fastestPersonAvgHours: holder[fastestIssueKeySolveTime],
+
+    issueGroupedIntoDates,
+    parsedGroupedDates: JSON.stringify(parsedGroupedDates)
+  })
 })
 
 module.exports = router

@@ -31,6 +31,35 @@ const IssueSchema = new mongoose.Schema({
         default: null
     },
 
+    fixedByIdentifier:{
+        type: String,
+        default: null
+    },
+
+    wasRedirected:{
+        type: Boolean,
+        default: false
+    },
+
+    redirectStartTime:{
+        type: String,
+        default: null
+    },
+
+    waitingStartTime:{
+        type: String,
+        default: null
+    },
+
+    WaitingEndTime:{
+        type: String,
+        default: null
+    },
+    wasInWaitingState:{
+        type: Boolean,
+        default: false
+    },
+
     processes:{
         type: [String],
         default: []

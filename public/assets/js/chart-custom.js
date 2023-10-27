@@ -6041,18 +6041,19 @@ if (jQuery('#calendar1').length) {
           showInLegend: true
         }
       },
-      colors: ["#876cfe", "#05bbc9"],
+      colors: ["#876cfe", "#05bbc9","red"],
       series: [{
-        name: 'Brands',
+        name: 'Machines',
         colorByPoint: true,
         data: [{
-          name: 'Man : 3,272978',
+          name: 'Working',
           y: 80,
-          sliced: true,
-          selected: true
         }, {
-            name: 'Woman : 83,272978',
+            name: 'Waiting',
           y: 30
+        },{
+          name: 'Out of service',
+          y: 120
         }]
       }]
     });

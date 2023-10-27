@@ -10,6 +10,7 @@ const machineSchema = mongoose.Schema({
     },
     status:{
       type: String,
+      enum: ['active','waiting','inactive'],
       default: 'active'
     },
     qrcode:{

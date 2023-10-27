@@ -167,6 +167,11 @@ router.put('/issues/:id/waiting', async (req, res) => {
         issue.statusText = reason
 
         await issue.save()
+
+        let machineId = issue.machine
+        await Machine.updateOne({
+            _id: machineId
+        },{ status: 'waiting'})
         return res.status(200).json('moved to waiting')
     }catch(err){
         return res.status(500).json(err.message)
@@ -212,6 +217,9 @@ router.post('/issues', async (req, res) => {
             const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
             const localDateString = localDate.toISOString().split('T')[0];
 
+            let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
+
+
             const issueNotification = new IssueNotification({
                 title: `Feil på ${machine.zoneLocation} Automat`,
                 body: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med ${publisher == 'driver' ? 'pnid ' + pnid : 'skilt nr' + boardNumber}`,
@@ -222,14 +230,11 @@ router.post('/issues', async (req, res) => {
 
             await issueNotification.save()
 
-            let currentDate = moment(moment.now()).format('yyyy-MM-DD HH:mm:ss')
-            let localeDate = moment(moment.now()).format('yyyy-MM-DD')
-
             const issue = new Issue({
                 title: `Feil på Automat ${machine.zoneLocation}`,
                 description: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med ${publisher == 'driver' ? 'pnid ' + pnid : 'skilt nr' + boardNumber}`,
                 notes: notes ?? null,
-                date: localeDate,
+                date: currentDate,
                 machine: id ,
                 serial: machine.serial,
                 zone: machine.zone.name,
