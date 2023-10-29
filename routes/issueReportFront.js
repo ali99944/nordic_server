@@ -113,49 +113,7 @@ router.get('/reports/dashboard', async (req, res) => {
     let reports = (await IssueReport.find()).reverse()
     reports = reports.slice(0,5)
 
-    let issueGroupedIntoIdentifiers = completedIssues.reduce((result, item) => {
-      const key = item.fixedByIdentifier;
-      if (key !== undefined && key !== null) {
-        if (!result[key]) {
-          result[key] = [];
-        }
-        result[key].push(item);
-      }
-      return result;
-    }, {});
 
-    
-
-    let holder = {}
-    
-    Object.keys(issueGroupedIntoIdentifiers).forEach((key) =>{
-      let list = issueGroupedIntoIdentifiers[key]
-      let sumx = list.reduce((sum, item) =>{
-        let end = moment(item.fixedAt)
-      let start = moment(item.date)
-
-   
-
-      let diff = moment.duration(end.diff(start))
-      return sum + diff.asHours()
-      },0)
-
-      avgx = sumx / list.length
-
-      holder[key] = avgx
-    })
-
-    let holderSortableArray = []
-    for(let key in holder){
-      holderSortableArray.push({
-        identifier: key,
-        value: holder[key]
-      })
-    }
-
-    holderSortableArray.sort((a,b) =>{
-      return a.value - b.value
-    })
 
 
 
@@ -189,7 +147,95 @@ router.get('/reports/dashboard', async (req, res) => {
     }
 
 
+    let issues_2 = await Issue.find()
+let issuesGroupedIntoMonths = issues_2.reduce((result, item) =>{
+  let key = item.date
+  if(key !== undefined && key !== null){
+    key = moment(key).format('YYYY-MM')
+    if (!result[key]) {
+      result[key] = [];
+    }
 
+    result[key].push(item)
+    return result
+  }
+},{})
+
+
+Object.keys(issuesGroupedIntoMonths).forEach(key => {
+    let issues = issuesGroupedIntoMonths[key]
+
+    let issueGroupedIntoSerials = issues.reduce((result, item) => {
+      const key = item.zoneLocation;
+      if (key !== undefined && key !== null) {
+        if (!result[key]) {
+          result[key] = [];
+        }
+        result[key].push(item);
+      }
+      return result;
+    }, {});
+
+    let groupsIntoNumbers = 0
+    for(let key in issueGroupedIntoSerials){
+      if(issueGroupedIntoSerials.hasOwnProperty(key) && issueGroupedIntoSerials[key].length > 2){
+        groupsIntoNumbers += Math.floor(issueGroupedIntoSerials[key].length / 5)
+      }
+    }
+
+    issuesGroupedIntoMonths[key] = {
+      totalIssues: issuesGroupedIntoMonths[key].length,
+      totalRepeated: groupsIntoNumbers
+    }
+})
+
+
+let issueGroupedIntoIdentifiers = completedIssues.reduce((result, item) => {
+  const key = item.fixedByIdentifier;
+  if (key !== undefined && key !== null) {
+    if (!result[key]) {
+      result[key] = [];
+    }
+    result[key].push(item);
+  }
+  return result;
+}, {});
+
+
+
+let holder = {}
+
+Object.keys(issueGroupedIntoIdentifiers).forEach((key) =>{
+  let list = issueGroupedIntoIdentifiers[key]
+  let sumx = list.reduce((sum, item) =>{
+    let end = moment(item.fixedAt)
+  let start = moment(item.date)
+
+
+
+  let diff = moment.duration(end.diff(start))
+  return sum + diff.asHours()
+  },0)
+
+  avgx = sumx / list.length
+
+  holder[key] = avgx
+})
+
+let holderSortableArray = []
+for(let key in holder){
+  holderSortableArray.push({
+    identifier: key,
+    value: holder[key]
+  })
+}
+
+holderSortableArray.sort((a,b) =>{
+  return a.value - b.value
+})
+
+
+console.log(holderSortableArray);
 
   return res.render('reports/dashboard',{
     machines: JSON.stringify(machines),
@@ -198,18 +244,10 @@ router.get('/reports/dashboard', async (req, res) => {
     activeMachines: activeMachines.length,
     inActiveMachines:inActiveMachines.length,
 
-    totalIssues: issues.length,
-    waitingIssues: waitingIssues.length,
-    completedIssues: completedIssues.length,
-    inCompletedIssues: inCompletedIssues.length,
-    issuePublishedByDriver: issuePublishedByDriver.length,
-    issueSolvedByDriver: issueSolvedByDriver.length,
+    issuesGroupedIntoMonths: JSON.stringify(issuesGroupedIntoMonths),
+    holderSortableArray: JSON.stringify(holderSortableArray),
 
-    issueSolvedHoursAverage,
-    issueSolvedWaitingHoursAverage,
-    issueRedirectHoursAverage,
     reports,
-    holderSortableArray,
 
     issueGroupedIntoDates,
     parsedGroupedDates: JSON.stringify(parsedGroupedDates)
