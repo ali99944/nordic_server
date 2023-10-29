@@ -8,23 +8,6 @@ const Machine = require('../models/Machine')
 const Issue = require('../models/Issue')
 const moment = require('moment');
 
-function findKeyWithLowestValue(obj) {
-  let lowestValue = Infinity;
-  let lowestKey = null;
-
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const value = obj[key];
-      if (value < lowestValue) {
-        lowestValue = value;
-        lowestKey = key;
-      }
-    }
-  }
-
-  return lowestKey;
-}
-
 router.get('/reports', async (req, res) => {
   try{
     let jwt_access_token = req.cookies.jwt_token
@@ -87,6 +70,10 @@ router.get('/reports/dashboard', async (req, res) => {
   issueSolvedHours = issueSolvedHours.filter(Boolean)
   let issueSolvedHoursSum = issueSolvedHours.reduce((sum, hour) => sum + hour,0)
   let issueSolvedHoursAverage = (issueSolvedHoursSum / issueSolvedHours.length).toFixed(2)
+  let fraction = issueSolvedHoursAverage.split('.')
+  fraction[0] = fraction[0] + 'H'
+  fraction[1] = ((+fraction[1] / 100) * 60).toFixed(2) + 'M'
+  issueSolvedHoursAverage = fraction.join(' ')
 
 
   let issuesWereInWaitingState = await Issue.find({
@@ -158,8 +145,18 @@ router.get('/reports/dashboard', async (req, res) => {
       holder[key] = avgx
     })
 
+    let holderSortableArray = []
+    for(let key in holder){
+      holderSortableArray.push({
+        identifier: key,
+        value: holder[key]
+      })
+    }
 
-    let fastestIssueKeySolveTime = findKeyWithLowestValue(holder)
+    holderSortableArray.sort((a,b) =>{
+      return a.value - b.value
+    })
+
 
 
     let issueGroupedIntoDates = completedIssues.reduce((result, item) => {
@@ -192,6 +189,8 @@ router.get('/reports/dashboard', async (req, res) => {
     }
 
 
+
+
   return res.render('reports/dashboard',{
     machines: JSON.stringify(machines),
     issues: [...inCompletedIssues,...waitingIssues],
@@ -210,8 +209,7 @@ router.get('/reports/dashboard', async (req, res) => {
     issueSolvedWaitingHoursAverage,
     issueRedirectHoursAverage,
     reports,
-    fastestPerson: fastestIssueKeySolveTime,
-    fastestPersonAvgHours: holder[fastestIssueKeySolveTime],
+    holderSortableArray,
 
     issueGroupedIntoDates,
     parsedGroupedDates: JSON.stringify(parsedGroupedDates)

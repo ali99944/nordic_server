@@ -22,6 +22,9 @@
     <link rel='stylesheet' href='/assets/vendor/fullcalendar/list/main.css' />
     <link rel="stylesheet" href="/assets/vendor/mapbox/mapbox-gl.css"></head>
 
+    <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+
     <style>
         #map {
             width: 100%;
@@ -48,7 +51,34 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
+
+            <div class="col-lg-8 mb-2 d-flex align-items-center">
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(6)">All</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(1)">today</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(2)">2D ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3)">week ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4)">month ago</div>
+                
+                <div class="date" id="reservationdate" data-target-input="nearest">
+                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-2 d-flex align-items-center">
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(6)">All</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(1)">today</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(2)">2D ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(3)">week ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(4)">month ago</div>
+                
+                <div class="date" id="reservationdate1" data-target-input="nearest">
+                    <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="card card-block card-stretch card-height">
@@ -57,9 +87,11 @@
                                     <div class="bg-danger icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-funnel-dollar"></i>
                                     </div>
+                                    <span class="text-primary"> <i class="ri-arrow-up-fill mr-1 fa-2x"></i></span>
+
                                 </div>
                                 <div class="mt-4 ">
-                                    <h3><%= totalIssues %></h3>
+                                    <h3 id="ti-holder">-</h3>
                                     <span class="mb-0">Total Issues</span>
                                 </div>
                             </div>
@@ -72,10 +104,12 @@
                                     <div class="bg-white icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-money-check-alt text-primary"></i>
                                     </div>
+                                    <span class="text-white"><i class="ri-arrow-down-line mr-1 fa-2x"></i></span>
+
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3 class="text-white"><%= completedIssues %></h3>
+                                    <h3 class="text-white" id="ci-holder">-</h3>
                                     <span class="mb-0  text-white">Completed Issues</span>
                                 </div>
                             </div>
@@ -88,10 +122,12 @@
                                     <div class="bg-success icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="lar la-hand-pointer"></i>
                                     </div>
+                                    <span class="text-primary"> <i class="ri-arrow-up-fill mr-1 fa-2x"></i></span>
+
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3><%= waitingIssues %></h3>
+                                    <h3 id="wi-holder">-</h3>
                                     <span class="mb-0">Issues In Wait</span>
                                 </div>
                             </div>
@@ -104,11 +140,12 @@
                                     <div class="bg-info icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-file-invoice-dollar"></i>
                                     </div>
-                                        </span>
+                                    <span class="text-white"><i class="ri-arrow-down-line mr-1 fa-2x"></i></span>
+
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3><%= inCompletedIssues %></h3>
+                                    <h3 id="ici-holder">-</h3>
                                     <span class="mb-0">In-Completed Issues</span>
                                 </div>
                             </div>
@@ -121,10 +158,12 @@
                                     <div class="bg-orange icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-signal"></i>
                                     </div>
+                                    <span class="text-primary"> <i class="ri-arrow-up-fill mr-1 fa-2x"></i></span>
+
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3><%= issuePublishedByDriver %></h3>
+                                    <h3 id="ibd-holder">-</h3>
                                     <span class="mb-0">Issues By Driver</span>
                                 </div>
                             </div>
@@ -137,11 +176,13 @@
                                     <div class="bg-skyblue icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
                                         <i class="las la-mouse-pointer"></i>
                                     </div>
+                                    <span class="text-white"><i class="ri-arrow-down-line mr-1 fa-2x"></i></span>
+
                                  
                                 </div>
 
                                 <div class="mt-4 ">
-                                    <h3><%= issueSolvedByDriver %></h3>
+                                    <h3 id="isd-holder">-</h3>
                                     <span class="mb-0">Issue Solved By Driver</span>
                                 </div>
                             </div>
@@ -149,7 +190,22 @@
                     </div>
                 </div>
             </div>
-       
+
+            <div class="col-lg-4">
+                <div class="card card-block card-height overflow-hidden">
+                    <div class="card-header border-none">
+                        <div class="header-title ">
+                            <h4 class="card-title">
+                                Solvers
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div id="leaderboard-container" class="card-body" style="overflow-y: auto; height: 200px;">
+                        
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-8 col-md-6">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
@@ -228,7 +284,7 @@
                                                     <td style="color: <%= importanceLevelColorJumpTable[report.importanceLevel] %>;"><%= importanceLevelJumpTable[report.importanceLevel] %></td>
                                                     <td><%= report.zoneLocation %></td>
                                                     <td><%= report.status %></td>
-                                                    <td date="<%= report.date %>" class="live-time">-</td>
+                                                    <td date="<%= report.date %>" class="live-time btn btn-sm btn-primary">-</td>
                                                 
                                                 </tr>
                             
@@ -263,10 +319,23 @@
                 <div class="card card-block card-stretch card-height rule-box">
                     <div class="card-header d-flex justify-content-between border-none">
                         <div class="header-title">
-                            <h4 class="card-title">IP Exclusions by Rule ( Today )</h4>
+                            <h4 class="card-title">Averages</h4>
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="d-flex align-items-center mb-1">
+                            <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(6)">All</div>
+                            <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(1)">today</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(2)">2D ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(3)">week ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(4)">month ago</div>
+                
+                <div class="date" id="reservationdate2" data-target-input="nearest">
+                    <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                        </div>
                         <ul class="perfomer-lists m-0 p-0">
                             <li class="d-flex mb-4 align-items-center">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -278,7 +347,7 @@
                                     <h5>Average Issue Solve Time</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4><%= issueSolvedHoursAverage %></h4>
+                                    <h4 id="isha-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
                             <li class="d-flex mb-4 align-items-center">
@@ -291,7 +360,7 @@
                                     <h5>Average Waiting Time</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4><%= issueSolvedWaitingHoursAverage %></h4>
+                                    <h4 id="iswhg-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
                             <li class="d-flex mb-4 align-items-center">
@@ -304,23 +373,24 @@
                                     <h5>Average Redirect Time</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4><%= issueRedirectHoursAverage %></h4>
+                                    <h4 id="idha-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
-                            <li class="d-flex  align-items-center">
+
+                            <li class="d-flex mb-4 align-items-center">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
-                                    <div class="bg-success icon iq-icon-box mr-2 rtl-ml-2 rtl-mr-0 rounded">
-                                        <i class="las la-desktop"></i>
+                                    <div class="bg-skyblue icon iq-icon-box mr-2 rtl-ml-2 rtl-mr-0 rounded">
+                                        <i class="las la-signal"></i>
                                     </div>
                                 </div>
-                                <div class="media-support-info ml-3 rtl-ml-0 rtl-mr-3">
-                                    <h5>Fastest Person</h5>
-                                    <p class="mb-0 font-size-14"><%= fastestPerson %></p>
+                                <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
+                                    <h5>Total SMS Sent</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4><%= fastestPersonAvgHours %></h4>
+                                    <h4 id="sms-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
+                  
                         </ul>
                     </div>
                 </div>
@@ -344,7 +414,7 @@
                 </div>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 <div class="card card-block card-stretch card-height ">
                     <div class="card-header border-none">   
                         <div class="header-title d-flex justify-content-between">
@@ -412,6 +482,21 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-4">
+                <div class="card card-block card-height overflow-hidden">
+                    <div class="card-header border-none">
+                        <div class="header-title ">
+                            <h4 class="card-title">
+                                Repeated Issues
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div id="repeated-container" class="card-body" style="overflow-y: auto; height: 200px;">
+                        
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -467,60 +552,68 @@
     <script src="/assets/js/app.js"></script>
 
     <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
 
     <script>
         "use strict";
         if (jQuery('#layout-3-chart-02').length) {
-            console.log('yip');
-            console.log(jQuery('#layout-3-chart-02'));
-    Highcharts.chart('layout-3-chart-02', {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        height: 300,
-        type: 'pie'
-      },
-      title: {
-        text: ''
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-      },
-      accessibility: {
-        point: {
-          valueSuffix: '%'
-        }
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-            enabled: false
-          },
-          showInLegend: true
-        }
-      },
-      colors: ["green", "gold","red"],
-      series: [{
+  Highcharts.chart('layout-3-chart-02', {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      height: 300,
+      type: 'pie'
+    },
+    title: {
+      text: ''
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+      point: {
+        valueSuffix: '%'
+      }
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true, // Set this to true to show data labels
+          format: '{point.name}: {point.percentage:.1f} %'
+        },
+        showInLegend: true
+      }
+    },
+    colors: ["green", "gold", "red"],
+    series: [
+      {
         name: 'Machines',
         colorByPoint: true,
-        data: [{
-          name: 'Working',
-          y: <%- activeMachines %>,
-        }, {
+        data: [
+          {
+            name: 'Working',
+            y: <%- activeMachines %>,
+          },
+          {
             name: 'Waiting',
-          y: <%- waitingMachines %>
-        },{
-          name: 'Out of service',
-          y: <%- inActiveMachines %>
-        }]
-      }]
-    });
-  }else{
-    console.log('not dounf');
-  }
+            y: <%- waitingMachines %>
+          },
+          {
+            name: 'Out of service',
+            y: <%- inActiveMachines %>
+          }
+        ]
+      }
+    ]
+  });
+} else {
+  console.log('not found');
+}
+
 
   am4core.ready(function () {
 
@@ -641,7 +734,7 @@ function updateChart(data) {
         }
     // ... Other chart options ...
   };
-
+  document.getElementById('layout-1-chart-06').innerHTML = ''
   var chart = new ApexCharts(document.querySelector("#layout-1-chart-06"), options);
   chart.render();
 }
@@ -654,7 +747,7 @@ document.getElementById("applyFilter").addEventListener("click", function () {
   console.log(endDate);
   // Sample data filtering logic based on date range
   var filteredData = initialData.filter(item => {
-    var currentDate = moment(item.date,'YYYY-MM-DD');
+    var currentDate = moment(moment(item.date).format('YYYY-MM-DD'));
     console.log(currentDate);
     console.log(currentDate.isBetween(startDate, endDate, null, "[]"));
     return currentDate.isBetween(startDate, endDate, null, "[]");
@@ -675,6 +768,154 @@ setInterval(() => {
         liveTimes.item(live).textContent = moment.utc(diff.asMilliseconds()).format("DD HH:mm:ss");
     }
 },1000)
+
+    async function initalizeGeneralNumbers(id,lowerbound) {
+        let ci = document.getElementById('ci-holder')
+        let wi = document.getElementById('wi-holder')
+        let ti = document.getElementById('ti-holder')
+        let ici = document.getElementById('ici-holder')
+        let ibd = document.getElementById('ibd-holder')
+        let isd = document.getElementById('isd-holder')
+
+        let generalResponse = await fetch(`/api/reports/general/${id}`,{
+            headers:{
+                lowerbound:lowerbound
+            }
+        })
+        let json = await generalResponse.json()
+
+        ci.textContent = json['completedIssues']
+        wi.textContent = json['waitingIssues']
+        ti.textContent = json['totalIssues']
+        ici.textContent = json['inCompletedIssues']
+        ibd.textContent = json['issuePublishedByDriver']
+        isd.textContent = json['issueSolvedByDriver']
+    }
+
+
+    async function initializeAverages(id,lowerbound){
+        let isha = document.getElementById('isha-holder')
+        let iswhg = document.getElementById('iswhg-holder')
+        let idha = document.getElementById('idha-holder')
+
+        let averagesResponse = await fetch(`/api/reports/averages/${id}`,{
+            headers:{
+                lowerbound: lowerbound
+            }
+        })
+        let json = await averagesResponse.json()
+
+        isha.textContent = json['issueSolvedHoursAverage']
+        iswhg.textContent = json['issueSolvedWaitingHoursAverage']
+        idha.textContent = json['issueRedirectHoursAverage']
+    }
+
+    async function initializeLeaderboard(id,lowerbound) {
+
+        let leaderboardContainer = document.getElementById('leaderboard-container')
+        let leaderboardResponse = await fetch(`/api/reports/leaderboard/${id}`,{
+            headers:{
+                lowerbound: lowerbound
+            }
+        })
+        let holderSortableArray = await leaderboardResponse.json()
+
+        for (let holder of holderSortableArray) {
+
+            let leaderboardItem = document.createElement('div')
+            leaderboardItem.className = 'd-flex justify-content-between align-items-center'
+
+            let identifierHolder = document.createElement('p')
+            let valueHolder = document.createElement('p')
+
+            identifierHolder.textContent = holder.identifier
+            valueHolder.textContent = holder.value
+            valueHolder.className = 'btn btn-primary btn-sm'
+
+
+            leaderboardItem.appendChild(identifierHolder)
+            leaderboardItem.appendChild(valueHolder)
+
+            leaderboardContainer.appendChild(leaderboardItem)
+        }
+    }
+
+
+    async function initializeTotalSMS(){
+        let smsHolder = document.getElementById('sms-holder')
+        let response = await fetch('/api/reports/sms/total')
+        let total = await response.json()
+
+        console.log(total);
+        smsHolder.textContent = total
+    }
+
+    async function initializeRepeatedIssues(){
+        let repeatedHolder = document.getElementById('repeated-container')
+        let response = await fetch('/api/reports/repeated')
+        let repeatedList = await response.json()
+
+        console.log(repeatedList);
+
+        for(let repeated of repeatedList){
+            let repeatedItem = document.createElement('div')
+            repeatedItem.className = 'd-flex justify-content-between align-items-center'
+
+            let serialHolder = document.createElement('p')
+            let totalHolder = document.createElement('p')
+
+            totalHolder.className = 'btn btn-primary btn-sm'
+
+            serialHolder.textContent = 'Serial: ' + repeated.serial
+            totalHolder.textContent = repeated.total
+
+
+            repeatedItem.appendChild(serialHolder)
+            repeatedItem.appendChild(totalHolder)
+
+            repeatedHolder.appendChild(repeatedItem)
+        }
+    }
+
+     //Date picker
+     $('#reservationdate').datetimepicker({
+        format: 'L'
+    })
+
+    $('#reservationdate').on('change.datetimepicker',async function(e) {
+        let date =  moment(e.date._d).format('YYYY-MM-DD')
+        console.log(date);
+        await initalizeGeneralNumbers(5,date)
+    })
+
+//Date picker
+$('#reservationdate1').datetimepicker({
+        format: 'L'
+    })
+
+    $('#reservationdate1').on('change.datetimepicker',async function(e) {
+        let date =  moment(e.date._d).format('YYYY-MM-DD')
+        console.log(date);
+        await initializeLeaderboard(5,date)
+    })
+
+    $('#reservationdate2').datetimepicker({
+        format: 'L'
+    })
+
+    $('#reservationdate2').on('change.datetimepicker',async function(e) {
+        let date =  moment(e.date._d).format('YYYY-MM-DD')
+        console.log(date);
+        await initializeAverages(5,date)
+    })
+
+    document.addEventListener('DOMContentLoaded', async (event) =>{
+        await initalizeGeneralNumbers(0)
+        await initializeAverages(0)
+        await initializeLeaderboard(0)
+        await initializeTotalSMS()
+        await initializeRepeatedIssues()
+    })
     </script>
 </body>
 

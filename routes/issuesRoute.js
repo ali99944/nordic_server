@@ -11,6 +11,7 @@ const moment = require('moment');
 const IssueCategory = require('../models/IssueCategory')
 const Manager = require('../models/Manager')
 const jwt = require('jsonwebtoken')
+const SMS = require('../models/SMS')
 
 router.get('/issues/categories', async (req, res) => {
     try{
@@ -282,6 +283,18 @@ Takk for beskjed.
                     to: phone.toString()
                     // to: `4747931499`
                 })
+
+                let delivery_date = moment().format('YYYY-MM-DD HH:mm:ss')
+
+                let smsMessage = new SMS({
+                    delivery_date,
+                    delivered_to: [phone.toString()],
+                    total_received: 1,
+                    content: smsMessageFormatted,
+                    about: 'notify client issue was received',
+                })
+
+                await smsMessage.save()
             }
 
                 if(importanceLevel == 3 || importanceLevel == 2){
@@ -297,6 +310,21 @@ Takk for beskjed.
                         to: '4740088605'
                         // to: `4747931499`
                     })
+
+                    let delivery_date = moment().format('YYYY-MM-DD HH:mm:ss')
+
+                    let smsMessage = new SMS({
+                        delivery_date,
+                        delivered_to: [
+                            '4740088605',
+                            '4740088605'
+                        ],
+                        total_received: 2,
+                        content: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med ${publisher == 'driver' ? 'pnid ' + pnid : 'skilt nr' + boardNumber}`,
+                        about: 'notify about low or medium importance issue',
+                    })
+    
+                    await smsMessage.save()
                 }else if(importanceLevel == 1){
                     console.log('ok i was 1 and that is very serious');
                     await sendAlertSMS({
@@ -316,6 +344,22 @@ Takk for beskjed.
                         to: '4740088605'
                         // to: `4747931499`
                     })
+
+                    let delivery_date = moment().format('YYYY-MM-DD HH:mm:ss')
+
+                    let smsMessage = new SMS({
+                        delivery_date,
+                        delivered_to: [
+                            '4740088605',
+                            '4740088605',
+                            '4740088605',
+                        ],
+                        total_received: 3,
+                        content: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med ${publisher == 'driver' ? 'pnid ' + pnid : 'skilt nr' + boardNumber}`,
+                        about: 'notify about high importance issue',
+                    })
+    
+                    await smsMessage.save()
                 }
             await Machine.updateOne({
                 _id:id,
@@ -405,6 +449,20 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
                 // to: `4747931499`
                 to: '4740088605'
             })
+
+            let delivery_date = moment().format('YYYY-MM-DD HH:mm:ss')
+
+            let smsMessage = new SMS({
+                delivery_date,
+                delivered_to: [
+                    '4740088605',
+                ],
+                content: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`,
+                total_received: 1,
+                about: 'Technician uploads fix report',
+            })
+
+            await smsMessage.save()
 
             return res.status(200).json('issue was successfully closed');
     }catch(error){
@@ -545,7 +603,19 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
             })
 
 
+            let delivery_date = moment().format('YYYY-MM-DD HH:mm:ss')
 
+            let smsMessage = new SMS({
+                delivery_date,
+                delivered_to: [
+                    '4740088605',
+                ],
+                content: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
+                total_received: 1,
+                about: 'User Upload Fix Report',
+            })
+
+            await smsMessage.save()
 
         return res.status(200).json({ message: 'PDF generated and saved successfully' });
     }catch(err){
@@ -588,6 +658,21 @@ Grunn: ${reason}
             // to: `4747931499`
         })
 
+        let delivery_date = moment().format('YYYY-MM-DD HH:mm:ss')
+
+        let smsMessage = new SMS({
+            delivery_date,
+            delivered_to: [
+                '4740088605',
+                '4740088605'
+            ],
+            content: smsMessageFormatted,
+            total_received: 2,
+            about: 'issue redirected by driver',
+        })
+
+        await smsMessage.save()
+
         let drivers = [
             '4745078525',
             '4746428404',
@@ -624,6 +709,16 @@ for(let driver of drivers){
         to: driver
     })
 }
+
+let smsAnotherMessage = new SMS({
+    delivery_date,
+    delivered_to: drivers,
+    content: driversFormattedMessage,
+    total_received: drivers.length,
+    about: 'issue redirected by driver',
+})
+
+await smsAnotherMessage.save()
 
         return res.status(200).json({message: smsMessageFormatted})
     }catch(error){
