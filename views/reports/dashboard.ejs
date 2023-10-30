@@ -107,11 +107,11 @@
             </div>
 
             <div class="col-lg-8 mb-2 d-flex align-items-center">
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(6)">All</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(1)">today</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(2)">2D</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3)">week</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4)">month</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(6); initializeAverages(6); initializeLeaderboard(6)">All</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(1); initializeAverages(1); initializeLeaderboard(1)">today</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(2); initializeAverages(2); initializeLeaderboard(2)">2D</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3); initializeAverages(3); initializeLeaderboard(3)">week</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4); initializeAverages(4); initializeLeaderboard(4)">month</div>
                 
                 <div class="date" id="reservationdate" data-target-input="nearest">
                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
@@ -377,19 +377,6 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex align-items-center mb-1">
-                            <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(6)">All</div>
-                            <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(1)">today</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(2)">2D</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(3)">week</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(4)">month</div>
-                
-                <div class="date" id="reservationdate2" data-target-input="nearest">
-                    <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-                        </div>
                         <ul class="perfomer-lists m-0 p-0 mt-4">
                             <li class="d-flex mb-4 align-items-center">
                                 <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
@@ -457,20 +444,7 @@
                 </div>
                 </div>
             </div>
-            <div class="col-lg-8"></div>
-            <div class="col-lg-4 d-flex align-items-center mb-2">
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(6)">All</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(1)">today</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(2)">2D</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(3)">week</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(4)">month</div>
-                
-                <div class="date" id="reservationdate1" data-target-input="nearest">
-                    <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-            </div>
+       
             <div class="col-lg-8">
                 <div class="card card-block card-stretch card-height ">
                     <div class="card-header border-none">   
@@ -929,6 +903,9 @@ setInterval(() => {
     var endDate = picker.endDate.format('YYYY-MM-DD');
 
     await initalizeGeneralNumbers(5,startDate,endDate)
+    await initializeLeaderboard(5,startDate,endDate)
+    await initializeAverages(5,startDate,endDate)
+
 
 })
      //Date picker
@@ -943,24 +920,6 @@ setInterval(() => {
     });
     
     updateChart(filteredData);
-
-})
-
-
-//Date picker
-$('#reservationdate1').daterangepicker({ sideBySide: true, debug: true }).on('apply.daterangepicker', async function (e, picker) {
-    var startDate = picker.startDate.format('YYYY-MM-DD');
-    var endDate = picker.endDate.format('YYYY-MM-DD');
-
-    await initializeLeaderboard(5,startDate,endDate)
-
-})
-
-    $('#reservationdate2').daterangepicker({ sideBySide: true, debug: true }).on('apply.daterangepicker', async function (e, picker) {
-    var startDate = picker.startDate.format('YYYY-MM-DD');
-    var endDate = picker.endDate.format('YYYY-MM-DD');
-
-    await initializeAverages(5,startDate,endDate)
 
 })
 
