@@ -48,15 +48,16 @@ router.get('/reports/leaderboard/:id', async (req, res) => {
           })
         }else if(id == 5){
           const lowerBoundDate = req.headers.lowerbound
-          if(!lowerBoundDate){
+          const upperBoundDate = req.headers.upperbound
+          if(!lowerBoundDate  || !upperBoundDate){
             return res.status(400).json({
-              message: 'Bad Request Lower Bound Date is required',
+              message: 'Bad Request Lower Bound or Uppper Bound Date is required',
               lowerBoundDate
             }) 
           }
 
           let start = moment(moment(lowerBoundDate).format('YYYY-MM-DD'))
-          let end = moment().format('YYYY-MM-DD')
+          let end = moment(moment(upperBoundDate).format('YYYY-MM-DD'))
 
           completedIssues = completedIssues.filter(issue =>{
             return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(start,end,'days','[]')
@@ -205,15 +206,16 @@ router.get('/reports/averages/:id', async (req, res) => {
     })
   }else if(id == 5){
     const lowerBoundDate = req.headers.lowerbound
-    if(!lowerBoundDate){
+    const upperBoundDate = req.headers.upperbound
+    if(!lowerBoundDate || !upperBoundDate){
       return res.status(400).json({
-        message: 'Bad Request Lower Bound Date is required',
+        message: 'Bad Request Lower Bound or Upper Bound Date is required',
         lowerBoundDate
       }) 
     }
 
     let start = moment(moment(lowerBoundDate).format('YYYY-MM-DD'))
-    let end = moment().format('YYYY-MM-DD')
+    let end = moment(moment(upperBoundDate).format('YYYY-MM-DD'))
 
     completedIssues = completedIssues.filter(issue =>{
       return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(start,end,'days','[]')
@@ -310,7 +312,7 @@ router.get('/reports/general/:id', async (req, res) => {
     })
 
     if(id == 0){
-      let currentMonth = moment(moment.now()).month()
+      let currentMonth = moment().month()
       completedIssues = completedIssues.filter(issue =>{
           return moment(issue.fixedAt).month() == currentMonth
       })
@@ -320,8 +322,9 @@ router.get('/reports/general/:id', async (req, res) => {
       })
 
       issues = issues.filter(issue =>{
-        return moment(issue.fixedAt).month() == currentMonth
+        return moment(issue.date).month() == currentMonth
       })
+
 
       issuePublishedByDriver = issuePublishedByDriver.filter(issue =>{
         return moment(issue.fixedAt).month() == currentMonth
@@ -338,7 +341,7 @@ router.get('/reports/general/:id', async (req, res) => {
       })
 
       issues = issues.filter(issue =>{
-        return moment(issue.fixedAt).day() == currentDay && moment(issue.fixedAt).month() == currentMonth
+        return moment(issue.date).day() == currentDay && moment(issue.fixedAt).month() == currentMonth
       })
 
       waitingIssues = waitingIssues.filter(issue =>{
@@ -365,7 +368,7 @@ router.get('/reports/general/:id', async (req, res) => {
       })
 
       issues = issues.filter(issue =>{
-        return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(twoDaysAgo,currentDate,'days','[]')
+        return moment(moment(issue.date).format('YYYY-MM-DD')).isBetween(twoDaysAgo,currentDate,'days','[]')
       })
 
       inCompletedIssues = inCompletedIssues.filter(issue =>{
@@ -392,7 +395,7 @@ router.get('/reports/general/:id', async (req, res) => {
       })
 
       issues = issues.filter(issue =>{
-        return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(oneWeekAgo,currentDate,'days','[]')
+        return moment(moment(issue.date).format('YYYY-MM-DD')).isBetween(oneWeekAgo,currentDate,'days','[]')
       })
 
       inCompletedIssues = inCompletedIssues.filter(issue =>{
@@ -419,7 +422,7 @@ router.get('/reports/general/:id', async (req, res) => {
       })
 
       issues = issues.filter(issue =>{
-        return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(oneMonthAgo,currentDate,'days','[]')
+        return moment(moment(issue.date).format('YYYY-MM-DD')).isBetween(oneMonthAgo,currentDate,'days','[]')
       })
 
       inCompletedIssues = inCompletedIssues.filter(issue =>{
@@ -439,15 +442,16 @@ router.get('/reports/general/:id', async (req, res) => {
       })
     }else if(id == 5){
       const lowerBoundDate = req.headers.lowerbound
-      if(!lowerBoundDate){
+      const upperBoundDate = req.headers.upperbound
+      if(!lowerBoundDate || !upperBoundDate){
         return res.status(400).json({
-          message: 'Bad Request Lower Bound Date is required',
+          message: 'Bad Request Lower Bound or Upper Bound Date is required',
           lowerBoundDate
         }) 
       }
 
       let start = moment(moment(lowerBoundDate).format('YYYY-MM-DD'))
-      let end = moment().format('YYYY-MM-DD')
+      let end = moment(moment(upperBoundDate).format('YYYY-MM-DD'))
 
       completedIssues = completedIssues.filter(issue =>{
         return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(start,end,'days','[]')

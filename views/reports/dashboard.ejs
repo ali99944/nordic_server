@@ -28,6 +28,8 @@
     <link rel='stylesheet' href='../assets/vendor/fullcalendar/daygrid/main.css' />
     <link rel='stylesheet' href='../assets/vendor/fullcalendar/timegrid/main.css' />
     <link rel='stylesheet' href='../assets/vendor/fullcalendar/list/main.css' />
+    <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+
 
 
     <style>
@@ -107,9 +109,9 @@
             <div class="col-lg-8 mb-2 d-flex align-items-center">
                 <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(6)">All</div>
                 <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(1)">today</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(2)">2D ago</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3)">week ago</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4)">month ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(2)">2D</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3)">week</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4)">month</div>
                 
                 <div class="date" id="reservationdate" data-target-input="nearest">
                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
@@ -441,13 +443,15 @@
                 <div class="card-body">
                     <div id="layout-1-chart-06"></div>
                   
-                    <div>
-                        <label>Filter Data:</label>
-                        <div class="d-flex align-items-center">
-                            <input type="date" class="form-control mr-1" id="startDate">
-                            <input type="date" class="form-control mr-1" id="endDate">
+                    <div class="d-flex align-items-center">
+                        <label class="mr-3">Filter Data</label>
+                        <div>
+                            <div class="date" id="reservationdateF" data-target-input="nearest">
+                                <div class="input-group-append" data-target="#reservationdateF" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
     
-                            <button id="applyFilter" class="btn btn-primary" style="width: 120px;">Filter</button> 
                         </div>
                       </div>
                 </div>
@@ -457,9 +461,9 @@
             <div class="col-lg-4 d-flex align-items-center mb-2">
                 <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(6)">All</div>
                 <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(1)">today</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(2)">2D ago</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(3)">week ago</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(4)">month ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(2)">2D</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(3)">week</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeLeaderboard(4)">month</div>
                 
                 <div class="date" id="reservationdate1" data-target-input="nearest">
                     <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
@@ -472,7 +476,7 @@
                     <div class="card-header border-none">   
                         <div class="header-title d-flex justify-content-between">
                             <h4 class="card-title">Recent Reports</h4>
-                            <div class="btn btn-primary">Show All</div>
+                            <a class="btn btn-primary" href="/reports">Show All</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -613,6 +617,8 @@
         <script src='../assets/vendor/fullcalendar/daygrid/main.js'></script>
         <script src='../assets/vendor/fullcalendar/timegrid/main.js'></script>
         <script src='../assets/vendor/fullcalendar/list/main.js'></script>
+        <script src="/plugins/daterangepicker/daterangepicker.js"></script>
+
 
     <script>
         "use strict";
@@ -790,7 +796,25 @@ function updateChart(data) {
             horizontal: false,
             columnWidth: '30%',
           },
+        },
+
+        dataLabels: {
+        enabled: false // Hide default values on bars
+    },
+
+    tooltip: {
+        y: {
+            formatter: function (val) {
+                let average = val.toString()
+                let avgParts = average.split('.')
+                avgParts[0] = avgParts[0] + 'H'
+                avgParts[1] = avgParts[1] + 'M'
+
+                let joined = avgParts.join(' ')
+                return joined
+            }
         }
+    },
     // ... Other chart options ...
   };
   document.getElementById('layout-1-chart-06').innerHTML = ''
@@ -798,20 +822,6 @@ function updateChart(data) {
   chart.render();
 }
 
-document.getElementById("applyFilter").addEventListener("click", function () {
-  var startDate = moment(document.getElementById("startDate").value);
-  var endDate = moment(document.getElementById("endDate").value);
-  
-  console.log(startDate);
-  console.log(endDate);
-  // Sample data filtering logic based on date range
-  var filteredData = initialData.filter(item => {
-    var currentDate = moment(moment(item.date).format('YYYY-MM-DD'));
-    return currentDate.isBetween(startDate, endDate, null, "[]");
-  });
-  
-  updateChart(filteredData);
-});
 
 // Initial chart rendering
 updateChart(initialData);
@@ -826,7 +836,7 @@ setInterval(() => {
     }
 },1000)
 
-    async function initalizeGeneralNumbers(id,lowerbound) {
+    async function initalizeGeneralNumbers(id,lowerbound,upperbound) {
         let ci = document.getElementById('ci-holder')
         let wi = document.getElementById('wi-holder')
         let ti = document.getElementById('ti-holder')
@@ -836,7 +846,8 @@ setInterval(() => {
 
         let generalResponse = await fetch(`/api/reports/general/${id}`,{
             headers:{
-                lowerbound:lowerbound
+                lowerbound:lowerbound,
+                upperbound: upperbound
             }
         })
         let json = await generalResponse.json()
@@ -850,14 +861,15 @@ setInterval(() => {
     }
 
 
-    async function initializeAverages(id,lowerbound){
+    async function initializeAverages(id,lowerbound,upperbound){
         let isha = document.getElementById('isha-holder')
         let iswhg = document.getElementById('iswhg-holder')
         let idha = document.getElementById('idha-holder')
 
         let averagesResponse = await fetch(`/api/reports/averages/${id}`,{
             headers:{
-                lowerbound: lowerbound
+                lowerbound: lowerbound,
+                upperbound: upperbound
             }
         })
         let json = await averagesResponse.json()
@@ -867,13 +879,14 @@ setInterval(() => {
         idha.textContent = json['issueRedirectHoursAverage']
     }
 
-    async function initializeLeaderboard(id,lowerbound) {
+    async function initializeLeaderboard(id,lowerbound,upperbound) {
 
         let leaderboardContainer = document.getElementById('leaderboard-container')
         leaderboardContainer.innerHTML = ''
         let leaderboardResponse = await fetch(`/api/reports/leaderboard/${id}`,{
             headers:{
-                lowerbound: lowerbound
+                lowerbound: lowerbound,
+                upperbound: upperbound
             }
         })
         let holderSortableArray = await leaderboardResponse.json()
@@ -911,36 +924,45 @@ setInterval(() => {
 
 
      //Date picker
-     $('#reservationdate').datetimepicker({
-        format: 'L'
-    })
+     $('#reservationdate').daterangepicker({ sideBySide: true, debug: true }).on('apply.daterangepicker', async function (e, picker) {
+    var startDate = picker.startDate.format('YYYY-MM-DD');
+    var endDate = picker.endDate.format('YYYY-MM-DD');
 
-    $('#reservationdate').on('change.datetimepicker',async function(e) {
-        let date =  moment(e.date._d).format('YYYY-MM-DD')
-        console.log(date);
-        await initalizeGeneralNumbers(5,date)
-    })
+    await initalizeGeneralNumbers(5,startDate,endDate)
+
+})
+     //Date picker
+     $('#reservationdateF').daterangepicker({ sideBySide: true, debug: true }).on('apply.daterangepicker', async function (e, picker) {
+    var startDate = picker.startDate.format('YYYY-MM-DD');
+    var endDate = picker.endDate.format('YYYY-MM-DD');
+
+    // Sample data filtering logic based on date range
+    var filteredData = initialData.filter(item => {
+        var currentDate = moment(moment(item.date).format('YYYY-MM-DD'));
+        return currentDate.isBetween(startDate, endDate, null, "[]");
+    });
+    
+    updateChart(filteredData);
+
+})
+
 
 //Date picker
-$('#reservationdate1').datetimepicker({
-        format: 'L'
-    })
+$('#reservationdate1').daterangepicker({ sideBySide: true, debug: true }).on('apply.daterangepicker', async function (e, picker) {
+    var startDate = picker.startDate.format('YYYY-MM-DD');
+    var endDate = picker.endDate.format('YYYY-MM-DD');
 
-    $('#reservationdate1').on('change.datetimepicker',async function(e) {
-        let date =  moment(e.date._d).format('YYYY-MM-DD')
-        console.log(date);
-        await initializeLeaderboard(5,date)
-    })
+    await initializeLeaderboard(5,startDate,endDate)
 
-    $('#reservationdate2').datetimepicker({
-        format: 'L'
-    })
+})
 
-    $('#reservationdate2').on('change.datetimepicker',async function(e) {
-        let date =  moment(e.date._d).format('YYYY-MM-DD')
-        console.log(date);
-        await initializeAverages(5,date)
-    })
+    $('#reservationdate2').daterangepicker({ sideBySide: true, debug: true }).on('apply.daterangepicker', async function (e, picker) {
+    var startDate = picker.startDate.format('YYYY-MM-DD');
+    var endDate = picker.endDate.format('YYYY-MM-DD');
+
+    await initializeAverages(5,startDate,endDate)
+
+})
 
     document.addEventListener('DOMContentLoaded', async (event) =>{
         await initalizeGeneralNumbers(0)
@@ -1020,7 +1042,7 @@ $('#reservationdate1').datetimepicker({
                         </div>
                     `
                 }else{
-                    return series[seriesIndex]
+                    return series[seriesIndex] + " issues"
                 }
             }
           }
