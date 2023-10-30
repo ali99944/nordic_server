@@ -378,9 +378,9 @@
                         <div class="d-flex align-items-center mb-1">
                             <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(6)">All</div>
                             <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(1)">today</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(2)">2D ago</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(3)">week ago</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(4)">month ago</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(2)">2D</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(3)">week</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initializeAverages(4)">month</div>
                 
                 <div class="date" id="reservationdate2" data-target-input="nearest">
                     <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
@@ -388,55 +388,39 @@
                     </div>
                 </div>
                         </div>
-                        <ul class="perfomer-lists m-0 p-0">
+                        <ul class="perfomer-lists m-0 p-0 mt-4">
                             <li class="d-flex mb-4 align-items-center">
-                                <div class="top-block-one d-flex align-items-center justify-content-between">
-                                    <div class="bg-primary icon iq-icon-box mr-2 rtl-ml-2 rtl-mr-0 rounded">
-                                        <i class="las la-globe"></i>
-                                    </div>
-                                </div>
                                 <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Average Issue Solve Time</h5>
+                                    <h5>Issue / Hour</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
                                     <h4 id="isha-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
+                            <hr>
                             <li class="d-flex mb-4 align-items-center">
-                                <div class="top-block-one d-flex align-items-center justify-content-between">
-                                    <div class="bg-info icon iq-icon-box mr-2 rtl-ml-2 rtl-mr-0 rounded">
-                                        <i class="lar la-hand-pointer"></i>
-                                    </div>
-                                </div>
+    
                                 <div class="media-support-info ml-3 rtl-ml-0 rtl-mr-3">
-                                    <h5>Average Waiting Time</h5>
+                                    <h5>Waiting / Hour</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
                                     <h4 id="iswhg-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
+                            <hr>
                             <li class="d-flex mb-4 align-items-center">
-                                <div class="top-block-one d-flex align-items-center justify-content-between">
-                                    <div class="bg-skyblue icon iq-icon-box mr-2 rtl-ml-2 rtl-mr-0 rounded">
-                                        <i class="las la-signal"></i>
-                                    </div>
-                                </div>
+            
                                 <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Average Redirect Time</h5>
+                                    <h5>Redirect/hour</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
                                     <h4 id="idha-holder" class="btn btn-sm btn-primary">-</h4>
                                 </div>
                             </li>
-
+                            <hr>
                             <li class="d-flex mb-4 align-items-center">
-                                <div class="top-block-one d-flex align-items-center justify-content-between">
-                                    <div class="bg-skyblue icon iq-icon-box mr-2 rtl-ml-2 rtl-mr-0 rounded">
-                                        <i class="las la-signal"></i>
-                                    </div>
-                                </div>
                                 <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Total SMS Sent</h5>
+                                    <h5>SMS</h5>
                                 </div>
                                 <div class="iq-card-header-toolbar d-flex align-items-center">
                                     <h4 id="sms-holder" class="btn btn-sm btn-primary">-</h4>
@@ -966,6 +950,8 @@ $('#reservationdate1').datetimepicker({
     })
 
     if (jQuery("#dual-repeated-chart").length) {
+
+
         let dualData = <%- issuesGroupedIntoMonths %>;
         var options = {
           series: [{
@@ -1009,9 +995,33 @@ $('#reservationdate1').datetimepicker({
           opacity: 1
         },
         tooltip: {
-          y: {
-            formatter: function (val) {
-              return val
+            custom: function({ series,seriesIndex, dataPointIndex, w }){
+                if(seriesIndex == 1){
+                    const xValue = w.globals.labels[dataPointIndex]; // Access x-axis value
+                    return `
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Locations Repeated
+                                </div>      
+
+                                <div class="card-body">
+                                    <h5>Total: ${dualData[xValue].totalRepeated}</h5>
+                                    <ul>
+                                        ${Object.values(dualData[xValue].zoneLocationSet).map(v => {
+                                        if(v.repeat != undefined)
+                                        return `<li><span class="zone-location">${v.zoneLocation}</span><span class="repeat">  ${v.repeat}</span></li>`;
+                                    }).join('\n')}
+                                    </ul>
+                                </div>
+                            </div> 
+                            
+                            <div class="card-body"></div>
+                        </div>
+                    `
+                }else{
+                    return series[seriesIndex]
+                }
             }
           }
         }
@@ -1019,7 +1029,6 @@ $('#reservationdate1').datetimepicker({
 
     var chart = new ApexCharts(document.querySelector("#dual-repeated-chart"), options);
         chart.render();
-}
 
 let holderSortableArray = <%- holderSortableArray %>;
 let progressContainer = document.getElementById('progress-container');
@@ -1062,6 +1071,7 @@ for(let value of holderSortableArray){
     container.appendChild(progressIqContainer)
     progressContainer.appendChild(container)
 }
+
     </script>
 </body>
 

@@ -178,14 +178,26 @@ Object.keys(issuesGroupedIntoMonths).forEach(key => {
 
     let groupsIntoNumbers = 0
     for(let key in issueGroupedIntoSerials){
-      if(issueGroupedIntoSerials.hasOwnProperty(key) && issueGroupedIntoSerials[key].length > 2){
+      if(issueGroupedIntoSerials.hasOwnProperty(key) && issueGroupedIntoSerials[key].length >= 5){
         groupsIntoNumbers += Math.floor(issueGroupedIntoSerials[key].length / 5)
       }
     }
 
+    let zoneLocationSet = []
+
+    Object.keys(issueGroupedIntoSerials).forEach(key => {
+      zoneLocationSet.push({
+        zoneLocation: key,
+        repeat: issueGroupedIntoSerials[key].length >= 5 ?  Math.floor(issueGroupedIntoSerials[key].length / 5) : undefined
+      })
+    })
+
+    console.log(zoneLocationSet);
+
     issuesGroupedIntoMonths[key] = {
       totalIssues: issuesGroupedIntoMonths[key].length,
-      totalRepeated: groupsIntoNumbers
+      totalRepeated: groupsIntoNumbers,
+      zoneLocationSet: zoneLocationSet
     }
 })
 
