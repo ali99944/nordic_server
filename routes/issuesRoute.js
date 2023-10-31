@@ -166,6 +166,8 @@ router.put('/issues/:id/waiting', async (req, res) => {
         issue.processes.push(`Issue is in waiting state at ${currentDate}`)
         issue.status = 'waiting'
         issue.statusText = reason
+        issue.waitingStartTime = moment(currentDate).format('YYYY-MM-DD')
+        issue.wasInWaitingState = true
 
         await issue.save()
 
@@ -249,6 +251,11 @@ router.post('/issues', async (req, res) => {
                 importanceLevel: importanceLevel,
                 publisher: publisher
             })
+
+            if(publisher == 'driver'){
+                issue.wasRedirected = true
+                issue.redirectStartTime = moment(currentDate).format('YYYY-MM-DD')
+            }
 
 
             await issue.save()
@@ -415,7 +422,56 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
         issue.status = 'complete'
         issue.fixedAt = currentDate
         issue.processes.push(`issue was fixed and closed by ${currentTech.name} at ${currentDate}`)
+
+        issue.fixedByIdentifier = currentTech.username
+        issue.fixedBy = 'technician'
+
+        if(issue.wasInWaitingState){
+            issue.WaitingEndTime = moment(currentDate).format('YYYY-MM-DD')
+        }
         await issue.save()
+
+        const browser = await puppeteer.launch({
+            headless: 'new',
+            args:['--no-sandbox']
+        });
+        const page = await browser.newPage();
+
+        // Load the HTML template
+        const htmlTemplate = fs.readFileSync('templates/machine_fix_report_tech.html', 'utf8');
+
+        const now = new Date();
+        const localDate = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+        const localDateString = localDate.toISOString().split('T')[0];
+
+        // Replace placeholders with dynamic data
+        const template_data = {
+            details: details,
+            notes: notes ,
+            clientNotes: currentIssue.notes,
+            boardNumber:currentIssue.boardNumber,
+            date: localDateString,
+            fullDate: localDate.toDateString(),
+            serial: currentIssue.serial,
+            zone: currentIssue.zone,
+            zoneLocation: currentIssue.zoneLocation,
+            username: currentTech.username,
+            name: currentTech.name
+        };
+
+        const filledTemplate = Handlebars.compile(htmlTemplate)(template_data);
+        let up_date = moment().format('YYYY-MM-DD')
+        let filename = `technician_machine_fix_report_${up_date}.pdf`
+
+        // Generate PDF from filled template
+        await page.setContent(filledTemplate);
+        await page.pdf({ path: `./public/profiles/${filename}`,
+        
+        printBackground: true,
+
+        format: 'A3' });
+
+        await browser.close();
 
         console.log('Issue updated and closed');
 
@@ -518,8 +574,8 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         };
 
         const filledTemplate = Handlebars.compile(htmlTemplate)(template_data);
-
-        let filename = `machine_fix_report_${Date.now()}.pdf`
+        let up_date = moment().format('YYYY-MM-DD')
+        let filename = `machine_fix_report_${up_date}.pdf`
 
         // Generate PDF from filled template
         await page.setContent(filledTemplate);
@@ -567,6 +623,12 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         issue.status = 'complete'
         issue.fixedAt = currentDate
         issue.processes.push(`issue was fixed and closed by ${currentUser.name} at ${currentDate}`)
+        issue.fixedByIdentifier = currentUser.accountId
+        issue.fixedBy = 'driver'
+
+        if(issue.wasInWaitingState){
+            issue.WaitingEndTime = moment(currentDate).format('YYYY-MM-DD') 
+        }
         await issue.save()
 
         console.log('Issue updated and closed');
@@ -637,6 +699,9 @@ router.post('/issues/:id/external/notify', async (req,res) =>{
         issue.processes.push(`issue couldn't be fixed and notified managers at ${currentDate}`)
         issue.status = 'redirected'
         issue.statusText = reason
+
+        issue.redirectStartTime = currentDate
+        issue.wasRedirected = true
         await issue.save()
 
         let smsMessageFormatted = `

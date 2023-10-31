@@ -37,6 +37,7 @@
             width: 100%;
             height: 450px;
         }
+        
     </style>
 
 <body>
@@ -370,56 +371,50 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
-                <div class="card card-block card-stretch card-height rule-box">
+                <div class="card card-block card-stretch card-height rule-box averages-card">
                     <div class="card-header d-flex justify-content-between border-none">
                         <div class="header-title">
                             <h4 class="card-title">Averages</h4>
                         </div>
                     </div>
                     <div class="card-body">
-                        <ul class="perfomer-lists m-0 p-0 mt-4">
-                            <li class="d-flex mb-4 align-items-center">
-                                <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Issue / Hour</h5>
+                        <div class="averages-container">
+                            <div class="average-item">
+                                <i class="fas fa-chart-line average-icon"></i>
+                                <div class="average-details">
+                                    <p class="average-title">Issue / Hour</p>
+                                    <h4 id="isha-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
-                                <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4 id="isha-holder" class="btn btn-sm btn-primary">-</h4>
-                                </div>
-                            </li>
+                            </div>
                             <hr>
-                            <li class="d-flex mb-4 align-items-center">
-    
-                                <div class="media-support-info ml-3 rtl-ml-0 rtl-mr-3">
-                                    <h5>Waiting / Hour</h5>
+                            <div class="average-item">
+                                <i class="fas fa-clock average-icon"></i>
+                                <div class="average-details">
+                                    <p class="average-title">Waiting / Hour</p>
+                                    <h4 id="iswhg-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
-                                <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4 id="iswhg-holder" class="btn btn-sm btn-primary">-</h4>
-                                </div>
-                            </li>
+                            </div>
                             <hr>
-                            <li class="d-flex mb-4 align-items-center">
-            
-                                <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>Redirect/hour</h5>
+                            <div class="average-item">
+                                <i class="fas fa-exchange-alt average-icon"></i>
+                                <div class="average-details">
+                                    <p class="average-title">Redirect / Hour</p>
+                                    <h4 id="idha-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
-                                <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4 id="idha-holder" class="btn btn-sm btn-primary">-</h4>
-                                </div>
-                            </li>
+                            </div>
                             <hr>
-                            <li class="d-flex mb-4 align-items-center">
-                                <div class="media-support-info ml-3 rtl-mr-3 rtl-ml-0">
-                                    <h5>SMS</h5>
+                            <div class="average-item">
+                                <i class="fas fa-comment average-icon"></i>
+                                <div class="average-details">
+                                    <p class="average-title">SMS</p>
+                                    <h4 id="sms-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
-                                <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <h4 id="sms-holder" class="btn btn-sm btn-primary">-</h4>
-                                </div>
-                            </li>
-                  
-                        </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-8 col-md-6">
                 <div class="card card-block card-stretch card-height">
                 <div class="card-header border-none">
@@ -709,7 +704,7 @@ circle2.propertyFields.fill = "color";
 
 circle2.events.on("inited", function (event) {
   animateBullet(event.target);
-})
+});
 
 
 function animateBullet(circle) {
@@ -782,7 +777,7 @@ function updateChart(data) {
                 let average = val.toString()
                 let avgParts = average.split('.')
                 avgParts[0] = avgParts[0] + 'H'
-                avgParts[1] = avgParts[1] + 'M'
+                avgParts[1] = ((+avgParts[1] / 100) * 60).toFixed(2) + 'M'
 
                 let joined = avgParts.join(' ')
                 return joined

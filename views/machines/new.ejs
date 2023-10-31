@@ -32,7 +32,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-left">
                     <li class="breadcrumb-item"><a href="/">Hjem</a></li>
-                    <li class="breadcrumb-item"><a href="/machines">Maskiner</a></li>
+                    <li class="breadcrumb-item"><a href="/machines">P-Automater</a></li>
                     <li class="breadcrumb-item active">Legge til</li>
                     </ol>
                 </div><!-- /.col -->
@@ -63,16 +63,6 @@
                                                     </div>
                                                     <input type="number" class="form-control" placeholder="serial" name="serial" id="serial">
                                                   </div>
-
-                                                  <div class="mb-3 form-group">
-                                                    <label for="initialCoordinates" class="form-label">breddegrad</label>
-                                                      <input type="text" id="lati" name="lati" class="form-control mr-2" placeholder="Breddegrad">
-                                                </div>
-        
-                                                  <div class="mb-3 form-group">
-                                                    <label for="initialCoordinates" class="form-label">lengdegrad</label>
-                                                    <input type="text" id="long" name="long" class="form-control" placeholder="Lengdegrad">
-                                                </div>
                      
                      
                                                   <div class="form-group">
@@ -83,7 +73,7 @@
                                                   </div>
 
                                                   <div class="form-group">
-                                                    <label>Category</label>
+                                                    <label>Kategori</label>
                                                     <select class="select2" id="category" name="category"  multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                                                   
                                                     </select>
@@ -197,9 +187,48 @@
                 const serial = document.getElementById('serial').value;
             const zone = document.getElementById('zone').value;
             const zoneLocation = document.getElementById('zoneLocation').value;
-            const latitude = document.getElementById('lati').value;
-            const longitude = document.getElementById('long').value;
+            let latitude = 0
+            let longitude = 0;
             const categories = $("#category").val()
+
+            const apiKey = 'AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI';
+
+            // Define the geocoding request URL
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(zoneLocation)}&key=${apiKey}`;
+            let geoResponse = await fetch(geocodingUrl)
+            let geoJson = await geoResponse.json();
+
+            if (geoResponse.status == 200 && geoJson.results.length > 0) {
+                  // Extract the latitude and longitude from the first result
+                  const location = geoJson.results[0].geometry.location;
+                  latitude = location.lat;
+                  longitude = location.lng;
+                  
+
+                }
+
+
+                console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+
+            // Perform the geocoding request
+            // fetch(geocodingUrl)
+            //   .then((response) => response.json())
+            //   .then((data) => {
+            //     if (data.status === 'OK' && data.results.length > 0) {
+            //       // Extract the latitude and longitude from the first result
+            //       const location = data.results[0].geometry.location;
+            //       latitude = location.lat;
+            //       longitude = location.lng;
+                  
+
+            //     } else {
+            //       console.error('Geocoding failed. Please check the address or API key.');
+            //     }
+            //   })
+            //   .catch((error) => {
+            //     console.error('Error while geocoding:', error);
+            //   });
+
 
 
             const machineData = {

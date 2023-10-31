@@ -16,11 +16,6 @@ const IssueSchema = new mongoose.Schema({
         default: null
     },
 
-    totalTime: {
-        type: String,
-        default: null
-    },
-
     publisher:{
         type: String,
         default: 'unknown'

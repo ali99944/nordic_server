@@ -62,15 +62,6 @@
                                                     <input type="number" id="serial" class="form-control" value="<%= machine.serial %>" required>
                                                 </div>
 
-                                                <div class="mb-3 form-group">
-                                                    <label for="initialCoordinates" class="form-label">breddegrad</label>
-                                                      <input type="text" id="lati" name="lati" class="form-control mr-2" placeholder="Breddegrad">
-                                                </div>
-        
-                                                  <div class="mb-3 form-group">
-                                                    <label for="initialCoordinates" class="form-label">lengdegrad</label>
-                                                    <input type="text" id="long" name="long" class="form-control" placeholder="Lengdegrad">
-                                                </div>
                                 
                                                 <div class="form-group">
                                                     <label>Route</label>
@@ -171,10 +162,30 @@ var Toast = Swal.mixin({
             const machineId = '<%= machine._id %>';
             const serial = document.getElementById('serial').value;
             const zoneLocation = document.getElementById('zoneLocation').value;
-            const latitude = document.getElementById('lati').value;
-            const longitude = document.getElementById('long').value;
+            let latitude = 0;
+            let longitude = 0;
             const zone = document.getElementById('zone').value;
             const categories = $("#category").val()
+
+
+            const apiKey = 'AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI';
+
+            // Define the geocoding request URL
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(zoneLocation)}&key=${apiKey}`;
+            let geoResponse = await fetch(geocodingUrl)
+            let geoJson = await geoResponse.json();
+
+            if (geoResponse.status == 200 && geoJson.results.length > 0) {
+                  // Extract the latitude and longitude from the first result
+                  const location = geoJson.results[0].geometry.location;
+                  latitude = location.lat;
+                  longitude = location.lng;
+                  
+
+                }
+
+
+                console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
 
             const machineData = {
