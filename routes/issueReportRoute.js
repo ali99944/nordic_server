@@ -92,9 +92,12 @@ router.get('/reports/leaderboard/:id', async (req, res) => {
             return sum + diff.asHours()
             },0)
       
-            avgx = sumx / list.length
+            avgx = (sumx / list.length).toFixed(2)
+            avgxParts = avgx.split('.')
+            avgxParts[0] = avgxParts[0] + 'H'
+            avgxParts[1] = list.length > 0 ? ((+avgxParts[1] / 100) * 60) + 'M' : '0M'
       
-            holder[key] = avgx
+            holder[key] = avgxParts.join(' ')
           })
       
           let holderSortableArray = []
@@ -106,7 +109,7 @@ router.get('/reports/leaderboard/:id', async (req, res) => {
           }
       
           holderSortableArray.sort((a,b) =>{
-            return a.value - b.value
+            return b.value - a.value
           })
         
           return res.status(200).json(holderSortableArray)
@@ -143,6 +146,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
       issueWereRedirected = issueWereRedirected.filter(issue =>{
         return moment(issue.fixedAt).month() == currentMonth
+        && !(issue.publisher == 'driver' && issue.wasRedirected && issue.fixedBy == 'driver')
       })
   }else if(id == 1){
     let currentDay = moment(moment.now()).day()
@@ -153,6 +157,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
     issueWereRedirected = issueWereRedirected.filter(issue =>{
       return moment(issue.fixedAt).day() == currentDay && moment(issue.fixedAt).month() == currentMonth
+      && !(issue.publisher == 'driver' && issue.wasRedirected && issue.fixedBy == 'driver')
     })
 
     issuesWereInWaitingState = issuesWereInWaitingState.filter(issue =>{
@@ -168,6 +173,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
     issueWereRedirected = issueWereRedirected.filter(issue =>{
       return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(twoDaysAgo,currentDate,'days','[]')
+      && !(issue.publisher == 'driver' && issue.wasRedirected && issue.fixedBy == 'driver')
     })
 
     issuesWereInWaitingState = issuesWereInWaitingState.filter(issue =>{
@@ -183,6 +189,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
     issueWereRedirected = issueWereRedirected.filter(issue =>{
       return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(oneWeekAgo,currentDate,'days','[]')
+      && !(issue.publisher == 'driver' && issue.wasRedirected && issue.fixedBy == 'driver')
     })
 
     issuesWereInWaitingState = issuesWereInWaitingState.filter(issue =>{
@@ -199,6 +206,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
     issueWereRedirected = issueWereRedirected.filter(issue =>{
       return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(oneMonthAgo,currentDate,'days','[]')
+      && !(issue.publisher == 'driver' && issue.wasRedirected && issue.fixedBy == 'driver')
     })
 
     issuesWereInWaitingState = issuesWereInWaitingState.filter(issue =>{
@@ -223,6 +231,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
     issueWereRedirected = issueWereRedirected.filter(issue =>{
       return moment(moment(issue.fixedAt).format('YYYY-MM-DD')).isBetween(start,end,'days','[]')
+      && !(issue.publisher == 'driver' && issue.wasRedirected && issue.fixedBy == 'driver')
     })
 
     issuesWereInWaitingState = issuesWereInWaitingState.filter(issue =>{
@@ -244,9 +253,8 @@ router.get('/reports/averages/:id', async (req, res) => {
     let issueSolvedHoursAverage = (issueSolvedHoursSum / issueSolvedHours.length).toFixed(2)
     let fraction = issueSolvedHoursAverage.split('.')
     fraction[0] = fraction[0] + 'H'
-    fraction[1] = ((+fraction[1] / 100) * 60).toFixed(2) + 'M'
+    fraction[1] = issueSolvedHours.length > 0 ? ((+fraction[1] / 100) * 60).toFixed(2) + 'M' : '0M'
     issueSolvedHoursAverage = issueSolvedHours.length > 0 ? fraction.join(' ') : 0
-
 
     let issueWaitingHours = issuesWereInWaitingState.map(iws => {
       let end = moment(iws.WaitingEndTime)
@@ -261,6 +269,13 @@ router.get('/reports/averages/:id', async (req, res) => {
     let issueSolvedWaitingHoursAverage = issueWaitingHours.length > 0 ? 
       (issueSolvedWaitingHoursSum / issueWaitingHours.length).toFixed(2) : 0
 
+      let iswha = issueSolvedWaitingHoursAverage.toString().split('.')
+      iswha[0] = iswha[0] + 'H'
+      iswha[1]  = issueWaitingHours.length > 0 ?  (+iswha[1] / 100) * 60 + 'M' : 0 + 'M'
+    
+      iswha = iswha.join(' ')
+      issueSolvedWaitingHoursAverage = iswha
+
 
       let issueRedirectHours = issueWereRedirected.map(iwr =>{
     let end = moment(iwr.fixedAt)
@@ -273,8 +288,14 @@ router.get('/reports/averages/:id', async (req, res) => {
   issueRedirectHours = issueRedirectHours.filter(Boolean)
   let issueRedirectHoursSum = issueRedirectHours.reduce((sum, hour) => sum + hour, 0)
   let issueRedirectHoursAverage = issueRedirectHours.length > 0 ?
-    (issueRedirectHoursSum / issueRedirectHours.length) : 0
+  (issueRedirectHoursSum / issueRedirectHours.length).toFixed(2) : 0
     
+  let idhaParts = issueRedirectHoursAverage.toString().split('.')
+  idhaParts[0] = idhaParts[0] + 'H'
+  idhaParts[1]  = issueRedirectHours.length > 0 ?  (+idhaParts[1] / 100) * 60 + 'M' : 0 + 'M'
+
+  idhaParts = idhaParts.join(' ')
+  issueRedirectHoursAverage = idhaParts
 
     return res.status(200).json({
       issueSolvedHoursAverage,
@@ -282,6 +303,7 @@ router.get('/reports/averages/:id', async (req, res) => {
       issueRedirectHoursAverage,
     })
   }catch(err){
+    console.log(err.message);
     return res.status(500).json(err.message)
   }
 });
@@ -312,7 +334,7 @@ router.get('/reports/general/:id', async (req, res) => {
     })
 
     console.log(inCompletedIssues.length);
-
+    
     if(id == 0){
       let currentMonth = moment().month()
       completedIssues = completedIssues.filter(issue =>{

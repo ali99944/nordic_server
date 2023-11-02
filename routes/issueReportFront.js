@@ -51,6 +51,8 @@ router.get('/reports/dashboard', async (req, res) => {
     status: 'incomplete'
   })
 
+  let redirectedIssues = await Issue.find({ status: 'redirected' })
+
   let issuePublishedByDriver = await Issue.find({
     publisher: 'driver'
   })
@@ -238,7 +240,7 @@ let holderSortableArray = []
 for(let key in holder){
   holderSortableArray.push({
     identifier: key,
-    value: holder[key]
+    value: Math.floor(holder[key])
   })
 }
 
@@ -246,16 +248,37 @@ holderSortableArray.sort((a,b) =>{
   return a.value - b.value
 })
 
+let combinedCurrentIssues = [
+  ...inCompletedIssues,
+  ...waitingIssues,
+  ...redirectedIssues
+]
 
-console.log(holderSortableArray);
+let issueGroupedIntoImportance = combinedCurrentIssues.reduce((result, item) => {
+  const key = item.importanceLevel;
+  if (key !== undefined && key !== null) {
+    if (!result[key]) {
+      result[key] = [];
+    }
+    result[key].push(item);
+  }
+  return result;
+}, {});
+
+Object.keys(issueGroupedIntoImportance).map(key => {
+  issueGroupedIntoImportance[key] = (((issueGroupedIntoImportance[key].length / combinedCurrentIssues.length)) * 100).toFixed(2)
+})
+
+console.log(issueGroupedIntoImportance);
 
   return res.render('reports/dashboard',{
     machines: JSON.stringify(machines),
-    issues: [...inCompletedIssues,...waitingIssues],
+    issues: [...inCompletedIssues,...waitingIssues,...redirectedIssues],
     waitingMachines: waitingMachines.length,
     activeMachines: activeMachines.length,
     inActiveMachines:inActiveMachines.length,
-
+    issueGroupedIntoImportance: JSON.stringify(issueGroupedIntoImportance),
+    issueGroupedIntoImportanceTotalIssues: combinedCurrentIssues.length,
     issuesGroupedIntoMonths: JSON.stringify(issuesGroupedIntoMonths),
     holderSortableArray: JSON.stringify(holderSortableArray),
 

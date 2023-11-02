@@ -166,7 +166,7 @@ router.put('/issues/:id/waiting', async (req, res) => {
         issue.processes.push(`Issue is in waiting state at ${currentDate}`)
         issue.status = 'waiting'
         issue.statusText = reason
-        issue.waitingStartTime = moment(currentDate).format('YYYY-MM-DD')
+        issue.waitingStartTime = moment(currentDate).format('YYYY-MM-DD HH:mm:ss')
         issue.wasInWaitingState = true
 
         await issue.save()
@@ -254,7 +254,7 @@ router.post('/issues', async (req, res) => {
 
             if(publisher == 'driver'){
                 issue.wasRedirected = true
-                issue.redirectStartTime = moment(currentDate).format('YYYY-MM-DD')
+                issue.redirectStartTime = moment(currentDate).format('YYYY-MM-DD HH:mm:ss')
             }
 
 

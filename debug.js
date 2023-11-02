@@ -1,24 +1,155 @@
-// Replace 'YOUR_API_KEY' with your Google Maps Geocoding API Key
-const apiKey = 'AIzaSyB_RMmoc5iVAGRDfxi8WLjQc27_QocN-eI';
-const address = 'Scandic Helsfyr';
+let arr = [
+  {
+    "_id" : ObjectId("6540d3d00d63d2267c155953"),
+    "machine" : ObjectId("653124f22d7b076318d36752"),
+    "date" : "2023-10-31 11:15:44",
+    "fixedAt" : null,
+    "publisher" : "driver",
+    "fixedBy" : null,
+    "fixedByIdentifier" : null,
+    "wasRedirected" : true,
+    "redirectStartTime" : "2023-10-31",
+    "waitingStartTime" : null,
+    "WaitingEndTime" : null,
+    "wasInWaitingState" : false,
+    "processes" : [
+            "driver uploaded issue at 2023-10-31 11:15:44"
+    ],
+    "boardNumber" : "",
+    "title" : "Feil på Automat Østre Aker vei 60",
+    "description" : "Automat som ligger i adressen Østre Aker vei 60 kanskje er ute av drift, klagen har kommet gjennom pnid PN167",
+    "notes" : "",
+    "status" : "incomplete",
+    "statusText" : "",
+    "zone" : "Rute 3",
+    "zoneLocation" : "Østre Aker vei 60",
+    "serial" : "11",
+    "category" : "Alvorlig",
+    "problem" : "Ute av drift ",
+    "importanceLevel" : 1,
+    "__v" : 0
+},
+{
+    "_id" : ObjectId("6540d4850d63d2267c155966"),
+    "machine" : ObjectId("65322a24c2b60030a687db3e"),
+    "date" : "2023-10-31 11:18:45",
+    "fixedAt" : null,
+    "publisher" : "driver",
+    "fixedBy" : null,
+    "fixedByIdentifier" : null,
+    "wasRedirected" : true,
+    "redirectStartTime" : "2023-10-31",
+    "waitingStartTime" : null,
+    "WaitingEndTime" : null,
+    "wasInWaitingState" : false,
+    "processes" : [
+            "driver uploaded issue at 2023-10-31 11:18:45"
+    ],
+    "boardNumber" : "",
+    "title" : "Feil på Automat Hauketo senter",
+    "description" : "Automat som ligger i adressen Hauketo senter kanskje er ute av drift, klagen har kommet gjennom pnid PN167",
+    "notes" : "",
+    "status" : "incomplete",
+    "statusText" : "",
+    "zone" : "Rute 4",
+    "zoneLocation" : "Hauketo senter",
+    "serial" : "22",
+    "category" : "Mindre viktig ",
+    "problem" : "Lading sitt fast i bilen ",
+    "importanceLevel" : 3,
+    "__v" : 0
+},
+{
+    "_id" : ObjectId("6540d49f0d63d2267c155975"),
+    "machine" : ObjectId("6537a7a16d888648f5f86db0"),
+    "date" : "2023-10-31 11:19:11",
+    "fixedAt" : null,
+    "publisher" : "driver",
+    "fixedBy" : null,
+    "fixedByIdentifier" : null,
+    "wasRedirected" : true,
+    "redirectStartTime" : "2023-10-31",
+    "waitingStartTime" : null,
+    "WaitingEndTime" : null,
+    "wasInWaitingState" : false,
+    "processes" : [
+            "driver uploaded issue at 2023-10-31 11:19:11"
+    ],
+    "boardNumber" : "",
+    "title" : "Feil på Automat Kongeveien 49",
+    "description" : "Automat som ligger i adressen Kongeveien 49 kanskje er ute av drift, klagen har kommet gjennom pnid PN167",
+    "notes" : "",
+    "status" : "incomplete",
+    "statusText" : "",
+    "zone" : "Rute 4",
+    "zoneLocation" : "Kongeveien 49",
+    "serial" : "2200",
+    "category" : "Alvorlig",
+    "problem" : "Ute av drift ,Mangler skillet ",
+    "importanceLevel" : 1,
+    "__v" : 0
+},
+{
+    "_id" : ObjectId("65421e9220355b05c75e43ba"),
+    "machine" : ObjectId("6537a7a16d888648f5f86db0"),
+    "date" : "2023-11-01 10:46:58",
+    "fixedAt" : "2023-11-01 10:53:12",
+    "publisher" : "driver",
+    "fixedBy" : "driver",
+    "fixedByIdentifier" : "PN173",
+    "wasRedirected" : true,
+    "redirectStartTime" : "2023-11-01",
+    "waitingStartTime" : null,
+    "WaitingEndTime" : null,
+    "wasInWaitingState" : false,
+    "processes" : [
+            "driver uploaded issue at 2023-11-01 10:46:58",
+            "issue was fixed and closed by Loghman at 2023-11-01 10:53:12"
+    ],
+    "boardNumber" : "",
+    "title" : "Feil på Automat Kongeveien 49",
+    "description" : "Automat som ligger i adressen Kongeveien 49 kanskje er ute av drift, klagen har kommet gjennom pnid PN173",
+    "notes" : "",
+    "status" : "complete",
+    "statusText" : "",
+    "zone" : "Rute 4",
+    "zoneLocation" : "Kongeveien 49",
+    "serial" : "2200",
+    "category" : "Else",
+    "problem" : "de har ingen problem fikset",
+    "importanceLevel" : 2,
+    "__v" : 1
+},
+{
+    "_id" : ObjectId("6542c0fecbde911fbafd65ea"),
+    "machine" : ObjectId("6542c0d1cbde911fbafd65b9"),
+    "date" : "2023-11-01 22:19:58",
+    "fixedAt" : null,
+    "publisher" : "client",
+    "fixedBy" : null,
+    "fixedByIdentifier" : null,
+    "wasRedirected" : false,
+    "redirectStartTime" : null,
+    "waitingStartTime" : null,
+    "WaitingEndTime" : null,
+    "wasInWaitingState" : false,
+    "processes" : [
+            "client uploaded issue at 2023-11-01 22:19:58"
+    ],
+    "boardNumber" : "II 99",
+    "title" : "Feil på Automat åråssvingen 2",
+    "description" : "Automat som ligger i adressen åråssvingen 2 kanskje er ute av drift, klagen har kommet gjennom skilt nrII 99",
+    "notes" : "",
+    "status" : "incomplete",
+    "statusText" : "",
+    "zone" : "Rute 6",
+    "zoneLocation" : "åråssvingen 2",
+    "serial" : "111",
+    "category" : "Alvorlig",
+    "problem" : "Mangler skillet ",
+    "importanceLevel" : 1,
+    "__v" : 0
+}
+]
 
-// Define the geocoding request URL
-const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
-
-// Perform the geocoding request
-fetch(geocodingUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    if (data.status === 'OK' && data.results.length > 0) {
-      // Extract the latitude and longitude from the first result
-      const location = data.results[0].geometry.location;
-      const latitude = location.lat;
-      const longitude = location.lng;
-      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-    } else {
-      console.error('Geocoding failed. Please check the address or API key.');
-    }
-  })
-  .catch((error) => {
-    console.error('Error while geocoding:', error);
-  });
+console.log(arr.length);
