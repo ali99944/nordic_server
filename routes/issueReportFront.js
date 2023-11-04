@@ -7,6 +7,7 @@ const Manager = require('../models/Manager')
 const Machine = require('../models/Machine')
 const Issue = require('../models/Issue')
 const moment = require('moment');
+let SMS = require('../models/SMS')
 
 router.get('/reports', async (req, res) => {
   try{
@@ -25,6 +26,23 @@ router.get('/reports', async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+router.get('/reports/sms', async (req, res) => {
+  try {
+    let smss = await SMS.find()
+    let jwt_access_token = req.cookies.jwt_token
+    let decoded = jwt.verify(jwt_access_token,process.env.JWT_SECRET_KEY)
+    let manager = await Manager.findOne({ _id: decoded.id })
+
+    return res.status(200).render('reports/sms',{
+      smss: smss,
+      isAdmin: decoded.role === 'admin',
+      permissions: manager.permissions 
+    });
+  }catch(err){
+    return res.status(500).send(err.message)
+  }
+})
 
 router.get('/reports/dashboard', async (req, res) => {
   let machines = await Machine.find()
@@ -244,9 +262,13 @@ for(let key in holder){
   })
 }
 
+console.log(holderSortableArray);
+
 holderSortableArray.sort((a,b) =>{
-  return a.value - b.value
+  return b.value - a.value
 })
+
+console.log(holderSortableArray);
 
 let combinedCurrentIssues = [
   ...inCompletedIssues,
@@ -265,11 +287,33 @@ let issueGroupedIntoImportance = combinedCurrentIssues.reduce((result, item) => 
   return result;
 }, {});
 
+let issueGroupedIntoImportanceValues = []
+
+
 Object.keys(issueGroupedIntoImportance).map(key => {
   issueGroupedIntoImportance[key] = (((issueGroupedIntoImportance[key].length / combinedCurrentIssues.length)) * 100).toFixed(2)
 })
 
-console.log(issueGroupedIntoImportance);
+
+if(issueGroupedIntoImportance.hasOwnProperty('3')){
+  issueGroupedIntoImportanceValues.push(+issueGroupedIntoImportance['3'])
+}else{
+  issueGroupedIntoImportanceValues.push(0)
+}
+
+if(issueGroupedIntoImportance.hasOwnProperty('2')){
+  issueGroupedIntoImportanceValues.push(+issueGroupedIntoImportance['2'])
+}else{
+  issueGroupedIntoImportanceValues.push(0)
+}
+
+if(issueGroupedIntoImportance.hasOwnProperty('1')){
+  issueGroupedIntoImportanceValues.push(+issueGroupedIntoImportance['1'])
+}else{
+  issueGroupedIntoImportanceValues.push(0)
+}
+
+console.log(issueGroupedIntoImportanceValues);
 
   return res.render('reports/dashboard',{
     machines: JSON.stringify(machines),
@@ -277,7 +321,7 @@ console.log(issueGroupedIntoImportance);
     waitingMachines: waitingMachines.length,
     activeMachines: activeMachines.length,
     inActiveMachines:inActiveMachines.length,
-    issueGroupedIntoImportance: JSON.stringify(issueGroupedIntoImportance),
+    issueGroupedIntoImportance: JSON.stringify(issueGroupedIntoImportanceValues),
     issueGroupedIntoImportanceTotalIssues: combinedCurrentIssues.length,
     issuesGroupedIntoMonths: JSON.stringify(issuesGroupedIntoMonths),
     holderSortableArray: JSON.stringify(holderSortableArray),

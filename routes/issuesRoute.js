@@ -12,6 +12,7 @@ const IssueCategory = require('../models/IssueCategory')
 const Manager = require('../models/Manager')
 const jwt = require('jsonwebtoken')
 const SMS = require('../models/SMS')
+const AppNotification = require('../models/AppNotification')
 
 router.get('/issues/categories', async (req, res) => {
     try{
@@ -273,6 +274,13 @@ router.post('/issues', async (req, res) => {
               let response = await admin
                 .messaging()
                 .send(message)
+
+
+              const appNotification = await AppNotification.create({
+                delivery_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+                content: `Automat som ligger i adressen ${machine.zoneLocation} kanskje er ute av drift, klagen har kommet gjennom bilfører med ${publisher == 'driver' ? 'pnid ' + pnid : 'skilt nr' + boardNumber}`,
+                title: `Feil på ${machine.zoneLocation} Automat`,
+              })
     
                 console.log('Message sent:', response);
 
@@ -490,7 +498,7 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
         const message = {
             data: {
                 title: `P-Autmat ${currentIssue.zoneLocation} er i orden`,
-                body: ` P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`,
+                body: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`,
                 type: 'issue_closed',
             },
             topic: 'nordic', // Replace with the topic you want to use
@@ -499,6 +507,12 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
           let response = await admin
             .messaging()
             .send(message)
+
+            const appNotification = await AppNotification.create({
+                delivery_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+                title: `P-Autmat ${currentIssue.zoneLocation} er i orden`,
+                content: ` P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`
+              })
 
             await sendAlertSMS({
                 text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentTech.name}`,
@@ -657,6 +671,12 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
           let response = await admin
             .messaging()
             .send(message)
+
+            const appNotification = await AppNotification.create({
+                delivery_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+                content: ` P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
+                title: `P-Autmat ${currentIssue.zoneLocation} er i orden`,
+              })
 
             await sendAlertSMS({
                 text: `P-Automat i adressen ${currentIssue.zoneLocation} fikset av ${currentUser.name}`,
