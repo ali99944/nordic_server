@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Insta Dash | Responsive Bootstrap 4 Admin Dashboard Template</title>
+    <title>Drift-Report admin</title>
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="/assets/images/gensolv.png" />
@@ -61,12 +61,12 @@
                 </a>
                 <ul id="payment" class="iq-submenu collapse show list-inline m-0 p-0 mt-2">
                     <li>
-                        <a href="/" data-toggle="tooltip" data-placement="right" title="Home"><i
+                        <a href="/" data-toggle="tooltip" data-placement="right" title="Hjem"><i
                                 class="las la-home iq-arrow-left"></i></a>
                     </li>
             
                     <li>
-                        <a href="/admin/api/logout" data-toggle="tooltip" data-placement="right" title="Logout" style="color: red;"><i
+                        <a href="/admin/api/logout" data-toggle="tooltip" data-placement="right" title="Logg ut" style="color: red;"><i
                                 class="las la-sign-out-alt"></i></a>
                     </li>
                 </ul>
@@ -79,17 +79,17 @@
             <div class="col-lg-12 mb-3">
                 <div class="d-flex align-items-center justify-content-between welcome-content">
                     <div class="navbar-breadcrumb">
-                        <h4 class="mb-1">Welcome To Dashboard</h4>
+                        <h4 class="mb-1">Drift Klage Report</h4>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-8 mb-2 d-flex align-items-center">
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(6); initializeAverages(6); initializeLeaderboard(6)">All</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(1); initializeAverages(1); initializeLeaderboard(1)">today</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(6); initializeAverages(6); initializeLeaderboard(6)">Alle</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(1); initializeAverages(1); initializeLeaderboard(1)">Dag</div>
                 <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(2); initializeAverages(2); initializeLeaderboard(2)">2D</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3); initializeAverages(3); initializeLeaderboard(3)">week</div>
-                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4); initializeAverages(4); initializeLeaderboard(4)">month</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(3); initializeAverages(3); initializeLeaderboard(3)">Uke</div>
+                <div class="btn btn-sm btn-primary mr-1" onclick="initalizeGeneralNumbers(4); initializeAverages(4); initializeLeaderboard(4)">Månd</div>
                 
                 <div class="date" id="reservationdate" data-target-input="nearest">
                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
@@ -119,7 +119,7 @@
                                             Check
                                         </a>
                                     </div>
-                                    <span class="mb-0">Total Issues</span>
+                                    <span class="mb-0">Alle klage</span>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                                         <a href="/issues" class="btn btn-sm btn-info">
                                             Check
                                         </a>
-                                    </div>                                    <span class="mb-0  text-white">Completed Issues</span>
+                                    </div>                                    <span class="mb-0  text-white">Løst klage</span>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                                         <a href="/issues" class="btn btn-sm btn-info">
                                             Check
                                         </a>
-                                    </div>                                    <span class="mb-0">Issues In Wait</span>
+                                    </div>                                    <span class="mb-0">Klage på vent</span>
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                                         <a href="/issues" class="btn btn-sm btn-info">
                                             Check
                                         </a>
-                                    </div>                                    <span class="mb-0">In-Completed Issues</span>
+                                    </div>                                    <span class="mb-0">Uløst klage</span>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                                         <a href="/issues" class="btn btn-sm btn-info">
                                             Check
                                         </a>
-                                    </div>                                    <span class="mb-0">Issues By Driver</span>
+                                    </div>                                    <span class="mb-0">Klage ab betjent</span>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                                         <a href="/issues" class="btn btn-sm btn-info">
                                             Check
                                         </a>
-                                    </div>                                    <span class="mb-0">Issue Solved By Driver</span>
+                                    </div>                                    <span class="mb-0">Løst klage av betjent</span>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +242,7 @@
                 <div class="card card-block card-stretch card-height rtl-card">
                 <div class="card-header border-none">
                     <div class="header-title">
-                        <h4 class="card-title">Facebook Daily Likes</h4>
+                        <h4 class="card-title">Rask betjent inngående klage</h4>
                     </div>
                 </div>
                     <div class="card-body" id="progress-container">
@@ -268,7 +268,7 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
                         <div class="header-title">
-                            <h4 class="card-title">Media Values</h4>
+                            <h4 class="card-title">Klage kategori</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -282,7 +282,7 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
                         <div class="header-title">
-                            <h4 class="card-title">Issues Graph</h4>
+                            <h4 class="card-title">Antall og gjentatt klage</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -295,8 +295,8 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
                         <div class="header-title">
-                            <h4 class="card-title mb-1">Demographic Audience</h4>
-                            <span class="mb-0">See insights on how you profile has grown and changed over time</span>
+                            <h4 class="card-title mb-1">Direkte P-Automat status på kart</h4>
+                            <span class="mb-0">Se alle automatene som har fått klage eller ute av drift</span>
                         </div>
                     </div>
                     <div class="card-body">
@@ -309,7 +309,7 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header border-none">
                         <div class="header-title">
-                            <h4 class="card-title mb-1">Machines Statistic</h4>
+                            <h4 class="card-title mb-1">P-automat statistikk</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -321,7 +321,7 @@
                 <div class="card card-block card-stretch card-height ">
                     <div class="card-header border-none">   
                         <div class="header-title">
-                            <h4 class="card-title">Current Issues</h4>
+                            <h4 class="card-title">Nåværende klage og status</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -330,14 +330,15 @@
                                 <thead>
                                     <tr>
                                         <th>Dato</th>
-                                        <th>Seriell</th>
-                                        <th>Sone</th>
-                                        <th>Category</th>
-                                        <th>Problem</th>
-                                        <th>Importance</th>
+                                        <th>pub</th>
+                                        <th>Tasknr</th>
                                         <th>Rute</th>
+                                        <th>Kategori</th>
+                                        <th>Klage</th>
+                                        <th>Betydning</th>
+                                        <th>Hvor</th>
                                         <th>Status</th>
-                                        <th>Up Time</th>
+                                        <th>Siden?</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -367,6 +368,7 @@
                                             <% issues.forEach(report => { %>
                                                 <tr>
                                                     <td><%= report.date %></td>
+                                                    <td><%= report.publisher %></td>
                                                     <td><%= report.serial %></td>
                                                     <td><%= report.zone %></td>
                                                     <td><%= report.category %></td>
@@ -412,7 +414,7 @@
                 <div class="card card-block card-stretch card-height rule-box averages-card">
                     <div class="card-header d-flex justify-content-between border-none">
                         <div class="header-title">
-                            <h4 class="card-title">Averages</h4>
+                            <h4 class="card-title">Gjennomsnitt</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -420,7 +422,7 @@
                             <div class="average-item">
                                 <i class="fas fa-chart-line average-icon"></i>
                                 <div class="average-details">
-                                    <p class="average-title">Issue / Hour</p>
+                                    <p class="average-title">Klage / time</p>
                                     <h4 id="isha-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
                             </div>
@@ -428,7 +430,7 @@
                             <div class="average-item">
                                 <i class="fas fa-clock average-icon"></i>
                                 <div class="average-details">
-                                    <p class="average-title">Waiting / Hour</p>
+                                    <p class="average-title">Klage på vent / Hour</p>
                                     <h4 id="iswhg-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
                             </div>
@@ -436,7 +438,7 @@
                             <div class="average-item">
                                 <i class="fas fa-exchange-alt average-icon"></i>
                                 <div class="average-details">
-                                    <p class="average-title">Redirect / Hour</p>
+                                    <p class="average-title">Videresende klage / Hour</p>
                                     <h4 id="idha-holder" class="average-value btn btn-sm btn-primary">-</h4>
                                 </div>
                             </div>
@@ -460,7 +462,7 @@
                 <div class="card card-block card-stretch card-height">
                 <div class="card-header border-none">
                     <div class="header-title">
-                        <h4 class="card-title">Total Fix Average Time</h4>
+                        <h4 class="card-title">Total gjennomsnittstid for å løse klagen</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -485,8 +487,8 @@
                 <div class="card card-block card-stretch card-height ">
                     <div class="card-header border-none">   
                         <div class="header-title d-flex justify-content-between">
-                            <h4 class="card-title">Recent Reports</h4>
-                            <a class="btn btn-primary" href="/reports">Show All</a>
+                            <h4 class="card-title">Nylige rapporter</h4>
+                            <a class="btn btn-primary" href="/reports">Vise Alle</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -554,7 +556,7 @@
                     <div class="card-header border-none">
                         <div class="header-title ">
                             <h4 class="card-title">
-                                Solvers
+                                Løsere og tid brukt
                             </h4>
                         </div>
                     </div>

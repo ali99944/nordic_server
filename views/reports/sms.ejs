@@ -75,8 +75,8 @@
                                         <% } else { %>
                                             <% smss.forEach(sms => { %>
                                                 <tr>
-                                                    <td><%= sms.deliverd_date %></td>
-                                                    <td><%= sms.deliverd_to.join(', ') %></td>
+                                                    <td><%= sms.delivery_date %></td>
+                                                    <td><%= sms.delivered_to.join(', ') %></td>
                                                     <td><%= sms.total_received %></td>
                                                     <td><%= sms.about %></td>
                                                     <td><%= sms.content %></td>
