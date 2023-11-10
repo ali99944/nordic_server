@@ -172,10 +172,19 @@ router.put('/issues/:id/waiting', async (req, res) => {
 
         await issue.save()
 
+        let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
+        let machine = await Machine.findOne({
+            _id: issue.machine
+        })
+        let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+        let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+
+        let diff = moment.duration(currentTime.diff(lastActiveTime))
+        let newTotalTime = machine.totalWorkingTime + diff.hours()
         let machineId = issue.machine
         await Machine.updateOne({
             _id: machineId
-        },{ status: 'waiting'})
+        },{ status: 'waiting', lastActiveTime: newLastActiveTime, totalWorkingTime: newTotalTime})
         return res.status(200).json('moved to waiting')
     }catch(err){
         return res.status(500).json(err.message)
@@ -376,9 +385,17 @@ Takk for beskjed.
     
                     await smsMessage.save()
                 }
+
+                let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
+                let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+                let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+        
+                let diff = moment.duration(currentTime.diff(lastActiveTime))
+                let newTotalTime = machine.totalWorkingTime + diff.hours()
+
             await Machine.updateOne({
                 _id:id,
-            },{ status: 'inactive' })
+            },{ status: 'inactive', totalWorkingTime: newTotalTime, lastActiveTime: newLastActiveTime })
 
             return res.json({ 
                 message: 'Message sent successfully'
@@ -413,6 +430,7 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
     try{
         const { id } = req.params
         const { token } = req.headers
+
         let decoded = jwt.verify(token,process.env.JWT_SECRET_KEY)
 
 
@@ -435,7 +453,7 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
         issue.fixedBy = 'technician'
 
         if(issue.wasInWaitingState){
-            issue.WaitingEndTime = moment(currentDate).format('YYYY-MM-DD')
+            issue.WaitingEndTime = moment(currentDate).format('YYYY-MM-DD HH:mm:ss')
         }
         await issue.save()
 
@@ -454,8 +472,6 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
 
         // Replace placeholders with dynamic data
         const template_data = {
-            details: details,
-            notes: notes ,
             clientNotes: currentIssue.notes,
             boardNumber:currentIssue.boardNumber,
             date: localDateString,
@@ -485,10 +501,23 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
 
         let machineId = currentIssue.machine
 
+        let machine = await Machine.findOne({
+            _id: machineId
+        })
+
+        let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
+        let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+        let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+
+        let diff = moment.duration(currentTime.diff(lastActiveTime))
+        let newTotalTime = machine.totalWorkingTime + diff.hours()
+
         let machineActivation = await Machine.updateOne({
             _id: machineId,
         },{
             status: 'active',
+            lastActiveTime: newLastActiveTime,
+            totalOfflineTime: newTotalTime
         })
 
         if(machineActivation){
@@ -641,18 +670,29 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         issue.fixedBy = 'driver'
 
         if(issue.wasInWaitingState){
-            issue.WaitingEndTime = moment(currentDate).format('YYYY-MM-DD') 
+            issue.WaitingEndTime = moment(currentDate).format('YYYY-MM-DD HH:mm:ss') 
         }
         await issue.save()
 
         console.log('Issue updated and closed');
 
         let machineId = currentIssue.machine
+        let machine = await Machine.findOne({
+            _id: machineId
+        })
 
+        let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
+        let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+        let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+
+        let diff = moment.duration(currentTime.diff(lastActiveTime))
+        let newTotalTime = machine.totalWorkingTime + diff.hours()
         let machineActivation = await Machine.updateOne({
             _id: machineId,
         },{
             status: 'active',
+            lastActiveTime: newLastActiveTime,
+            totalOfflineTime: newTotalTime
         })
 
         if(machineActivation){

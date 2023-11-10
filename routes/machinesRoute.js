@@ -6,7 +6,7 @@ const Issue = require('../models/Issue')
 const qrcode = require('qr-image')
 const fs = require('fs')
 const admin = require('../utils/firebase');
-
+const moment = require('moment')
 
 
 router.get('/machines', async (req, res) => {
@@ -54,6 +54,8 @@ router.get('/machines/:id', async (req, res) => {
 router.post('/machines', async (req, res) => {
     try{
         const { serial,zone,shiftNumber,zoneLocation,categories,latitude,longitude } = req.body
+        let lastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
+        
         let machine = new Machine({
             serial,
             zone,
@@ -62,6 +64,7 @@ router.post('/machines', async (req, res) => {
             categories,
             latitude,
             longitude,
+            lastActiveTime: lastActiveTime
         })
         await machine.save()
 
@@ -130,7 +133,8 @@ router.post('/machines/:id/activate', async (req, res) => {
         let machineActivation = await Machine.updateOne({
             _id:req.params.id
         },{
-            status: 'active'
+            status: 'active',
+            lastActiveTime: moment().format('YYYY-MM-DD HH:mm:ss')
         })
 
         if(machineActivation){

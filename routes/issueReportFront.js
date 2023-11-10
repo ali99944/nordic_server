@@ -138,7 +138,7 @@ router.get('/reports/dashboard', async (req, res) => {
 
 
     let issueGroupedIntoDates = completedIssues.reduce((result, item) => {
-      let key = item.date;
+      let key = item.fixedAt;
       if (key !== undefined && key !== null) {
         key = moment(key).format('YYYY-MM-DD')
 
@@ -273,7 +273,8 @@ console.log(holderSortableArray);
 let combinedCurrentIssues = [
   ...inCompletedIssues,
   ...waitingIssues,
-  ...redirectedIssues
+  ...redirectedIssues,
+  ...completedIssues
 ]
 
 let issueGroupedIntoImportance = combinedCurrentIssues.reduce((result, item) => {
@@ -313,8 +314,62 @@ if(issueGroupedIntoImportance.hasOwnProperty('1')){
   issueGroupedIntoImportanceValues.push(0)
 }
 
-console.log(issueGroupedIntoImportanceValues);
 
+let issues_3 = await Issue.find()
+let issuesGroupedIntoDays = issues_3.reduce((result, item) =>{
+  let key = item.date
+  if(key !== undefined && key !== null){
+    key = moment(key).format('YYYY-MM-DD')
+    if (!result[key]) {
+      result[key] = [];
+    }
+
+    result[key].push(item)
+    return result
+  }
+},{})
+
+
+Object.keys(issuesGroupedIntoDays).forEach(key => {
+  let issues = issuesGroupedIntoDays[key]
+
+  let issueGroupedIntoSerials = issues.reduce((result, item) => {
+    const key = item.zoneLocation;
+    if (key !== undefined && key !== null) {
+      if (!result[key]) {
+        result[key] = [];
+      }
+      result[key].push(item);
+    }
+    return result;
+  }, {});
+
+  let groupsIntoNumbers = 0
+  for(let key in issueGroupedIntoSerials){
+    if(issueGroupedIntoSerials.hasOwnProperty(key) && issueGroupedIntoSerials[key].length >= 5){
+      groupsIntoNumbers += Math.floor(issueGroupedIntoSerials[key].length / 5)
+    }
+  }
+
+  let zoneLocationSet = []
+
+  Object.keys(issueGroupedIntoSerials).forEach(key => {
+    zoneLocationSet.push({
+      zoneLocation: key,
+      repeat: issueGroupedIntoSerials[key].length >= 5 ?  Math.floor(issueGroupedIntoSerials[key].length / 5) : undefined
+    })
+  })
+
+  console.log(zoneLocationSet);
+
+  issuesGroupedIntoDays[key] = {
+    totalIssues: issuesGroupedIntoDays[key].length,
+    totalRepeated: groupsIntoNumbers,
+    zoneLocationSet: zoneLocationSet
+  }
+})
+
+console.log(issuesGroupedIntoDays);
   return res.render('reports/dashboard',{
     machines: JSON.stringify(machines),
     issues: [...inCompletedIssues,...waitingIssues,...redirectedIssues],
@@ -324,6 +379,7 @@ console.log(issueGroupedIntoImportanceValues);
     issueGroupedIntoImportance: JSON.stringify(issueGroupedIntoImportanceValues),
     issueGroupedIntoImportanceTotalIssues: combinedCurrentIssues.length,
     issuesGroupedIntoMonths: JSON.stringify(issuesGroupedIntoMonths),
+    issuesGroupedIntoDays: JSON.stringify(issuesGroupedIntoDays),
     holderSortableArray: JSON.stringify(holderSortableArray),
 
     reports,

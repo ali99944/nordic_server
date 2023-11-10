@@ -77,6 +77,9 @@
                                     <th>Rute</th>
                                     <th>Hvor?</th>
                                     <th>Categories</th>
+                                    <th>Last Active</th>
+                                    <th>Working</th>
+                                    <th>Offline</th>
                                     <th>QR kode</th>
                                     <th>Handlinger</th>
                                 </tr>
@@ -89,6 +92,9 @@
                                             <td><%= machine.zone?.name ?? '---' %></td>
                                             <td><%= machine.zoneLocation %></td>
                                             <td><%= machine.categories.map(e => e.name) %></td>
+                                            <td><%= machine.lastActiveTime ?? 'N/A' %></td>
+                                            <td><%= machine.totalWorkingTime %></td>
+                                            <td><%= machine.totalOfflineTime %></td>
                                             <td>
                                                 <a href="/machines/<%= machine._id %>/qrcode">
                                                     <i class="fas fa-qrcode fa-2x"></i>

@@ -76,7 +76,11 @@
                       if(json.role == 'admin'){
                         location.href = '/'
                       }else{
-                        location.href = '/managers/dashboard'
+                        if(json.permissions.some(p => p.route == 'dashboard')){
+                          location.href = '/reports/dashboard'
+                        }else{
+                          location.href = '/managers/dashboard'
+                        }
                       }
                     },2000)
                 }

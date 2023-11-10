@@ -8,6 +8,21 @@ const machineSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    totalWorkingTime:{
+      type: Number,
+      default: 0
+    },
+
+    totalOfflineTime:{
+      type: Number,
+      default: 0
+    },
+
+    lastActiveTime:{
+      type: String,
+      default: null
+    },
+    
     status:{
       type: String,
       enum: ['active','waiting','inactive'],

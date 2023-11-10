@@ -67,7 +67,7 @@ router.get('/issues', async (req, res) => {
     return res.render('issues/index',{
         isAdmin: decoded.role === 'admin',
         permissions: manager.permissions,
-        issues: issues
+        issues: issues.reverse()
     })
 })
 

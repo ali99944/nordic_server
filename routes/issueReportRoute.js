@@ -4,6 +4,7 @@ const Machine = require('../models/Machine')
 const Issue = require('../models/Issue')
 const SMS = require('../models/SMS')
 const moment = require('moment');
+const { machine } = require('os');
 
 router.get('/reports/leaderboard/:id', async (req, res) => {
     try{
@@ -95,7 +96,7 @@ router.get('/reports/leaderboard/:id', async (req, res) => {
             avgx = (sumx / list.length).toFixed(2)
             avgxParts = avgx.split('.')
             avgxParts[0] = avgxParts[0] + 'H'
-            avgxParts[1] = list.length > 0 ? ((+avgxParts[1] / 100) * 60) + 'M' : '0M'
+            avgxParts[1] = list.length > 0 ? ((+avgxParts[1] / 100) * 60).toFixed(2) + 'M' : '0M'
       
             holder[key] = avgxParts.join(' ')
           })
@@ -127,11 +128,17 @@ router.get('/reports/averages/:id', async (req, res) => {
     })
 
     let issuesWereInWaitingState = await Issue.find({
-      wasInWaitingState: true
+      wasInWaitingState: true,
+      $nor:[{
+        waitingStartTime: null
+      },{ WaitingEndTime: null }]
     })
 
     let issueWereRedirected = await Issue.find({
-      wasRedirected: true
+      wasRedirected: true,
+      $nor:[{
+        redirectStartTime: null
+      }]
     })
 
     if(id == 0){
@@ -271,7 +278,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
       let iswha = issueSolvedWaitingHoursAverage.toString().split('.')
       iswha[0] = iswha[0] + 'H'
-      iswha[1]  = issueWaitingHours.length > 0 ?  (+iswha[1] / 100) * 60 + 'M' : 0 + 'M'
+      iswha[1]  = issueWaitingHours.length > 0 ?  ((+iswha[1] / 100) * 60).toFixed(2) + 'M' : 0 + 'M'
     
       iswha = iswha.join(' ')
       issueSolvedWaitingHoursAverage = iswha
@@ -292,7 +299,7 @@ router.get('/reports/averages/:id', async (req, res) => {
     
   let idhaParts = issueRedirectHoursAverage.toString().split('.')
   idhaParts[0] = idhaParts[0] + 'H'
-  idhaParts[1]  = issueRedirectHours.length > 0 ?  (+idhaParts[1] / 100) * 60 + 'M' : 0 + 'M'
+  idhaParts[1]  = issueRedirectHours.length > 0 ?  ((+idhaParts[1] / 100) * 60).toFixed(2) + 'M' : 0 + 'M'
 
   idhaParts = idhaParts.join(' ')
   issueRedirectHoursAverage = idhaParts
@@ -333,7 +340,7 @@ router.get('/reports/general/:id', async (req, res) => {
       fixedBy: 'driver'
     })
 
-    console.log(inCompletedIssues.length);
+    let machines = await Machine.find()
     
     if(id == 0){
       let currentMonth = moment().month()
@@ -503,6 +510,9 @@ router.get('/reports/general/:id', async (req, res) => {
       })
     }
 
+    let totalActive = machines.reduce((sum,machine) => sum + machine.totalWorkingTime,0)
+    let totalOffline = machines.reduce((sum,machine) => sum + machine.totalOfflineTime,0)
+
     return res.status(200).json({
       totalIssues: issues.length,
       waitingIssues: waitingIssues.length,
@@ -510,6 +520,8 @@ router.get('/reports/general/:id', async (req, res) => {
       inCompletedIssues: inCompletedIssues.length,
       issuePublishedByDriver: issuePublishedByDriver.length,
       issueSolvedByDriver: issueSolvedByDriver.length,
+      totalActive,
+      totalOffline
     })
 
   }catch(e){

@@ -8,7 +8,7 @@
     <title>Drift-Report admin</title>
     
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/assets/images/gensolv.png" />
+    <link rel="shortcut icon" href="/images/gensolv.png" />
     <link rel="stylesheet" href="/assets/css/backend-plugin.min.css?v=2.0.0">
     <link rel="stylesheet" href="/assets/css/backend.css?v=2.0.0">
     <link rel="stylesheet" href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
@@ -102,7 +102,7 @@
             
             <div class="col-lg-8">
                 <div class="row">
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card card-block card-stretch card-height bg-primary">
                             <div class="card-body">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -168,7 +168,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class="top-block-one d-flex align-items-center justify-content-between">
+                                    <div class="icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
+                                        <img src="/images/waiting.png" alt="" srcset="" width="100%" height="100%">
+                                    </div>
+                                    <span class="text-primary"> <i class="ri-arrow-up-fill mr-1 fa-2x"></i></span>
+
+                                </div>
+
+                                <div class="mt-4 ">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h3 id="active-holder">-</h3>
+                                        <a href="/machines" class="btn btn-sm btn-info">
+                                            Check
+                                        </a>
+                                    </div>                                    <span class="mb-0">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -190,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -212,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block-one d-flex align-items-center justify-content-between">
@@ -235,6 +257,30 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class="top-block-one d-flex align-items-center justify-content-between">
+                                    <div class="icon iq-icon-box-2 mr-2 rtl-ml-2 rtl-mr-0 rounded">
+                                        <img src="/images/by_driver.png" alt="" srcset="" width="100%" height="100%">
+                                    </div>
+                                    <span class="text-white"><i class="ri-arrow-down-line mr-1 fa-2x"></i></span>
+
+                                 
+                                </div>
+
+                                <div class="mt-4 ">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h3 id="offline-holder">-</h3>
+                                        <a href="/machines" class="btn btn-sm btn-info">
+                                            Check
+                                        </a>
+                                    </div>                                    <span class="mb-0">Offline</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -251,14 +297,16 @@
             </div>
 
 
-            <div class="col-lg-12">
-                <div class="card card-block card-stretch card-height rtl-card">
-                <div class="card-header border-none">
-                    <div class="header-title">
-                        <h4 class="card-title">Analytics</h4>
+            <div class="col-lg-12 col-md-6">
+                <div class="card card-block card-stretch card-height">
+                    <div class="card-header border-none">
+                        <div class="header-title">
+                            <h4 class="card-title mb-1">Direkte P-Automat status på kart</h4>
+                            <span class="mb-0">Se alle automatene som har fått klage eller ute av drift</span>
+                        </div>
                     </div>
-                </div>
-                    <div class="card-body" id="chartdiv">
+                    <div class="card-body">
+                        <div id="cmap" class="layout-3-chart-01"></div>
                     </div>
                 </div>
             </div>
@@ -291,16 +339,14 @@
                     </div>
             </div>
         
-            <div class="col-lg-8 col-md-6">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title mb-1">Direkte P-Automat status på kart</h4>
-                            <span class="mb-0">Se alle automatene som har fått klage eller ute av drift</span>
-                        </div>
+            <div class="col-lg-8">
+                <div class="card card-block card-stretch card-height rtl-card">
+                <div class="card-header border-none">
+                    <div class="header-title">
+                        <h4 class="card-title">Analytics</h4>
                     </div>
-                    <div class="card-body">
-                        <div id="cmap" class="layout-3-chart-01"></div>
+                </div>
+                    <div class="card-body" id="chartdiv">
                     </div>
                 </div>
             </div>
@@ -379,7 +425,11 @@
                                                     </div></td>
                                                     <td><%= report.zoneLocation %></td>
                                                     <td><%= report.status %></td>
-                                                    <td date="<%= report.date %>" class="live-time btn btn-sm btn-primary" style="font-size: 14px;">-</td>
+                                                    <td date="<%= report.date %>" style="font-size: 14px;">
+                                                        <div date="<%= report.date %>" class="p-0 live-time" style="background-color: <%= importanceLevelBGColorJumpTable[3] %>">
+                                                            -
+                                                        </div>
+                                                    </td>
                                                 
                                                 </tr>
                             
@@ -871,7 +921,9 @@ function updateChart(data) {
 updateChart(initialData);
 
 let liveTimes = document.querySelectorAll('.live-time')
-setInterval(() => {
+
+    if(liveTimes.length > 0){
+        setInterval(() => {
     for (let live in liveTimes) {
         let startDate = moment(liveTimes.item(live).getAttribute('date'));
         let endDate = moment();
@@ -885,6 +937,7 @@ setInterval(() => {
         liveTimes.item(live).textContent = durationText;
     }
 }, 1000);
+    }
 
     async function initalizeGeneralNumbers(id,lowerbound,upperbound) {
         let ci = document.getElementById('ci-holder')
@@ -893,6 +946,9 @@ setInterval(() => {
         let ici = document.getElementById('ici-holder')
         let ibd = document.getElementById('ibd-holder')
         let isd = document.getElementById('isd-holder')
+
+        let activeHolder = document.getElementById('active-holder')
+        let offlineHolder = document.getElementById('offline-holder')
 
         let generalResponse = await fetch(`/api/reports/general/${id}`,{
             headers:{
@@ -908,6 +964,8 @@ setInterval(() => {
         ici.textContent = json['inCompletedIssues']
         ibd.textContent = json['issuePublishedByDriver']
         isd.textContent = json['issueSolvedByDriver']
+        activeHolder.textContent = json['totalActive']
+        offlineHolder.textContent = json['totalOffline']
     }
 
 
@@ -1114,7 +1172,7 @@ for(let value of holderSortableArray){
 
     let dataPercent = document.createElement('span')
     dataPercent.className = 'bg-orange iq-progress progress-1'
-    dataPercent.setAttribute('data-percent', value.value.toString())
+    dataPercent.setAttribute('data-percent', value.value > 100 ? '100' : value.value.toString())
     
     let dataPercentText = document.createElement('span')
     dataPercentText.className = 'progress-text-one bg-orange'
@@ -1226,7 +1284,7 @@ if (jQuery("#layout-3-chart-04").length) {
         suppressDirections: true,
     });
 
-    geoXml.parse("http://localhost:9090/kmz/norway_administrative_boundaries_province_polygon.kml");
+    geoXml.parse("https://nordic.bilsjekk.in/kmz/norway_administrative_boundaries_province_polygon.kml");
     google.maps.event.addListener(geoXml,'parsed', function() {
         console.log(geoXml.docs);
       geocoder.geocode( { 'address': "Norway"}, function(results, status) {
@@ -1288,7 +1346,7 @@ for (let i = 0; i < machines.length; i++) {
     icon: markerIcons[status], // Set the marker icon based on status
   });
 
-  if(machines[i].status == 'inactive'){
+  if(machines[i].status == 'inactive' || machines[i].status == 'waiting') {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 
@@ -1355,28 +1413,38 @@ var chart = am4core.create("chartdiv", am4charts.XYChart);
 //   {date:new Date(2019,5,18), value1:59, value2:55, previousDate:new Date(2019, 5, 11)}
 // ]
 
-chart.data = [
-    {
-        date: moment('2023-04').format('YYYY-MM'),
-        value1: 40,
-        value2: 30,
-        previousDate: moment('2023-03')
-    },
+let issuesGroupedIntoDays = <%- issuesGroupedIntoDays %>;
 
-    {
-        date: moment('2023-05').format('YYYY-MM'),
-        value1: 50,
-        value2: 68,
-        previousDate: moment('2023-03-01')
-    },
-
-    {
-        date: moment('2023-06').format('YYYY-MM'),
-        value1: 10,
-        value2: 12,
-        previousDate: moment('2023-03')
+chart.data = Object.keys(issuesGroupedIntoDays).map(igit => {
+    return {
+        date: igit,
+        value1: issuesGroupedIntoDays[igit].totalIssues,
+        value2: issuesGroupedIntoDays[igit].totalRepeated,
     }
-]
+})
+
+// chart.data = [
+//     {
+//         date: moment('2023-04').format('YYYY-MM'),
+//         value1: 40,
+//         value2: 30,
+//         previousDate: moment('2023-03')
+//     },
+
+//     {
+//         date: moment('2023-05').format('YYYY-MM'),
+//         value1: 50,
+//         value2: 68,
+//         previousDate: moment('2023-03-01')
+//     },
+
+//     {
+//         date: moment('2023-06').format('YYYY-MM'),
+//         value1: 10,
+//         value2: 12,
+//         previousDate: moment('2023-03')
+//     }
+// ]
 // Create axes
 var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 dateAxis.renderer.minGridDistance = 30;
@@ -1389,7 +1457,7 @@ series.dataFields.valueY = "value1";
 series.dataFields.dateX = "date";
 series.strokeWidth = 2;
 series.minBulletDistance = 10;
-series.tooltipText = "[bold]{date.formatDate()}:[/] {value1}\n[bold]{previousDate.formatDate()}:[/] {value2}";
+series.tooltipText = "[bold]Issues:[/] {value1}\n[bold]Repeated:[/] {value2}";
 series.tooltip.pointerOrientation = "vertical";
 series.fillOpacity = 0.1; // Fill the area under the line
 series.stroke = am4core.color("lightblue"); // Set line color
@@ -1406,7 +1474,7 @@ series2.strokeWidth = 2;
 series2.fillOpacity = 0.3; // Fill the area under the
 series2.stroke = am4core.color("red"); // Set line color for the second series
 series.fill = am4core.color("red"); // Set the fill color
-series2.name = 'Average'
+series2.name = 'Repeated'
 
 
 // Add cursor
