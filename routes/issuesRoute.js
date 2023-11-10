@@ -385,13 +385,16 @@ Takk for beskjed.
     
                     await smsMessage.save()
                 }
-
                 let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
-                let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
-                let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+                let newTotalTime = machine.totalWorkingTime
         
-                let diff = moment.duration(currentTime.diff(lastActiveTime))
-                let newTotalTime = machine.totalWorkingTime + diff.hours()
+                if(machine.lastActiveTime != null){
+                    let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+                    let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+            
+                    let diff = moment.duration(currentTime.diff(lastActiveTime))
+                    newTotalTime = machine.totalWorkingTime + diff.asHours()
+                }
 
             await Machine.updateOne({
                 _id:id,
@@ -506,11 +509,15 @@ router.post('/issues/:id/technician/reports', async (req, res) => {
         })
 
         let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
-        let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
-        let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+        let newTotalTime = machine.totalOfflineTime
 
-        let diff = moment.duration(currentTime.diff(lastActiveTime))
-        let newTotalTime = machine.totalWorkingTime + diff.hours()
+        if(machine.lastActiveTime != null){
+            let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+            let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+    
+            let diff = moment.duration(currentTime.diff(lastActiveTime))
+            newTotalTime = machine.totalWorkingTime + diff.asHours()
+        }
 
         let machineActivation = await Machine.updateOne({
             _id: machineId,
@@ -682,11 +689,16 @@ router.post('/issues/:id/report', upload.single('report') ,async (req, res) => {
         })
 
         let newLastActiveTime = moment().format('YYYY-MM-DD HH:mm:ss')
-        let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
-        let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+        let newTotalTime = machine.totalOfflineTime
 
-        let diff = moment.duration(currentTime.diff(lastActiveTime))
-        let newTotalTime = machine.totalWorkingTime + diff.hours()
+        if(machine.lastActiveTime != null){
+            let lastActiveTime = moment(moment(machine.lastActiveTime).format('YYYY-MM-DD HH:mm:ss'))
+            let currentTime = moment(moment().format('YYYY-MM-DD HH:mm:ss'))
+    
+            let diff = moment.duration(currentTime.diff(lastActiveTime))
+            newTotalTime = machine.totalWorkingTime + diff.asHours()
+        }
+
         let machineActivation = await Machine.updateOne({
             _id: machineId,
         },{
