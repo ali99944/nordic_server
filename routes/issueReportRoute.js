@@ -260,7 +260,7 @@ router.get('/reports/averages/:id', async (req, res) => {
     let issueSolvedHoursAverage = (issueSolvedHoursSum / issueSolvedHours.length).toFixed(2)
     let fraction = issueSolvedHoursAverage.split('.')
     fraction[0] = fraction[0] + 'H'
-    fraction[1] = issueSolvedHours.length > 0 ? ((+fraction[1] / 100) * 60).toFixed(2) + 'M' : '0M'
+    fraction[1] = issueSolvedHours.length > 0 ? ((+fraction[1] / 100) * 60).toFixed(0) + 'M' : '0M'
     issueSolvedHoursAverage = issueSolvedHours.length > 0 ? fraction.join(' ') : 0
 
     let issueWaitingHours = issuesWereInWaitingState.map(iws => {
@@ -278,7 +278,7 @@ router.get('/reports/averages/:id', async (req, res) => {
 
       let iswha = issueSolvedWaitingHoursAverage.toString().split('.')
       iswha[0] = iswha[0] + 'H'
-      iswha[1]  = issueWaitingHours.length > 0 ?  ((+iswha[1] / 100) * 60).toFixed(2) + 'M' : 0 + 'M'
+      iswha[1]  = issueWaitingHours.length > 0 ?  ((+iswha[1] / 100) * 60).toFixed(0) + 'M' : 0 + 'M'
     
       iswha = iswha.join(' ')
       issueSolvedWaitingHoursAverage = iswha
@@ -299,7 +299,7 @@ router.get('/reports/averages/:id', async (req, res) => {
     
   let idhaParts = issueRedirectHoursAverage.toString().split('.')
   idhaParts[0] = idhaParts[0] + 'H'
-  idhaParts[1]  = issueRedirectHours.length > 0 ?  ((+idhaParts[1] / 100) * 60).toFixed(2) + 'M' : 0 + 'M'
+  idhaParts[1]  = issueRedirectHours.length > 0 ?  ((+idhaParts[1] / 100) * 60).toFixed(0) + 'M' : 0 + 'M'
 
   idhaParts = idhaParts.join(' ')
   issueRedirectHoursAverage = idhaParts
