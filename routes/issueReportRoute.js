@@ -96,7 +96,7 @@ router.get('/reports/leaderboard/:id', async (req, res) => {
             avgx = (sumx / list.length).toFixed(2)
             avgxParts = avgx.split('.')
             avgxParts[0] = avgxParts[0] + 'H'
-            avgxParts[1] = list.length > 0 ? ((+avgxParts[1] / 100) * 60).toFixed(2) + 'M' : '0M'
+            avgxParts[1] = list.length > 0 ? ((+avgxParts[1] / 100) * 60).toFixed(0) + 'M' : '0M'
       
             holder[key] = avgxParts.join(' ')
           })
